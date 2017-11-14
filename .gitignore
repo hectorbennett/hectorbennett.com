@@ -105,3 +105,4 @@ ENV/
 
 # Sensitive information
 email_settings.py
+hectorbennett/hectorbennett/email_settings.py
