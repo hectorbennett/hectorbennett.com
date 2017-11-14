@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 
 from .forms import SantaFormSet
 from .forms import DetailsForm
@@ -11,18 +12,26 @@ def success(request):
     return render(request, 'success.html', {})
 
 
+def failure(request):
+    return render(request, 'failure.html', {})
+
+
 def index(request):
     if request.method == 'POST':
         santa_forms = SantaFormSet(request.POST)
         details_form = DetailsForm(request.POST)
-        if santa_forms.is_valid() and details_form.is_valid():
-            print('valid')
-            print(create_and_send_emails(santa_forms, details_form))
-            return render(request, 'success.html', {})
+        if not santa_forms.is_valid():
+            print('santa form not valid')
+            print(santa_forms.errors)
+            return HttpResponseRedirect('failure')
+        elif not details_form.is_valid():
+            print('details form not valid')
+            print(details_form.errors)
+            return HttpResponseRedirect('failure')
         else:
-            return HttpResponseRedirect('you failed lol')
+            create_and_send_emails(santa_forms, details_form)
+            return HttpResponseRedirect('success')
     else:
-        print('not POST')
         santa_forms = SantaFormSet()
         details_form = DetailsForm()
         return render(
@@ -34,32 +43,14 @@ def index(request):
             }
         )
 
-def send_email(user, password, recipient, subject, body):
-    """
-    Sends an email with gmail.
-    """
-
-    message = """From: {user}\nTo: {recipient}\nSubject: {subject}\n\n{body}
-    """.format(user=user, recipient=recipient, subject=subject, body=body)
-
-    try:
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.ehlo()
-        server.starttls()
-        server.login(user, password)
-        server.sendmail(user, recipient, message)
-        server.close()
-        print('successfully sent the mail')
-    except:
-        print('failed to send mail')
 
 def create_and_send_emails(santa_form, details_form):
     email_details = details_form.cleaned_data
     santa_list = list_from_form(santa_form)
     assignment_list = generate_assignments(santa_list)
-    email_subject = email_details.get('subject')
+    subject = email_details.get('subject')
 
-    message = """Dear {santa},
+    base_message = """Dear {santa},
 
         You have been assigned {giftee} as your giftee.
 
@@ -70,16 +61,15 @@ def create_and_send_emails(santa_form, details_form):
         xxx
         """
 
-
     for santa, giftee in assignment_list:
-        print(message.format(santa=santa, giftee=giftee))
-        # send_email(
-        #     username,
-        #     password,
-        #     santa_email,
-        #     email_subject,
-        #     email_content
-        # )
+        message = base_message.format(santa=santa, giftee=giftee)
+        send_mass_email(
+            (subject, message, from, recipient),
+            fail_silently=False,
+            auth_user=None,
+            auth_password=None,
+            connection=None
+        )
 
 
 def list_from_form(form):
