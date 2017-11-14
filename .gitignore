@@ -102,3 +102,7 @@ ENV/
 
 # db
 *.sqlite3
+
+# Sensitive information
+email_settings.py
+hectorbennett/hectorbennett/email_settings.py
