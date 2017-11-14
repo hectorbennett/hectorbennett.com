@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Natasha Lall | Home {% endblock %} {% block content %}
+<div class="row">
+    <div class="col">
+        {% autoescape off %} {{ contact_info.content }} {% endautoescape %}
+    </div>
+    <div class="col">
+        <img width="400" src="{% static 'img/main_image.png' %}"></img>
+    </div>
+</div>
+{% endblock %}
