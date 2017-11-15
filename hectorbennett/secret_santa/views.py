@@ -7,6 +7,16 @@ from .forms import DetailsForm
 
 import random
 
+BASE_MESSAGE = """Dear {santa},
+
+You have been assigned {giftee} as your giftee.
+
+Good luck, and merry Christmas
+Love, Autosanta
+Ho Ho Ho
+xxx
+"""
+
 
 def success(request):
     return render(request, 'success.html', {})
@@ -32,8 +42,12 @@ def index(request):
             create_and_send_emails(santa_forms, details_form)
             return HttpResponseRedirect('success')
     else:
+        initial_details_data = {
+            'subject': 'This a subject',
+            'message': BASE_MESSAGE
+        }
         santa_forms = SantaFormSet()
-        details_form = DetailsForm()
+        details_form = DetailsForm(initial_details_data)
         return render(
             request,
             "index.html",
@@ -49,27 +63,19 @@ def create_and_send_emails(santa_form, details_form):
     santa_list = list_from_form(santa_form)
     assignment_list = generate_assignments(santa_list)
     subject = email_details.get('subject')
+    base_message = email_details.get('message')
 
-    base_message = """Dear {santa},
-
-        You have been assigned {giftee} as your giftee.
-
-        Good luck, and merry Christmas
-
-        Love, Autosanta
-        Ho Ho Ho
-        xxx
-        """
+    
 
     for santa, giftee in assignment_list:
         message = base_message.format(santa=santa, giftee=giftee)
-        send_mass_email(
-            (subject, message, from, recipient),
-            fail_silently=False,
-            auth_user=None,
-            auth_password=None,
-            connection=None
-        )
+        # send_mass_email(
+        #     (subject, message, from, recipient),
+        #     fail_silently=False,
+        #     auth_user=None,
+        #     auth_password=None,
+        #     connection=None
+        # )
 
 
 def list_from_form(form):

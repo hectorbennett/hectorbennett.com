@@ -21,11 +21,13 @@
                     {{ form.as_table }}
                 </div>
             {% endfor %}
-        </div>
-        <div id="email-details">
-            {{ email_details_form.as_table }}
+            
         </div>
         <button type="button" id="add-another">add another</button>
+        <div id="email-details">
+            {{ email_details_form.as_p }}
+        </div>
+        
         <input type="submit" />
     </form>
 </div>
