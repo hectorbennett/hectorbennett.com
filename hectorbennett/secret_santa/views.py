@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail
+from django.core.mail import send_mass_mail
 
 from .forms import SantaFormSet
 from .forms import DetailsForm
@@ -39,6 +39,9 @@ def index(request):
             print(details_form.errors)
             return HttpResponseRedirect('failure')
         else:
+            # send_mass_mail(
+                # ('subject', 'test message', 'secret-santa', 'heknotoad.com')
+            # )
             create_and_send_emails(santa_forms, details_form)
             return HttpResponseRedirect('success')
     else:
@@ -65,17 +68,26 @@ def create_and_send_emails(santa_form, details_form):
     subject = email_details.get('subject')
     base_message = email_details.get('message')
 
-    
+    print(email_details)
 
+    emails = []
     for santa, giftee in assignment_list:
         message = base_message.format(santa=santa, giftee=giftee)
-        # send_mass_email(
-        #     (subject, message, from, recipient),
-        #     fail_silently=False,
-        #     auth_user=None,
-        #     auth_password=None,
-        #     connection=None
-        # )
+        email_data = (
+            subject,
+            message,
+            'secret-santa@hectorbennett.com',
+            ['heknotoad@gmail.com']
+        )
+        emails.append(email_data)
+
+    emails = tuple(emails)
+
+    send_mass_mail(emails, fail_silently=False)
+
+    # send_mass_mail(
+    #     ('subject', 'test message', 'secret-santa', 'heknotoad.com')
+    # )
 
 
 def list_from_form(form):

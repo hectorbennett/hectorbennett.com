@@ -1,6 +1,11 @@
-{% load staticfiles %}
+{% extends 'base.html' %}
+{% load static %}
 
-<script src="{% static 'scripts/jquery.min.js' %}"></script>
+{% block title %} Hector {% endblock %}
+
+{% block content %}
+
+
 
 <div class="container">
     <h1>Secret Santa generator</h1>
@@ -31,6 +36,8 @@
         <input type="submit" />
     </form>
 </div>
+
+{% endblock %}
 
 <script>
     console.log('hello');
