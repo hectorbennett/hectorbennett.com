@@ -23,14 +23,14 @@ def success(request):
     """
     Our form on successful sending
     """
-    return render(request, 'success.html', {})
+    return render(request, 'secret_santa/success.html', {})
 
 
 def failure(request):
     """
     Our view incase the form fails.
     """
-    return render(request, 'failure.html', {})
+    return render(request, 'secret_santa/failure.html', {})
 
 
 def index(request):
@@ -63,7 +63,7 @@ def index(request):
         details_form = DetailsForm(initial_details_data)
         return render(
             request,
-            "index.html",
+            "secret_santa/index.html",
             {
                 'santa_forms': santa_forms,
                 'email_details_form': details_form

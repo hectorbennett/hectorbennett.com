@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Hector // Secret Santa {% endblock %}
+
+
+
+{% block content %}
+
+
+
+<div class="container">
+    <h1>Secret Santa generator</h1>
+    <p>Enter your friend's names and email addresses</p>
+
+    <form action="/secret-santa/" method="post">
+        {% csrf_token %}
+        <div id="forms">
+            {{ santa_forms.management_form|crispy }}
+            <div id="empty_form" style="display:none">
+                <div>
+                    {{ santa_forms.empty_form|crispy }}
+                    <button type="button" class="delete">remove</button>
+                </div>
+            </div>
+            {% for form in santa_forms.forms %}
+                <div>
+                    {{ form|crispy }}
+                </div>
+            {% endfor %}
+            
+        </div>
+        <button type="button" id="add-another">add another</button>
+        <div id="email-details">
+            {{ email_details_form.as_p }}
+        </div>
+        
+        <input type="submit" />
+    </form>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'scripts/secret-santa.js' %}"></script>
+{% endblock %}
