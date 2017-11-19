@@ -2,6 +2,7 @@ from django import forms
 
 
 class SecretSantaForm(forms.Form):
+    
     santa = forms.CharField(label='Santa', max_length=100)
     email_address = forms.EmailField(label='Email address')
 
@@ -23,3 +24,20 @@ class DetailsForm(forms.Form):
 
     subject = forms.CharField(label='Subject', max_length=100)
     message = forms.CharField(widget=forms.Textarea)
+
+    def clean_message(self):
+        message = self.cleaned_data['message']
+        if 'santa' not in message:
+            raise ValidationError("Must include '{santa}' tag in message.")
+        if 'giftee' not in message:
+            raise ValidationError("Must include '{giftee}' tag in message.")
+            
+        return message
+
+    def clean(self):
+        print('clean')
+        cleaned_data = super(DetailsForm, self).clean()
+        print('cleaned_data', cleaned_data)
+        message = cleaned_data.get("message")
+
+        

@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,29 +25,25 @@
 </head>
 
 <body>
-    
-    
-    <nav id="logo" class="nav navbar-rotated-left">
-        <span class="inner-nav">
-            <a class="nav-link active" href="/">Hector Bennett</a>
-        </span>
+
+    <!-- As a link -->
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/">Hector Bennett</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+              </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">Features</a>
+                <a class="nav-item nav-link" href="#">Pricing</a>
+                <a class="nav-item nav-link disabled" href="#">Disabled</a>
+            </div>
+        </div>
     </nav>
 
-    <nav id="menu-btns" class="nav navbar-rotated-right">
-        <span class="nav inner-nav">
-            <a id="info-btn" class="nav-link active" href="/">Info</a>
-            <a id="work-btn" class="nav-link active" href="/work">Button 2</a>
-            <a id="shows-btn" class="nav-link active" href="/shows">Button 3</a>
-            <a id="contact-btn" class="nav-link active" href="/contact">Button 4</a>
-        </span>
-    </nav>
-    
-{% comment %} 
-    <div id="bg-top-half"></div> {% endcomment %}
-
-
-   
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 
 
 </body>

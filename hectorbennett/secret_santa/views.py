@@ -38,8 +38,10 @@ def index(request):
     The main view for our secret-santa app.
     """
     if request.method == 'POST':
+        print('post')
         santa_forms = SantaFormSet(request.POST)
         details_form = DetailsForm(request.POST)
+        
         if not santa_forms.is_valid():
             print('santa form not valid')
             print(santa_forms.errors)
@@ -48,9 +50,11 @@ def index(request):
             print('details form not valid')
             print(details_form.errors)
             return HttpResponseRedirect('failure')
+        details_form.clean_message()
         create_and_send_emails(santa_forms, details_form)
         return HttpResponseRedirect('success')
     else:
+        print('not post')
         initial_details_data = {
             'subject': BASE_SUBJECT,
             'message': BASE_MESSAGE
