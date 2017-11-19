@@ -37,10 +37,9 @@
     </form>
 </div>
 
-{% endblock %}
-
 <script>
     console.log('hello');
+    console.log('hello again');
     form_count = Number($("[name=form-TOTAL_FORMS]").val());
     // get extra form count so we know what index to use for the next item.
 
@@ -59,3 +58,7 @@
         $('#id_form-TOTAL_FORMS').val(parseInt(form_count) + 1);
     })
 </script>
+
+{% endblock %}
+
+

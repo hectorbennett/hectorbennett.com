@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mass_mail
@@ -5,7 +7,6 @@ from django.core.mail import send_mass_mail
 from .forms import SantaFormSet
 from .forms import DetailsForm
 
-import random
 
 BASE_MESSAGE = """Dear {santa},
 
@@ -27,6 +28,9 @@ def failure(request):
 
 
 def index(request):
+    """
+    The main view for our secret-santa app.
+    """
     if request.method == 'POST':
         santa_forms = SantaFormSet(request.POST)
         details_form = DetailsForm(request.POST)
@@ -38,12 +42,8 @@ def index(request):
             print('details form not valid')
             print(details_form.errors)
             return HttpResponseRedirect('failure')
-        else:
-            # send_mass_mail(
-                # ('subject', 'test message', 'secret-santa', 'heknotoad.com')
-            # )
-            create_and_send_emails(santa_forms, details_form)
-            return HttpResponseRedirect('success')
+        create_and_send_emails(santa_forms, details_form)
+        return HttpResponseRedirect('success')
     else:
         initial_details_data = {
             'subject': 'This a subject',
@@ -62,13 +62,14 @@ def index(request):
 
 
 def create_and_send_emails(santa_form, details_form):
+    """
+    Our main function to create and send emails from our form data
+    """
     email_details = details_form.cleaned_data
     santa_list = list_from_form(santa_form)
     assignment_list = generate_assignments(santa_list)
     subject = email_details.get('subject')
     base_message = email_details.get('message')
-
-    print(email_details)
 
     emails = []
     for santa, giftee in assignment_list:
@@ -80,19 +81,15 @@ def create_and_send_emails(santa_form, details_form):
             ['heknotoad@gmail.com']
         )
         emails.append(email_data)
-
     emails = tuple(emails)
-
     send_mass_mail(emails, fail_silently=False)
-
-    # send_mass_mail(
-    #     ('subject', 'test message', 'secret-santa', 'heknotoad.com')
-    # )
 
 
 def list_from_form(form):
+    """
+    Converts our form data into a usable list
+    """
     form = form.cleaned_data
-    print(form)
     santa_list = []
     for item in form:
         if item.get('santa') and item.get('email_address'):
@@ -102,12 +99,19 @@ def list_from_form(form):
 
 
 def create_pairs(santa_list):
+    """
+    Creates a randomised list of pairs from a list of names.
+    """
     giftee_list = list(santa_list)
     random.shuffle(giftee_list)
     return list(zip(santa_list, giftee_list))
 
 
 def is_derangement(tuple_list):
+    """
+    Checks if a list of 2-tuples is a derangement, that is, no santa is paired
+    with themselves.
+    """
     for i, j in tuple_list:
         if i == j:
             return False
@@ -115,6 +119,9 @@ def is_derangement(tuple_list):
 
 
 def generate_assignments(santa_list):
+    """
+    Generates a list of valid pairs, santas and giftees.
+    """
     assignment_list = []
     while True:
         assignment_list = create_pairs(santa_list)
