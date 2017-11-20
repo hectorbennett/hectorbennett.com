@@ -15,15 +15,15 @@
 
     <!-- fonts -->
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Hammersmith+One" rel="stylesheet"> 
 
     <title>{% block title %}Hector Bennett{% endblock %}</title>
 
 </head>
 
-<body>
+<body class="light-orange">
 
-    <!-- As a link -->
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar orange shadow navbar-expand-lg navbar-dark mb-5">
         <a class="navbar-brand" href="/">Hector Bennett</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
@@ -31,15 +31,18 @@
         <span class="navbar-toggler-icon"></span>
               </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" href="contact">Contact</a>
-                <a class="nav-item nav-link" href="secret-santa">Secret santa</a>
+            <div class="navbar-nav justify-content-end">
+                <a class="nav-item nav-link" href="/contact">Contact</a>
+                <a class="nav-item nav-link" href="/secret-santa">Secret santa</a>
             </div>
         </div>
     </nav>
 
-    {% block content %} {% endblock %}
 
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 
 </body>
 

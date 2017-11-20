@@ -3,9 +3,19 @@ from django import forms
 
 class SecretSantaForm(forms.Form):
     
-    santa = forms.CharField(label='Santa', max_length=100)
-    email_address = forms.EmailField(label='Email address')
-
+    santa = forms.CharField(
+        label='Santa',
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
+    )
+    email_address = forms.EmailField(
+        label='Email address',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
+    )
 
 SantaFormSet = forms.formset_factory(
     SecretSantaForm,
@@ -17,13 +27,16 @@ SantaFormSet = forms.formset_factory(
 
 class DetailsForm(forms.Form):
 
-    def __init__(self, user, *args, **kwargs):
-        super(DetailsForm, self).__init__(user, *args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
-
-    subject = forms.CharField(label='Subject', max_length=100)
-    message = forms.CharField(widget=forms.Textarea)
+    subject = forms.CharField(
+        label='Subject',
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
+    )
+    message = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control'
+    }))
 
     def clean_message(self):
         message = self.cleaned_data['message']

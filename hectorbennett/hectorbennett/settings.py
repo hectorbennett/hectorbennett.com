@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
     'main',
     'secret_santa'
 ]
@@ -118,10 +117,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Form template for crispy_templates, which styles forms nicely with bootstrap
-# divs.
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Email settings
 EMAIL_HOST = email_settings.EMAIL_HOST

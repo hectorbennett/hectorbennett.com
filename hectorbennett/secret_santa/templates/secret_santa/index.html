@@ -1,48 +1,65 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 
 {% block title %} Hector // Secret Santa {% endblock %}
 
-
-
 {% block content %}
+    <div class="row">
+        <div class="col bd-content">
+            <h2>Secret Santa generator</h2>
+            <p>Enter your friend's names and email addresses</p>
+        </div>
+    </div>
 
-
-
-<div class="container">
-    <h1>Secret Santa generator</h1>
-    <p>Enter your friend's names and email addresses</p>
-
-    <form action="/secret-santa/" method="post">
+    <form class="row form" action="/secret-santa/" method="post">
         {% csrf_token %}
-        <div id="forms">
-            {{ santa_forms.management_form|crispy }}
+        <div class="col-sm" id="forms">
+            {{ santa_forms.management_form }}
             <div id="empty_form" style="display:none">
-                <div>
-                    {{ santa_forms.empty_form|crispy }}
-                    <button type="button" class="delete">remove</button>
+                <div class="card shadow my-2">
+                    <div class="card-body">
+                        <button type="button" class="close delete" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="form-group">
+                            {{ santa_forms.empty_form }}    
+                        </div>
+                    </div>
                 </div>
             </div>
-            {% for form in santa_forms.forms %}
-                <div>
-                    {{ form|crispy }}
+            <div id="santa-forms">
+                {% for form in santa_forms.forms %}
+                <div class="card shadow my-2">
+                    <div class="card-body">
+                        <div class="form-group">
+                            {{ form }}
+                        </div>
+                    </div>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
             
+            <div class="form-group">
+                <button type="button" id="add-another">add another</button>
+            </div>       
         </div>
-        <button type="button" id="add-another">add another</button>
-        <div id="email-details">
-            {{ email_details_form.as_p }}
-        </div>
-        
-        <input type="submit" />
-    </form>
-</div>
 
+        <div class="col-sm align-self-sm-end">
+            <div class="card shadow my-2">
+                <div class="card-body">
+                    <div class="form-group" id="email-details">
+                {{ email_details_form }}
+            </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" />
+            </div>
+        </div>    
+    </form>
 {% endblock %}
 
-
 {% block scripts %}
-<script src="{% static 'scripts/secret-santa.js' %}"></script>
+    <script src="{% static 'scripts/secret-santa.js' %}"></script>
 {% endblock %}

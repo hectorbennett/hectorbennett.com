@@ -41,7 +41,6 @@ def index(request):
         print('post')
         santa_forms = SantaFormSet(request.POST)
         details_form = DetailsForm(request.POST)
-        
         if not santa_forms.is_valid():
             print('santa form not valid')
             print(santa_forms.errors)
@@ -60,6 +59,9 @@ def index(request):
             'message': BASE_MESSAGE
         }
         santa_forms = SantaFormSet()
+        for thing in santa_forms:
+            print(thing)
+            print(' ')
         details_form = DetailsForm(initial_details_data)
         return render(
             request,
@@ -88,15 +90,14 @@ def create_and_send_emails(santa_form, details_form):
         email = santa_dict['email']
         giftee = santa_dict['giftee']
 
-        if email == 'heknotoad@gmail.com':
-            message = base_message.format(santa=santa, giftee=giftee)
-            email_data = (
-                subject,
-                message,
-                'secret-santa@hectorbennett.com',
-                [email]
-            )
-            emails.append(email_data)
+        message = base_message.format(santa=santa, giftee=giftee)
+        email_data = (
+            subject,
+            message,
+            'secret-santa@hectorbennett.com',
+            [email]
+        )
+        emails.append(email_data)
     emails = tuple(emails)
     send_mass_mail(emails, fail_silently=False)
 
