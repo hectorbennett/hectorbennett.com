@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Hector // Secret Santa {% endblock %}
+{% block title %} Secret Santa {% endblock %}
 
 {% block content %}
     <div class="row">
@@ -16,7 +16,7 @@
         <div class="col-sm" id="forms">
             {{ santa_forms.management_form }}
             <div id="empty_form" style="display:none">
-                <div class="card shadow my-2">
+                <div class="card white shadow my-2">
                     <div class="card-body">
                         <button type="button" class="close delete" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -29,7 +29,7 @@
             </div>
             <div id="santa-forms">
                 {% for form in santa_forms.forms %}
-                <div class="card shadow my-2">
+                <div class="card white shadow my-2">
                     <div class="card-body">
                         <div class="form-group">
                             {{ form }}
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-sm align-self-sm-end">
-            <div class="card shadow my-2">
+            <div class="card white shadow my-2">
                 <div class="card-body">
                     <div class="form-group" id="email-details">
                 {{ email_details_form }}
@@ -54,7 +54,7 @@
             </div>
             
             <div class="form-group">
-                <input type="submit" />
+                <button type="submit">Send Emails</button>
             </div>
         </div>    
     </form>

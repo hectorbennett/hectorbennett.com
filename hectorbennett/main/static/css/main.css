@@ -77,16 +77,38 @@ body {
 }
 
 .shadow {
-    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.1);
-    -moz-box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.1);
-    box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
 }
 
+.inner-shadow {
+    -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+}
+
+
 .orange {
-    background: #FF8B00;
+    background: #FFA600;
     color: white;
 }
 
 .light-orange {
-    background: #FFF1E1
+    background: #FFA600;
+    color: white;
+}
+
+.white {
+    background: white;
+    color: #000000;
+}
+
+.white a{
+    color: #555;
+}
+
+
+.white a:hover {
+    color: #000000;
 }
