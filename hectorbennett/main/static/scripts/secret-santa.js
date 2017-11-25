@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     $("#add-another").click(function () {
         form_count++;
-        $("#santa-forms").append($("#empty_form").html().replace(/__prefix__/g, form_count));
+        $("#santa-forms").append($("#empty_form").html().replace(/__prefix__/g, form_count - 1));
         $("#id_form-TOTAL_FORMS").val(parseInt(form_count));
     });
 

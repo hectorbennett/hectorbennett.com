@@ -74,6 +74,12 @@ a:hover {
 body {
     font-family: 'Archivo Black', sans-serif;
     font-family: 'Hammersmith One', sans-serif;
+    font-family: 'Raleway', sans-serif;
+}
+
+.title {
+    font-family: 'Kanit', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .shadow {

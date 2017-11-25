@@ -7,8 +7,9 @@ from django.core.mail import send_mass_mail
 from .forms import SantaFormSet
 from .forms import DetailsForm
 
-BASE_SUBJECT = "Secret Santa"
-BASE_MESSAGE = """Dear {santa},
+BASE_SUBJECT = 'Secret Santa'
+
+BASE_MESSAGE = '''Dear {santa},
 
 You have been assigned {giftee} as your giftee.
 
@@ -16,27 +17,27 @@ Good luck, and merry Christmas
 Love, Autosanta
 Ho Ho Ho
 xxx
-"""
+'''
 
 
 def success(request):
-    """
+    '''
     Our form on successful sending
-    """
+    '''
     return render(request, 'secret_santa/success.html', {})
 
 
 def failure(request):
-    """
+    '''
     Our view incase the form fails.
-    """
+    '''
     return render(request, 'secret_santa/failure.html', {})
 
 
 def index(request):
-    """
+    '''
     The main view for our secret-santa app.
-    """
+    '''
     if request.method == 'POST':
         print('post')
         santa_forms = SantaFormSet(request.POST)
@@ -65,7 +66,7 @@ def index(request):
         details_form = DetailsForm(initial_details_data)
         return render(
             request,
-            "secret_santa/index.html",
+            'secret_santa/index.html',
             {
                 'santa_forms': santa_forms,
                 'email_details_form': details_form
@@ -74,9 +75,9 @@ def index(request):
 
 
 def create_and_send_emails(santa_form, details_form):
-    """
+    '''
     Our main function to create and send emails from our form data
-    """
+    '''
     email_details = details_form.cleaned_data
     subject = email_details.get('subject')
     base_message = email_details.get('message')
@@ -103,25 +104,26 @@ def create_and_send_emails(santa_form, details_form):
 
 
 def get_santa_data(santa_form):
-    """
+    '''
     Converts the santa form data into a list of dictionaries of emails, names
     and giftees.
-    """
+    '''
     form = santa_form.cleaned_data
     santa_list = []
     for item in form:
-        santa_list.append({
-            'name': item.get('santa'),
-            'email': item.get('email_address'),
-            'giftee': None
-        })
+        if item.get('santa') and item.get('email_address'):
+            santa_list.append({
+                'name': item.get('santa'),
+                'email': item.get('email_address'),
+                'giftee': None
+            })
     return santa_list
 
 
 def assign_giftees(santa_list):
-    """
+    '''
     Creates a randomised list of pairs from a list of names.
-    """
+    '''
     giftee_list = []
     for santa in santa_list:
         giftee_list.append(santa['name'])
@@ -133,10 +135,10 @@ def assign_giftees(santa_list):
     return santa_list
 
 def is_derangement(dict_list):
-    """
+    '''
     Checks if a list of 2-tuples is a derangement, that is, no santa is paired
     with themselves.
-    """
+    '''
     for santa_dict in dict_list:
         if santa_dict['name'] == santa_dict['giftee']:
             return False
@@ -144,9 +146,9 @@ def is_derangement(dict_list):
 
 
 def generate_assignments(santa_list):
-    """
+    '''
     Generates a list of valid pairs, santas and giftees.
-    """
+    '''
     santa_dicts = []
     while True:
         santa_dicts = assign_giftees(santa_list)
