@@ -3,8 +3,9 @@ import random
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mass_mail
+from django import forms
 
-from .forms import SantaFormSet
+from .forms import SecretSantaForm
 from .forms import DetailsForm
 
 BASE_SUBJECT = 'Secret Santa'
@@ -31,16 +32,21 @@ def failure(request):
     '''
     Our view incase the form fails.
     '''
-    return render(request, 'secret_santa/failure.html', {})
+    return index(request)
 
 
 def index(request):
     '''
     The main view for our secret-santa app.
     '''
+    santa_form_set = forms.formset_factory(
+        SecretSantaForm,
+        min_num=1,
+        validate_min=True,
+        extra=2
+    )
     if request.method == 'POST':
-        print('post')
-        santa_forms = SantaFormSet(request.POST)
+        santa_forms = santa_form_set(request.POST)
         details_form = DetailsForm(request.POST)
         if not santa_forms.is_valid():
             print('santa form not valid')
@@ -54,15 +60,11 @@ def index(request):
         create_and_send_emails(santa_forms, details_form)
         return HttpResponseRedirect('success')
     else:
-        print('not post')
         initial_details_data = {
             'subject': BASE_SUBJECT,
             'message': BASE_MESSAGE
         }
-        santa_forms = SantaFormSet()
-        for thing in santa_forms:
-            print(thing)
-            print(' ')
+        santa_forms = santa_form_set()
         details_form = DetailsForm(initial_details_data)
         return render(
             request,

@@ -1,1 +1,17 @@
-Success!
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Secret Santa {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 bd-content">
+            <h2 class="title">Secret Santa generator</h2>
+            <p>Emails successfully sent!</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/secret-santa.js' %}"></script>
+{% endblock %}
