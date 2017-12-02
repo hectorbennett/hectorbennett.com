@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 import os
-from . import email_settings
+from . import secret_settings
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4^ydi+8g%c@i36+w=je^g@bpas$3jwk*$84m+i1+c_8=)6d$k+'
+SECRET_KEY = secret_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -119,11 +119,11 @@ USE_L10N = True
 USE_TZ = True
 
 # Email settings
-EMAIL_HOST = email_settings.EMAIL_HOST
-EMAIL_HOST_USER = email_settings.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = email_settings.EMAIL_HOST_PASSWORD
-EMAIL_PORT = email_settings.EMAIL_PORT
-EMAIL_USE_TLS = email_settings.EMAIL_USE_TLS
+EMAIL_HOST = secret_settings.EMAIL_HOST
+EMAIL_HOST_USER = secret_settings.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = secret_settings.EMAIL_HOST_PASSWORD
+EMAIL_PORT = secret_settings.EMAIL_PORT
+EMAIL_USE_TLS = secret_settings.EMAIL_USE_TLS
 
 
 # Static files (CSS, JavaScript, Images)
