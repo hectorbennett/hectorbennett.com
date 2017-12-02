@@ -1,6 +1,6 @@
-html,
+/* html,
 body {
-    /* background: #000000; */
+    background: #000000;
     font-family: 'Bree Serif', serif;
     line-height: 1.6rem;
     letter-spacing: 0.05rem;
@@ -12,6 +12,9 @@ body {
     width: 200%;
     background: #FFFFFF;
 }
+
+.card {
+
 .nav {
     z-index: 10;
 }
@@ -29,22 +32,6 @@ a:hover {
     outline: none;
     color: #5355DF;
 }
-
-/* #menu-btns a {
-    color: black;
-}
-
-#menu-btns a:hover {
-    color: white;
-}
-
-#logo a {
-    color: #FFFFFF;
-}
-
-#logo a:hover {
-    color: black;
-} */
 
 .inner-nav {
     width: 50vh;
@@ -82,5 +69,52 @@ a:hover {
     width: 100vh;
     position: fixed;
     font-size: 2rem;
+} */
+
+body {
+    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Hammersmith One', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
+.title {
+    font-family: 'Kanit', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.shadow {
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.inner-shadow {
+    -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+}
+
+
+.orange {
+    background: #FFA600;
+    color: white;
+}
+
+.light-orange {
+    background: #FFA600;
+    color: white;
+}
+
+.white {
+    background: white;
+    color: #000000;
+}
+
+.white a{
+    color: #555;
+}
+
+
+.white a:hover {
+    color: #000000;
+}

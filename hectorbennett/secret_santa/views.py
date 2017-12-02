@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.mail import send_mass_mail
 from django import forms
 
-from .forms import SecretSantaForm
+from .forms import SantaFormSet
 from .forms import DetailsForm
 
 BASE_SUBJECT = 'Secret Santa'
@@ -34,52 +34,47 @@ def failure(request):
     '''
     return index(request)
 
-
 def index(request):
     '''
     The main view for our secret-santa app.
     '''
-    santa_form_set = forms.formset_factory(
-        SecretSantaForm,
-        min_num=1,
-        validate_min=True,
-        extra=2
-    )
+
+    santa_forms = SantaFormSet()
+    initial_details_data = {
+        'subject': BASE_SUBJECT,
+        'message': BASE_MESSAGE
+    }
+    details_form = DetailsForm(initial_details_data)
+    print(santa_forms.errors)
     if request.method == 'POST':
-        santa_forms = santa_form_set(request.POST)
+        santa_forms = SantaFormSet(request.POST)
         details_form = DetailsForm(request.POST)
+        print('santa_forms', santa_forms)
         if not santa_forms.is_valid():
             print('santa form not valid')
             print(santa_forms.errors)
-            return HttpResponseRedirect('failure')
         elif not details_form.is_valid():
             print('details form not valid')
             print(details_form.errors)
-            return HttpResponseRedirect('failure')
-        details_form.clean_message()
-        create_and_send_emails(santa_forms, details_form)
-        return HttpResponseRedirect('success')
-    else:
-        initial_details_data = {
-            'subject': BASE_SUBJECT,
-            'message': BASE_MESSAGE
+        else:
+            santa_forms.clean_formset()
+            details_form.clean_message()
+            create_and_send_emails(santa_forms, details_form)
+            return HttpResponseRedirect('success')
+    return render(
+        request,
+        'secret_santa/index.html',
+        {
+            'santa_forms': santa_forms,
+            'email_details_form': details_form
         }
-        santa_forms = santa_form_set()
-        details_form = DetailsForm(initial_details_data)
-        return render(
-            request,
-            'secret_santa/index.html',
-            {
-                'santa_forms': santa_forms,
-                'email_details_form': details_form
-            }
-        )
+    )
 
 
 def create_and_send_emails(santa_form, details_form):
-    '''
+    """
     Our main function to create and send emails from our form data
-    '''
+    """
     email_details = details_form.cleaned_data
     subject = email_details.get('subject')
     base_message = email_details.get('message')
@@ -106,10 +101,10 @@ def create_and_send_emails(santa_form, details_form):
 
 
 def get_santa_data(santa_form):
-    '''
+    """
     Converts the santa form data into a list of dictionaries of emails, names
     and giftees.
-    '''
+    """
     form = santa_form.cleaned_data
     santa_list = []
     for item in form:
@@ -123,9 +118,9 @@ def get_santa_data(santa_form):
 
 
 def assign_giftees(santa_list):
-    '''
+    """
     Creates a randomised list of pairs from a list of names.
-    '''
+    """
     giftee_list = []
     for santa in santa_list:
         giftee_list.append(santa['name'])
@@ -137,10 +132,10 @@ def assign_giftees(santa_list):
     return santa_list
 
 def is_derangement(dict_list):
-    '''
+    """
     Checks if a list of 2-tuples is a derangement, that is, no santa is paired
     with themselves.
-    '''
+    """
     for santa_dict in dict_list:
         if santa_dict['name'] == santa_dict['giftee']:
             return False
@@ -148,9 +143,9 @@ def is_derangement(dict_list):
 
 
 def generate_assignments(santa_list):
-    '''
+    """
     Generates a list of valid pairs, santas and giftees.
-    '''
+    """
     santa_dicts = []
     while True:
         santa_dicts = assign_giftees(santa_list)

@@ -1,5 +1,14 @@
 from django import forms
 
+class RequiredFormSet(forms.BaseFormSet):
+    def __init__(self, *args, **kwargs):
+        super(RequiredFormSet, self).__init__(*args, **kwargs)
+        for form in self.forms:
+            form.empty_permitted = False
+
+    def clean_formset(self):
+        print('clean formset')
+        print(self.forms)
 
 class SecretSantaForm(forms.Form):
 
@@ -20,6 +29,13 @@ class SecretSantaForm(forms.Form):
         })
     )
 
+SantaFormSet = forms.formset_factory(
+    SecretSantaForm,
+    min_num=2,
+    validate_min=True,
+    formset=RequiredFormSet
+)
+
 class DetailsForm(forms.Form):
 
     subject = forms.CharField(
@@ -35,14 +51,8 @@ class DetailsForm(forms.Form):
 
     def clean_message(self):
         message = self.cleaned_data['message']
-        if 'santa' not in message:
-            raise forms.ValidationError(('Must include santa tag'), code='error1')
-        if 'giftee' not in message:
-            raise forms.ValidationError(('Must include giftee tag'), code='error1')
+        if '{santa}' not in message:
+            raise forms.ValidationError(('{santa} tag not included in message'), code='error1')
+        if '{giftee}' not in message:
+            raise forms.ValidationError(('{giftee} tag not included in message'), code='error2')
         return message
-
-    def clean(self):
-        print('clean')
-        cleaned_data = super(DetailsForm, self).clean()
-        print('cleaned_data', cleaned_data)
-        message = cleaned_data.get("message")
