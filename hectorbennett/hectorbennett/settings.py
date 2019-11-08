@@ -125,11 +125,11 @@ USE_TZ = True
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = secret_settings.EMAIL_HOST
+EMAIL_HOST = 'smtp.zoho.eu'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 EMAIL_HOST_USER = secret_settings.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = secret_settings.EMAIL_HOST_PASSWORD
-EMAIL_PORT = secret_settings.EMAIL_PORT
-EMAIL_USE_SSL = secret_settings.EMAIL_USE_TLS
 DEFAULT_FROM_EMAIL = secret_settings.DEFAULT_FROM_EMAIL
 
 
