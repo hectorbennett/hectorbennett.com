@@ -1,6 +1,5 @@
 # hectorbennett.com
-My Django website + Secret Santa generator
-
+Personal website including a Secret Santa generator, built in Django.
 
 To initiate, first make a new virtual environment
 
