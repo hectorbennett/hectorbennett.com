@@ -45,17 +45,13 @@ def index(request):
         'message': BASE_MESSAGE
     }
     details_form = DetailsForm(initial_details_data)
-    print(santa_forms.errors)
     if request.method == 'POST':
         santa_forms = SantaFormSet(request.POST)
         details_form = DetailsForm(request.POST)
-        print('santa_forms', santa_forms)
         if not santa_forms.is_valid():
-            print('santa form not valid')
-            print(santa_forms.errors)
+            pass
         elif not details_form.is_valid():
-            print('details form not valid')
-            print(details_form.errors)
+            pass
         else:
             santa_forms.clean_formset()
             details_form.clean_message()
