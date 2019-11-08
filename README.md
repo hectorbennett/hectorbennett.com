@@ -1,5 +1,5 @@
 # hectorbennett.com
-New site I'm making in django.
+My Django website + Secret Santa generator
 
 
 To initiate, first make a new virtual environment
