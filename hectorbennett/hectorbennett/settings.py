@@ -124,11 +124,13 @@ USE_L10N = True
 USE_TZ = True
 
 # Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = secret_settings.EMAIL_HOST
 EMAIL_HOST_USER = secret_settings.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = secret_settings.EMAIL_HOST_PASSWORD
 EMAIL_PORT = secret_settings.EMAIL_PORT
-EMAIL_USE_TLS = secret_settings.EMAIL_USE_TLS
+EMAIL_USE_SSL = secret_settings.EMAIL_USE_TLS
+DEFAULT_FROM_EMAIL = secret_settings.DEFAULT_FROM_EMAIL
 
 
 # Static files (CSS, JavaScript, Images)
