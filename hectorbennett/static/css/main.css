@@ -1,0 +1,131 @@
+/* html,
+body {
+    background: #000000;
+    font-family: 'Bree Serif', serif;
+    line-height: 1.6rem;
+    letter-spacing: 0.05rem;
+    height: 100%;
+    position: relative;
+}
+
+#bg-top-half {
+    width: 200%;
+    background: #FFFFFF;
+}
+
+.card {
+
+.nav {
+    z-index: 10;
+}
+
+a {
+    color: #000000;
+    outline: none;
+    transition: 200ms;
+    transition-timing-function: ease-in-out;
+    -webkit-transition: 200ms;
+    -webkit-transition-timing-function: ease-in-out;
+}
+
+a:hover {
+    outline: none;
+    color: #5355DF;
+}
+
+.inner-nav {
+    width: 50vh;
+}
+
+.navbar-rotated-right {
+    -webkit-transform: rotate(90deg);
+    -webkit-transform-origin: left top;
+    -moz-transform: rotate(90deg);
+    -moz-transform-origin: left top;
+    -ms-transform: rotate(90deg);
+    -ms-transform-origin: left top;
+    -o-transform: rotate(90deg);
+    -o-transform-origin: left top;
+    transform: rotate(90deg);
+    transform-origin: left top;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    white-space: nowrap;
+    width: 100vh;
+}
+
+.navbar-rotated-left {
+    -webkit-transform: rotate(-90deg) translateX(-100%);
+    -webkit-transform-origin: left top;
+    -moz-transform: rotate(-90deg) translateX(-100%);
+    -moz-transform-origin: left top;
+    -ms-transform: rotate(-90deg) translateX(-100%);
+    -ms-transform-origin: left top;
+    -o-transform: rotate(-90deg) translateX(-100%);
+    -o-transform-origin: left top;
+    transform: rotate(-90deg) translateX(-100%);
+    transform-origin: left top;
+    width: 100vh;
+    position: fixed;
+    font-size: 2rem;
+} */
+
+body {
+    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Hammersmith One', sans-serif;
+    font-family: 'Raleway', sans-serif;
+}
+
+.title {
+    font-family: 'Kanit', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.shadow {
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.inner-shadow {
+    -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+}
+
+
+.orange {
+    background: #FFA600;
+    color: white;
+}
+
+.light-orange {
+    background: #FFA600;
+    color: white;
+}
+
+.white {
+    background: white;
+    color: #000000;
+}
+
+.white a{
+    color: #555;
+}
+
+
+.white a:hover {
+    color: #000000;
+}
+
+.form-control:focus {
+    border-color: #FFA600;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+}
+
+label {
+    font-family: 'Montserrat', sans-serif;
+}
