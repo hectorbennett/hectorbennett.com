@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Hector Bennett | Web Developer</title>
         <meta name="description" content="hectorbennett.com" />
         <link rel="icon" href="/favicon.ico" />
         <link
