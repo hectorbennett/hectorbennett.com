@@ -27,7 +27,7 @@ export default function Page() {
           </a>{" "}
           in my spare time. I can be contacted via{" "}
           <a href="mailto:contact@hectorbennett.com" target="_blank">
-            Email
+            email
           </a>{" "}
           or{" "}
           <a href="https://uk.linkedin.com/in/hector-bennett" target="_blank">
