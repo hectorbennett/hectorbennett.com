@@ -1,0 +1,69 @@
+@use "./colours";
+
+$default-font: "Alice Regular", serif;
+$monospace-font: "Droid Sans Mono", monospace;
+$secret-santa-font: "Catamaran Black";
+
+@font-face {
+  font-family: "Alice Regular";
+  src: url("/fonts/Alice-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Droid Sans Mono";
+  src: url("/fonts/Droid-Sans-Mono.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Catamaran Black";
+  src: url("/fonts/Catamaran-Black.woff") format("woff");
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: colours.$woodsmoke;
+  color: colours.$whisper;
+  font-family: $default-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+textarea,
+select,
+input,
+button {
+  outline: none;
+}
+
+p {
+  line-height: 2.5;
+}
+
+a {
+  color: colours.$violet;
+  text-decoration: underline colours.$woodsmoke;
+}
+
+a:hover {
+  color: colours.$whisper;
+}
+
+::selection,
+::-moz-selection {
+  color: colours.$whisper;
+  background: colours.$woodsmoke;
+}
+
+button {
+  outline: none;
+  background: none;
+  border: none;
+  color: inherit;
+}
