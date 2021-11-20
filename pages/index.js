@@ -1,6 +1,17 @@
 import Head from "next/head";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTerminal,
+  faGlobeEurope,
+  faGift,
+} from "@fortawesome/free-solid-svg-icons";
+
 import { Section } from "../components/Layout";
+import WindowManager from "../components/WindowManager";
+import WindowWrapper from "../components/WindowWrapper";
+import Window from "../components/Window";
+import Tray from "../components/Tray";
 
 export default function Home() {
   return (
@@ -61,6 +72,41 @@ export default function Home() {
           .
         </p>
       </Section>
+      {/* <WindowManager /> */}
+      <WindowWrapper>
+        <div
+          style={{ background: "white", width: "100%", height: "100%" }}
+        ></div>
+      </WindowWrapper>
+      <Window title="test window" isFocused={true}>
+        <div
+          style={{ background: "white", width: "100%", height: "100%" }}
+        ></div>
+      </Window>
+      <Tray
+        apps={[
+          {
+            title: "terminal",
+            icon: <FontAwesomeIcon icon={faTerminal} />,
+            hasFocus: true,
+          },
+          {
+            title: "world war",
+            icon: <FontAwesomeIcon icon={faGlobeEurope} />,
+            hasFocus: false,
+          },
+          {
+            title: "secret santa",
+            icon: <FontAwesomeIcon icon={faGift} />,
+            hasFocus: false,
+          },
+          {
+            title: "slime soccer",
+            icon: <FontAwesomeIcon icon={faGift} />,
+            hasFocus: false,
+          },
+        ]}
+      />
     </>
   );
 }

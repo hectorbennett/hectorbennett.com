@@ -1,23 +1,5 @@
 @use "./colours";
-
-$default-font: "Alice Regular", serif;
-$monospace-font: "Droid Sans Mono", monospace;
-$secret-santa-font: "Catamaran Black";
-
-@font-face {
-  font-family: "Alice Regular";
-  src: url("/fonts/Alice-Regular.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Droid Sans Mono";
-  src: url("/fonts/Droid-Sans-Mono.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Catamaran Black";
-  src: url("/fonts/Catamaran-Black.woff") format("woff");
-}
+@use "./fonts";
 
 html,
 body {
@@ -25,7 +7,7 @@ body {
   padding: 0;
   background: colours.$woodsmoke;
   color: colours.$whisper;
-  font-family: $default-font;
+  font-family: fonts.$default-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.8;

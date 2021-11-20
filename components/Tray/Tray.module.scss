@@ -1,0 +1,68 @@
+@use "styles/colours";
+@use "styles/fonts";
+
+
+.tray {
+  min-height: 10px;
+  position: fixed;
+  right: 8px;
+  top: 50%;
+  transform: translate(0, -50%);
+  background: colours.$steelgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid colours.$woodsmoke;
+  z-index: 0;
+
+  &:hover,
+  &:focus-within {
+    z-index: 2147483647;
+  }
+}
+
+.tray_item {
+  border-radius: 3px;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+
+  &:hover,
+  &:focus {
+    background: colours.$cornflower;
+    opacity: 1;
+    .tooltip {
+      display: block;
+    }
+  }
+  .focused {
+    opacity: 1;
+  }
+}
+
+.icon {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip {
+  position: absolute;
+  right: 4.5rem;
+  background: colours.$whisper;
+  color: colours.$steelgrey;
+  border: 1px solid colours.$woodsmoke;
+  padding: 5px;
+  font-family: fonts.$monospace-font;
+  font-size: 1rem;
+  white-space: nowrap;
+  display: none;
+}
