@@ -1,67 +1,12 @@
 import { useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTerminal,
-  faGlobeEurope,
-  faGift,
-} from "@fortawesome/free-solid-svg-icons";
-
 import Window from "../Window";
-
-// import Terminal from "../Terminal/Terminal.js";
-// import WorldWar from "../WorldWar/WorldWar.js";
-// import SecretSanta from "../SecretSanta/SecretSanta.js";
+import Tray from "../Tray";
 
 import styles from "./WindowManager.module.scss";
 
-const APPS = [
-  {
-    name: "terminal",
-    title: "terminal",
-    width: 500,
-    height: 500,
-    // component: <Terminal WM={this} />,
-    component: <div>Hello world</div>,
-    icon: <FontAwesomeIcon icon={faTerminal} />,
-    closable: false,
-    maximisable: true,
-  },
-  {
-    name: "worldWar",
-    title: "world war",
-    width: 800,
-    height: 450,
-    // component: <WorldWar />,
-    component: <div>Hello world</div>,
-    icon: <FontAwesomeIcon icon={faGlobeEurope} />,
-    closable: true,
-    maximisable: true,
-    lockAspectRatio: true,
-  },
-  {
-    name: "secretSanta",
-    title: "secret santa",
-    width: 700,
-    height: 600,
-    // component: <SecretSanta />,
-    component: <div>Hello world</div>,
-    icon: <FontAwesomeIcon icon={faGift} />,
-    closable: true,
-    maximisable: true,
-  },
-];
-
-
-
 export default function WindowManager(props) {
-  const [apps, setApps] = useState({
-    terminal: {
-      isminimsed: false,
-      zIndex: 1,
-      hasFocus: true,
-    },
-  });
+  const [apps, setApps] = useState([]);
 
   const getNextHighestZIndex = () => {
     var current_max = 0;
@@ -74,6 +19,7 @@ export default function WindowManager(props) {
   };
 
   const launchApp = (appName) => {
+    // setApps([...apps, {}])
     apps[appName] = {
       isminimsed: false,
       zIndex: getNextHighestZIndex(),
@@ -119,8 +65,8 @@ export default function WindowManager(props) {
   return (
     <div className={styles.window_manager}>
       {/* Windows */}
-      {APPS.map((item, index) => {
-        if (apps[item.name] && !apps[item.name].isminimsed) {
+      {apps.map((item, index) => {
+        if (apps[item.name] && !apps[item.name].mode === "minimised") {
           return (
             <Window
               key={index}
@@ -146,6 +92,14 @@ export default function WindowManager(props) {
         }
         return null;
       })}
+      <Tray
+        apps={props.installed_apps.map((installed_app) => ({
+          title: installed_app.title,
+          icon: installed_app.icon,
+          hasFocus: false,
+          onClick: () => launchApp(installed_app.name),
+        }))}
+      />
     </div>
   );
 }

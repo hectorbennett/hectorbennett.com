@@ -12,8 +12,12 @@
   height: 100%;
   &.focused {
     border-image: colours.$gradient 1;
+    .top_bar {
+      background: colours.$cornflower;
+      color: colours.$whisper;
+    }
   }
-  .maximised {
+  &.maximised {
     position: fixed;
     left: 0;
     top: 0;
@@ -44,11 +48,6 @@
   height: 2rem;
   align-items: center;
   justify-content: center;
-}
-
-.focused .top_bar {
-  background: colours.$cornflower;
-  color: colours.$whisper;
 }
 
 .title {
