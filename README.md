@@ -5,4 +5,5 @@ www.hectorbennett.com
 to do:
 
  - add favicon
- - link slimey soccer
+ - create layouts
+ - add desktop environment

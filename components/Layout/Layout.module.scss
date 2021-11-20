@@ -1,0 +1,26 @@
+@use "styles/colours";
+@use "styles/screens";
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  border: 8px solid;
+  border-image: colours.$gradient 1;
+  padding: 1rem;
+
+  @include screens.md {
+    font-size: 1.5rem;
+  }
+}
+
+.section {
+  margin: 1rem;
+
+  @include screens.lg {
+    margin: 1rem 30% 1rem 1rem;
+    max-width: 47rem;
+  }
+}

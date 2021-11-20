@@ -67,3 +67,26 @@ button {
   border: none;
   color: inherit;
 }
+
+.highlight {
+  display: inline;
+  color: colours.$woodsmoke;
+  background: colours.$whisper;
+  padding: 0.5rem;
+  -webkit-box-decoration-break: clone;
+  -ms-box-decoration-break: clone;
+  -o-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.highlight a {
+  color: colours.$rose;
+  text-decoration: none;
+  border-bottom: 3px solid colours.$woodsmoke;
+  padding-bottom: 1px;
+}
+.highlight a:hover,
+.highlight a:focus {
+  color: colours.$blue;
+  // box-shadow: 0px 0px 0px 3px colours.$blue;
+  border-bottom-color: colours.$blue;
+}
