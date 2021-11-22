@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Window from "../Window";
 import Tray from "../Tray";
@@ -7,6 +7,7 @@ import styles from "./WindowManager.module.scss";
 
 export default function WindowManager(props) {
   const [apps, setApps] = useState(props.installed_apps);
+  const ref = useRef(null);
 
   const getNextHighestZIndex = () => {
     var current_max = 0;
@@ -81,8 +82,21 @@ export default function WindowManager(props) {
       })
     );
   };
+
+  const unfocusAll = () => {
+    setApps(apps.map((app) => ({ ...app, hasFocus: false })));
+  };
+
   return (
-    <div className={styles.window_manager}>
+    <div
+      className={styles.window_manager}
+      ref={ref}
+      onMouseDown={(e) => {
+        if (e.target === ref.current) {
+          unfocusAll();
+        }
+      }}
+    >
       {/* Windows */}
       {apps.map((app, index) => {
         return (

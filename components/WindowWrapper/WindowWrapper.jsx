@@ -88,6 +88,7 @@ export default function WindowWrapper(props) {
           zIndex: props.zIndex,
           opacity: isMinimised ? 0 : 1,
         }}
+        onMouseDown={props.onMouseDown}
       >
         {props.children}
       </Rnd>

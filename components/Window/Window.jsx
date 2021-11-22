@@ -63,30 +63,35 @@ function TopBar(props) {
 
 export default function Window(props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [classNames, setClassNames] = useState([styles.window]);
+  const [classNames, setClassNames] = useState([
+    styles.window,
+    props.hasFocus ? styles.focused : "",
+  ]);
   const contentRef = useRef(null);
 
   useEffect(() => {
-    if (props.hasFocus) {
-      setClassNames([...classNames, styles.focused]);
-    } else {
-      setClassNames(classNames.filter((c) => c !== styles.focused));
-    }
-  }, [props.hasFocus]);
+    var _classNames = classNames;
 
-  useEffect(() => {
+    if (props.hasFocus) {
+      _classNames = [...classNames, styles.focused];
+    } else {
+      _classNames = classNames.filter((c) => c !== styles.focused);
+    }
+
     if (props.isOpen) {
       setIsOpen(true);
       setTimeout(() => {
-        setClassNames([...classNames, styles.open]);
-      }, 2);
+        setClassNames((c) => [...c, styles.open]);
+      }, 1);
     } else {
-      setClassNames(classNames.filter((c) => c !== styles.open));
+      _classNames = classNames.filter((c) => c !== styles.open);
       setTimeout(() => {
         setIsOpen(false);
       }, 200);
     }
-  }, [props.isOpen]);
+
+    setClassNames(_classNames);
+  }, [props.hasFocus, props.isOpen]);
 
   if (!isOpen) {
     return null;
@@ -101,8 +106,9 @@ export default function Window(props) {
       isMaximised={props.mode === "maximised"}
       isMinimised={props.isMinimised}
       zIndex={props.zIndex}
+      onMouseDown={props.onMouseDown}
     >
-      <div className={classNames.join(" ")} onMouseDown={props.onMouseDown}>
+      <div className={classNames.join(" ")}>
         <TopBar
           mode={props.mode}
           icon={props.icon}
