@@ -1,0 +1,40 @@
+@use "styles/colours";
+@use "styles/fonts";
+
+.terminal {
+    padding: 0.1rem 0.4rem;
+    flex: 1;
+    overflow-y: auto;
+    font-family: fonts.$monospace-font;
+    background: colours.$steelgrey;
+    height: 100%;
+}
+
+.input_container {
+    display: flex;
+}
+
+.prompt {
+    color: #05b9fe;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.input {
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    color: white;
+    flex: 1;
+}
+
+.minimized {
+    // max-width: 400px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}

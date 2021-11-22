@@ -13,7 +13,7 @@ import WindowManager from "../components/WindowManager";
 import SlimeSoccer from "../components/SlimeSoccer";
 import WorldWar from "../components/WorldWar";
 
-// import Terminal from "../Terminal/Terminal.js";
+import Terminal from "../components/Terminal";
 // import SecretSanta from "../SecretSanta/SecretSanta.js";
 
 
@@ -23,8 +23,7 @@ const INSTALLED_APPS = [
     title: "terminal",
     width: 500,
     height: 500,
-    // component: <Terminal WM={this} />,
-    component: <div>Hello world</div>,
+    component: <Terminal WM={this} />,
     icon: <FontAwesomeIcon icon={faTerminal} />,
     closable: false,
     maximisable: true,
@@ -35,7 +34,6 @@ const INSTALLED_APPS = [
     width: 800,
     height: 450,
     component: <WorldWar />,
-    // component: <div>Hello world</div>,
     icon: <FontAwesomeIcon icon={faGlobeEurope} />,
     closable: true,
     maximisable: true,
