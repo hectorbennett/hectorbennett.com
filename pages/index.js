@@ -11,9 +11,9 @@ import { Section } from "../components/Layout";
 import WindowManager from "../components/WindowManager";
 
 import SlimeSoccer from "../components/SlimeSoccer";
+import WorldWar from "../components/WorldWar";
 
 // import Terminal from "../Terminal/Terminal.js";
-// import WorldWar from "../WorldWar/WorldWar.js";
 // import SecretSanta from "../SecretSanta/SecretSanta.js";
 
 
@@ -34,8 +34,8 @@ const INSTALLED_APPS = [
     title: "world war",
     width: 800,
     height: 450,
-    // component: <WorldWar />,
-    component: <div>Hello world</div>,
+    component: <WorldWar />,
+    // component: <div>Hello world</div>,
     icon: <FontAwesomeIcon icon={faGlobeEurope} />,
     closable: true,
     maximisable: true,
