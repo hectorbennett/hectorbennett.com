@@ -6,6 +6,14 @@ export default function WindowWrapper(props) {
   const [component, setComponent] = useState(null);
   const [classNames, setClassNames] = useState([styles.window_wrapper]);
   const [isMaximised, setIsMaximised] = useState(props.isMaximised);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    setPosition({
+      x: window.innerWidth - props.width - 100,
+      y: window.innerHeight - props.height - 100,
+    });
+  }, []);
 
   useEffect(() => {
     setClassNames([styles.window_wrapper, styles.transitioning]);
@@ -30,20 +38,20 @@ export default function WindowWrapper(props) {
         lockAspectRatio={props.lockAspectRatio}
         dragHandleClassName={props.dragHandleClassName}
         disableDragging={isMaximised}
-        position={isMaximised ? { x: 0, y: 0 } : null}
+        onDragStop={(e, d) => {
+          setPosition(d);
+        }}
+        position={isMaximised ? { x: 0, y: 0 } : position}
         minWidth={isMaximised ? "100vw" : props.minWidth}
         minHeight={isMaximised ? "100vh" : props.minHeight}
         style={{
           zIndex: props.zIndex,
-          // width:
-          // height: ,
-          // transform: props.isMaximised ? "translate(0, 0)" : null,
         }}
       >
         {props.children}
       </Rnd>
     );
-  }, [classNames, isMaximised, props]);
+  }, [classNames, isMaximised, position, props]);
   return component;
 }
 
