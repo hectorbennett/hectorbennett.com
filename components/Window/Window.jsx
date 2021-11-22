@@ -74,7 +74,7 @@ export default function Window(props) {
       lockAspectRatio={props.lockAspectRatio}
       dragHandleClassName={styles.top_bar}
       isMaximised={props.mode === "maximised"}
-      isMinimised={props.mode === "minimised"}
+      isMinimised={props.isMinimised}
       zIndex={props.zIndex}
     >
       <div className={classNames.join(" ")} onMouseDown={props.onMouseDown}>
@@ -99,7 +99,8 @@ export default function Window(props) {
 }
 
 Window.propTypes = {
-  mode: PropTypes.oneOf(["minimised", "maximised", "normal"]),
+  mode: PropTypes.oneOf(["maximised", "normal"]),
+  isMinimised: PropTypes.bool,
 };
 
 Window.defaultProps = {

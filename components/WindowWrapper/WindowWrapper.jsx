@@ -7,7 +7,7 @@ export default function WindowWrapper(props) {
   const [classNames, setClassNames] = useState([styles.window_wrapper]);
   const [isMaximised, setIsMaximised] = useState(props.isMaximised);
   const [isMinimised, setIsMinimised] = useState(props.isMinimised);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: null, y: null });
   const [size, setSize] = useState({
     width: props.width,
     height: props.height,
@@ -40,8 +40,6 @@ export default function WindowWrapper(props) {
     }, 1);
   }, [props.isMinimised]);
 
-  console.log(props.isMinimised);
-
   useEffect(() => {
     setComponent(
       <Rnd
@@ -63,30 +61,30 @@ export default function WindowWrapper(props) {
           setPosition(position);
         }}
         size={
-          isMaximised
-            ? { width: "100vw", height: "100vh" }
-            : isMinimised
+          isMinimised
             ? { width: 50, height: 50 }
+            : isMaximised
+            ? { width: "100vw", height: "100vh" }
             : size
         }
         position={
-          isMaximised
+          isMinimised
+            ? { y: window.innerHeight / 2, x: window.innerWidth - 50 }
+            : isMaximised
             ? { x: 0, y: 0 }
-            : isMinimised
-            ? { y: window.innerHeight / 2, x: window.innerWidth + 100 }
             : position
         }
-        minWidth={props.isMinimised ? null : props.minWidth}
-        minHeight={props.isMinimised ? null : props.minHeight}
+        minWidth={isMinimised ? null : props.minWidth}
+        minHeight={isMinimised ? null : props.minHeight}
         style={{
           zIndex: props.zIndex,
-          opacity: isMinimised ? 0.2 : 1,
+          opacity: isMinimised ? 0 : 1,
         }}
       >
         {props.children}
       </Rnd>
     );
-  });
+  }, [classNames, isMaximised, isMinimised, position, size, props]);
   return component;
 }
 

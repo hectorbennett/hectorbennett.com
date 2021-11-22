@@ -1,7 +1,6 @@
 @use "styles/colours";
 @use "styles/fonts";
 
-
 .tray {
   min-height: 10px;
   position: fixed;
@@ -23,13 +22,46 @@
 }
 
 .tray_item {
+  display: flex;
+  align-items: center;
+
+  .open_indicator {
+    background: colours.$grey;
+    width: 3px;
+    height: 6px;
+    border-radius: 3px;
+    height: 0px;
+    border-radius: 3px;
+    margin: 4px;
+    transition: all 0.3s;
+    opacity: 0;
+  }
+
+  &.isOpen {
+    .open_indicator {
+      height: 6px;
+      opacity: 1;
+    }
+  }
+
+  &.focused {
+    opacity: 1;
+    .open_indicator {
+      background: colours.$blue;
+      height: 10px;
+    }
+  }
+
+  opacity: 0.5;
+}
+
+.tray_item_button {
   border-radius: 3px;
-  margin: 0.5rem;
+  margin: 0.5rem 0 0.5rem 0.5rem;
   padding: 0.5rem;
   text-align: center;
   cursor: pointer;
   position: relative;
-  opacity: 0.5;
   display: flex;
   align-items: center;
 
@@ -40,9 +72,6 @@
     .tooltip {
       display: block;
     }
-  }
-  .focused {
-    opacity: 1;
   }
 }
 
