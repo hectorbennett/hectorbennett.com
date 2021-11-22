@@ -62,11 +62,36 @@ function TopBar(props) {
 }
 
 export default function Window(props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [classNames, setClassNames] = useState([styles.window]);
   const contentRef = useRef(null);
-  const classNames = [styles.window];
-  if (props.hasFocus) {
-    classNames.push(styles.focused);
+
+  useEffect(() => {
+    if (props.hasFocus) {
+      setClassNames([...classNames, styles.focused]);
+    } else {
+      setClassNames(classNames.filter((c) => c !== styles.focused));
+    }
+  }, [props.hasFocus]);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      setIsOpen(true);
+      setTimeout(() => {
+        setClassNames([...classNames, styles.open]);
+      }, 2);
+    } else {
+      setClassNames(classNames.filter((c) => c !== styles.open));
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 200);
+    }
+  }, [props.isOpen]);
+
+  if (!isOpen) {
+    return null;
   }
+
   return (
     <WindowWrapper
       width={props.width}

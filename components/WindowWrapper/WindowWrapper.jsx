@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import { Rnd } from "react-rnd";
 import styles from "./WindowWrapper.module.scss";
 
+const randomIntFromInterval = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
 export default function WindowWrapper(props) {
   const [component, setComponent] = useState(null);
   const [classNames, setClassNames] = useState([styles.window_wrapper]);
   const [isMaximised, setIsMaximised] = useState(props.isMaximised);
   const [isMinimised, setIsMinimised] = useState(props.isMinimised);
-  const [position, setPosition] = useState({ x: null, y: null });
+  const [position, setPosition] = useState({
+    x: randomIntFromInterval(50, 200),
+    y: randomIntFromInterval(50, 200),
+  });
   const [size, setSize] = useState({
     width: props.width,
     height: props.height,
@@ -15,29 +21,33 @@ export default function WindowWrapper(props) {
 
   useEffect(() => {
     setPosition({
-      x: window.innerWidth - props.width - 100,
-      y: window.innerHeight - props.height - 100,
+      x: window.innerWidth - props.width - randomIntFromInterval(10, 200),
+      y: window.innerHeight - props.height - randomIntFromInterval(10, 200),
     });
   }, []);
 
   useEffect(() => {
-    setClassNames([styles.window_wrapper, styles.transitioning]);
     setTimeout(() => {
-      setIsMaximised(props.isMaximised);
+      setClassNames([styles.window_wrapper, styles.transitioning]);
       setTimeout(() => {
-        setClassNames([styles.window_wrapper]);
-      }, 200);
-    }, 1);
+        setIsMaximised(props.isMaximised);
+        setTimeout(() => {
+          setClassNames([styles.window_wrapper]);
+        }, 200);
+      }, 10);
+    }, 10);
   }, [props.isMaximised]);
 
   useEffect(() => {
-    setClassNames([styles.window_wrapper, styles.transitioning]);
     setTimeout(() => {
-      setIsMinimised(props.isMinimised);
+      setClassNames([styles.window_wrapper, styles.transitioning]);
       setTimeout(() => {
-        setClassNames([styles.window_wrapper]);
-      }, 200);
-    }, 1);
+        setIsMinimised(props.isMinimised);
+        setTimeout(() => {
+          setClassNames([styles.window_wrapper]);
+        }, 200);
+      }, 10);
+    }, 10);
   }, [props.isMinimised]);
 
   useEffect(() => {
@@ -45,8 +55,6 @@ export default function WindowWrapper(props) {
       <Rnd
         className={classNames.join(" ")}
         default={{
-          x: window.innerWidth - props.width - 100,
-          y: window.innerHeight - props.height - 100,
           width: props.width,
           height: props.height,
         }}

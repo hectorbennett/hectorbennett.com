@@ -84,33 +84,32 @@ export default function WindowManager(props) {
   return (
     <div className={styles.window_manager}>
       {/* Windows */}
-      {apps
-        .filter((app) => app.isOpen)
-        .map((app, index) => {
-          return (
-            <Window
-              key={index}
-              title={app.title}
-              icon={app.icon}
-              closable={app.closable}
-              maximisable={app.maximisable}
-              hasFocus={app.hasFocus}
-              width={app.width}
-              height={app.height}
-              lockAspectRatio={app.lockAspectRatio}
-              mode={app.mode}
-              isMinimised={app.isMinimised}
-              zIndex={app.zIndex}
-              onClickMinimise={() => minimiseApp(app.name)}
-              onClickMaximise={() => maximiseApp(app.name)}
-              onClickCompress={() => compressApp(app.name)}
-              onClickClose={() => closeApp(app.name)}
-              onMouseDown={() => focusApp(app.name)}
-            >
-              {app.component}
-            </Window>
-          );
-        })}
+      {apps.map((app, index) => {
+        return (
+          <Window
+            key={index}
+            title={app.title}
+            icon={app.icon}
+            closable={app.closable}
+            maximisable={app.maximisable}
+            hasFocus={app.hasFocus}
+            width={app.width}
+            height={app.height}
+            lockAspectRatio={app.lockAspectRatio}
+            mode={app.mode}
+            isOpen={app.isOpen}
+            isMinimised={app.isMinimised}
+            zIndex={app.zIndex}
+            onClickMinimise={() => minimiseApp(app.name)}
+            onClickMaximise={() => maximiseApp(app.name)}
+            onClickCompress={() => compressApp(app.name)}
+            onClickClose={() => closeApp(app.name)}
+            onMouseDown={() => focusApp(app.name)}
+          >
+            {app.component}
+          </Window>
+        );
+      })}
 
       <Tray
         apps={apps.map((app) => ({
