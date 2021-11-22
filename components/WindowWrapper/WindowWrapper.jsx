@@ -21,8 +21,8 @@ export default function WindowWrapper(props) {
 
   useEffect(() => {
     setPosition({
-      x: window.innerWidth - props.width - randomIntFromInterval(10, 200),
-      y: window.innerHeight - props.height - randomIntFromInterval(10, 200),
+      x: window.innerWidth - props.width - randomIntFromInterval(100, 150),
+      y: window.innerHeight - props.height - randomIntFromInterval(100, 150),
     });
   }, []);
 

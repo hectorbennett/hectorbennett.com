@@ -10,6 +10,7 @@ import {
 import { Section } from "../components/Layout";
 import WindowManager from "../components/WindowManager";
 
+import SlimeSoccer from "../components/SlimeSoccer";
 
 // import Terminal from "../Terminal/Terminal.js";
 // import WorldWar from "../WorldWar/WorldWar.js";
@@ -54,16 +55,14 @@ const INSTALLED_APPS = [
   {
     name: "slimeSoccer",
     title: "slime soccer",
-    width: 700,
-    height: 600,
-    // component: <SecretSanta />,
-    component: <div>Slime soccer</div>,
+    width: 722,
+    height: 460,
+    component: <SlimeSoccer/>,
     icon: <FontAwesomeIcon icon={faGift} />,
     closable: true,
     maximisable: true,
   },
 ];
-
 
 export default function Home() {
   return (
