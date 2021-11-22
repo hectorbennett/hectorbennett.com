@@ -28,7 +28,7 @@ export default function Tray(props) {
             icon={item.icon}
             title={item.title}
             hasFocus={item.hasFocus}
-            onclick={() => console.log("click")}
+            onClick={item.onClick}
             //   onClick={() => focusApp(item.name)}
           />
         );

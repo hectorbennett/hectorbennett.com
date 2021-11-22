@@ -6,24 +6,24 @@ import Tray from "../Tray";
 import styles from "./WindowManager.module.scss";
 
 export default function WindowManager(props) {
-  const [apps, setApps] = useState([]);
+  const [apps, setApps] = useState(props.installed_apps);
 
   const getNextHighestZIndex = () => {
     var current_max = 0;
-    for (var i in apps) {
-      if (apps[i].zIndex >= current_max) {
-        current_max = apps[i].zIndex;
-      }
-    }
+    apps.forEach(app => {
+      current_max = app.zIndex >= current_max ? app.zIndex : current_max;
+    })
+    console.log(current_max);
     return current_max + 1;
   };
 
   const launchApp = (appName) => {
     // setApps([...apps, {}])
     apps[appName] = {
-      isminimsed: false,
+      mode: "normal",
       zIndex: getNextHighestZIndex(),
     };
+    console.log(apps);
     setApps(apps);
     focusApp(appName);
   };
@@ -34,70 +34,82 @@ export default function WindowManager(props) {
   };
 
   const minimseApp = (appName) => {
-    apps[appName].isminimsed = true;
-    apps[appName].hasFocus = false;
-    setApps(apps);
+    setApps(
+      apps.map((app) =>
+        app.name === appName ? { ...app, mode: "minimised" } : app
+      )
+    );
   };
 
-  const maximisApp = (appName) => {
-    apps[appName].isMaximised = true;
-    setApps(apps);
-    focusApp(appName);
+  const maximiseApp = (appName) => {
+    setApps(
+      apps.map((app) =>
+        app.name === appName ? { ...app, mode: "maximised" } : app
+      )
+    );
   };
 
   const compressApp = (appName) => {
-    apps[appName].isMaximised = false;
-    setApps(apps);
-    // focusApp(appName);
+    setApps(
+      apps.map((app) =>
+        app.name === appName ? { ...app, mode: "normal" } : app
+      )
+    );
   };
 
   const focusApp = (appName) => {
-    /* Unminimse app and bring to the top */
-    apps[appName].isminimsed = false;
-    apps[appName].zIndex = getNextHighestZIndex() + 1;
-
-    for (var key in apps) {
-      apps[key].hasFocus = false;
-    }
-    apps[appName].hasFocus = true;
-    setApps(apps);
+    setApps(
+      apps.map((app) => {
+        if (app.name === appName) {
+          return {
+            ...app,
+            // mode: "normal",
+            zIndex: getNextHighestZIndex(),
+            hasFocus: true,
+          };
+        } else {
+          return { ...app, hasFocus: false };
+        }
+      })
+    );
   };
   return (
     <div className={styles.window_manager}>
       {/* Windows */}
-      {apps.map((item, index) => {
-        if (apps[item.name] && !apps[item.name].mode === "minimised") {
-          return (
-            <Window
-              key={index}
-              title={item.title}
-              icon={item.icon}
-              closable={item.closable}
-              maximisable={item.maximisable}
-              hasFocus={apps[item.name].hasFocus}
-              width={item.width}
-              height={item.height}
-              lockAspectRatio={item.lockAspectRatio}
-              isMaximised={apps[item.name].isMaximised}
-              zIndex={apps[item.name].zIndex}
-              onClickminimse={() => minimseApp(item.name)}
-              onClickMaximis={() => maximisApp(item.name)}
-              onClickCompress={() => compressApp(item.name)}
-              onClickClose={() => destroyApp(item.name)}
-              onMouseDown={() => focusApp(item.name)}
-            >
-              {item.component}
-            </Window>
-          );
-        }
-        return null;
+      {apps.map((app, index) => {
+        return (
+          <Window
+            key={index}
+            title={app.title}
+            icon={app.icon}
+            closable={app.closable}
+            maximisable={app.maximisable}
+            hasFocus={app.hasFocus}
+            width={app.width}
+            height={app.height}
+            lockAspectRatio={app.lockAspectRatio}
+            mode={app.mode}
+            zIndex={app.zIndex}
+            onClickMinimse={() => minimseApp(app.name)}
+            onClickMaximise={() => maximiseApp(app.name)}
+            onClickCompress={() => compressApp(app.name)}
+            onClickClose={() => destroyApp(app.name)}
+            onMouseDown={() => focusApp(app.name)}
+          >
+            {app.component}
+          </Window>
+        );
       })}
+
       <Tray
         apps={props.installed_apps.map((installed_app) => ({
           title: installed_app.title,
           icon: installed_app.icon,
           hasFocus: false,
-          onClick: () => launchApp(installed_app.name),
+          onClick: () => {
+            console.log("click");
+            launchApp(installed_app.name);
+          },
         }))}
       />
     </div>
