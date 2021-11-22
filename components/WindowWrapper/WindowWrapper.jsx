@@ -8,6 +8,10 @@ export default function WindowWrapper(props) {
   const [isMaximised, setIsMaximised] = useState(props.isMaximised);
   const [isMinimised, setIsMinimised] = useState(props.isMinimised);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [size, setSize] = useState({
+    width: props.width,
+    height: props.height,
+  });
 
   useEffect(() => {
     setPosition({
@@ -54,23 +58,35 @@ export default function WindowWrapper(props) {
         onDragStop={(e, d) => {
           setPosition(d);
         }}
+        onResizeStop={(e, direction, ref, delta, position) => {
+          setSize({ width: ref.style.width, height: ref.style.height });
+          setPosition(position);
+        }}
+        size={
+          isMaximised
+            ? { width: "100vw", height: "100vh" }
+            : isMinimised
+            ? { width: 50, height: 50 }
+            : size
+        }
         position={
           isMaximised
             ? { x: 0, y: 0 }
             : isMinimised
-            ? { y: window.innerHeight / 2, x: window.innerWidth }
+            ? { y: window.innerHeight / 2, x: window.innerWidth + 100 }
             : position
         }
-        minWidth={isMaximised ? "100vw" : props.minWidth}
-        minHeight={isMaximised ? "100vh" : props.minHeight}
+        minWidth={props.isMinimised ? null : props.minWidth}
+        minHeight={props.isMinimised ? null : props.minHeight}
         style={{
           zIndex: props.zIndex,
+          opacity: isMinimised ? 0.2 : 1,
         }}
       >
         {props.children}
       </Rnd>
     );
-  }, [classNames, isMaximised, isMinimised, position, props]);
+  });
   return component;
 }
 
