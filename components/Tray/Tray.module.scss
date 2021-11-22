@@ -70,7 +70,7 @@
     background: colours.$cornflower;
     opacity: 1;
     .tooltip {
-      display: block;
+      opacity: 1;
     }
   }
 }
@@ -93,5 +93,6 @@
   font-family: fonts.$monospace-font;
   font-size: 1rem;
   white-space: nowrap;
-  display: none;
+  opacity: 0;
+  transition: all 0.2s;
 }
