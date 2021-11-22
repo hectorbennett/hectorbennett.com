@@ -6,6 +6,7 @@ export default function WindowWrapper(props) {
   const [component, setComponent] = useState(null);
   const [classNames, setClassNames] = useState([styles.window_wrapper]);
   const [isMaximised, setIsMaximised] = useState(props.isMaximised);
+  const [isMinimised, setIsMinimised] = useState(props.isMinimised);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -26,6 +27,18 @@ export default function WindowWrapper(props) {
   }, [props.isMaximised]);
 
   useEffect(() => {
+    setClassNames([styles.window_wrapper, styles.transitioning]);
+    setTimeout(() => {
+      setIsMinimised(props.isMinimised);
+      setTimeout(() => {
+        setClassNames([styles.window_wrapper]);
+      }, 200);
+    }, 1);
+  }, [props.isMinimised]);
+
+  console.log(props.isMinimised);
+
+  useEffect(() => {
     setComponent(
       <Rnd
         className={classNames.join(" ")}
@@ -41,7 +54,13 @@ export default function WindowWrapper(props) {
         onDragStop={(e, d) => {
           setPosition(d);
         }}
-        position={isMaximised ? { x: 0, y: 0 } : position}
+        position={
+          isMaximised
+            ? { x: 0, y: 0 }
+            : isMinimised
+            ? { y: window.innerHeight / 2, x: window.innerWidth }
+            : position
+        }
         minWidth={isMaximised ? "100vw" : props.minWidth}
         minHeight={isMaximised ? "100vh" : props.minHeight}
         style={{
@@ -51,7 +70,7 @@ export default function WindowWrapper(props) {
         {props.children}
       </Rnd>
     );
-  }, [classNames, isMaximised, position, props]);
+  }, [classNames, isMaximised, isMinimised, position, props]);
   return component;
 }
 

@@ -10,9 +10,9 @@ export default function WindowManager(props) {
 
   const getNextHighestZIndex = () => {
     var current_max = 0;
-    apps.forEach(app => {
+    apps.forEach((app) => {
       current_max = app.zIndex >= current_max ? app.zIndex : current_max;
-    })
+    });
     console.log(current_max);
     return current_max + 1;
   };
@@ -34,6 +34,8 @@ export default function WindowManager(props) {
   };
 
   const minimseApp = (appName) => {
+    console.log("minimise");
+    console.log(appName);
     setApps(
       apps.map((app) =>
         app.name === appName ? { ...app, mode: "minimised" } : app
@@ -90,7 +92,7 @@ export default function WindowManager(props) {
             lockAspectRatio={app.lockAspectRatio}
             mode={app.mode}
             zIndex={app.zIndex}
-            onClickMinimse={() => minimseApp(app.name)}
+            onClickMinimise={() => minimseApp(app.name)}
             onClickMaximise={() => maximiseApp(app.name)}
             onClickCompress={() => compressApp(app.name)}
             onClickClose={() => destroyApp(app.name)}

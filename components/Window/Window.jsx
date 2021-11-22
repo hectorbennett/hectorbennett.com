@@ -67,9 +67,6 @@ export default function Window(props) {
   if (props.hasFocus) {
     classNames.push(styles.focused);
   }
-  if (props.mode === "minimised") {
-    classNames.push(styles.minimised);
-  }
   return (
     <WindowWrapper
       width={props.width}
@@ -77,6 +74,7 @@ export default function Window(props) {
       lockAspectRatio={props.lockAspectRatio}
       dragHandleClassName={styles.top_bar}
       isMaximised={props.mode === "maximised"}
+      isMinimised={props.mode === "minimised"}
       zIndex={props.zIndex}
     >
       <div className={classNames.join(" ")} onMouseDown={props.onMouseDown}>
