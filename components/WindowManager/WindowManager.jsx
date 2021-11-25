@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import Window from "../Window";
 import Tray from "../Tray";
@@ -8,6 +8,12 @@ import styles from "./WindowManager.module.scss";
 export default function WindowManager(props) {
   const [apps, setApps] = useState(props.installed_apps);
   const ref = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      openApp("terminal");
+    }, 2000);
+  }, []);
 
   const getNextHighestZIndex = () => {
     var current_max = 0;
