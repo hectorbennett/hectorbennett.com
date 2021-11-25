@@ -1,6 +1,59 @@
-import React from "react";
-// import "../../animations.scss";
+import { useState, useRef, useEffect, Fragment } from "react";
 import styles from "./Terminal.module.scss";
+
+import Scrollable from "../Scrollable";
+
+const help_text = `hectorbennett.com, version 2.0
+These shell commands are defined internally.  Type \`help\' to see this list.
+Type \`help name\' to find out more about the function \`name\'.
+Use \`info hector\' to find out more about Hector in general.
+
+clear
+help
+santa
+slime
+war`;
+
+const help_slime_text = `Slime Soccer is my remake of Quin Pendragon's Java game from the very early 2000s which unfortunately no longer works on modern browsers :(.
+This remake was made in the Godot game engine.
+
+Source can be found at <a href="https://github.com/hectorbennett/slime-soccer" target="_blank">https://github.com/hectorbennett/slime-soccer</a>
+
+Controls
+--------
+Left slime: movement: a, w, d; change teams: w, s
+Right slime: movement: j, i, l; change teams: i, k`;
+
+const help_war_text = `World War Bot is a visualisation of a dumb algorithm for finding the ultimate warmonger.
+
+I stole the country data from <a href="https://github.com/lorey/list-of-countries" target="_blank">https://github.com/lorey/list-of-countries</a>
+
+The procedure works as follows:
+
+    - Pick a random country
+    - Pick a random neighbour of that country
+    - Choose a probability of victory for the countries based on relative population
+    - Choose a winner based on a random number choice and the calculated probability of victory
+    - Transfer the loser's population and borders to the winner
+
+Repeat until only one country remains. China usually wins.
+
+I won't list all the victors but running the algorithm 10,000 times I found the following likelyhood of victory
+
+China - 69%
+India - 24%
+USA - 5%
+Russia - 1%
+Nigeria - 0.7%
+etc.
+`;
+
+const info_hector_text = `
+ - Very good with Python, Javascript, MySQL, HTML/CSS, Sketch and various Adobe design software.
+ - Pretty mediocre with C++, GDScript and a few other random languages.
+ - London based.
+
+This website was built with React, The source code can be found at <a href="https://github.com/hectorbennett/hectorbennett.com." target="_blank">https://github.com/hectorbennett/hectorbennett.com.</a>`;
 
 function Query(props) {
   return (
@@ -14,73 +67,70 @@ function Query(props) {
   );
 }
 
-export default class Terminal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: "",
-      queries: [],
-    };
-  }
+const SplitText = ({ text }) => (
+  <>
+    {text.split("\n").map((line, index) => (
+      <Fragment key={index}>
+        <span dangerouslySetInnerHTML={{ __html: line }} />
+        <br />
+      </Fragment>
+    ))}
+  </>
+);
 
-  COMMANDS = {
-    help: () => {
-      return (
-        <>
-          <div>www.hectorbennett.com, version 0.2.0.</div>
-          <br />
-          <div>
-            Slime soccer Keys:
-            <br />
-            Player 1: Move: A, W, D; Change teams: W, S<br />
-            Player 2: Move: J, I, L; Change teams: I, K<br />
-          </div>
-          <br />
-          <div>Here is a list of available commands</div>
-          <br />
-          {Object.keys(this.COMMANDS).map((item, index) => (
-            <div key={index}>{item}</div>
-          ))}
-        </>
-      );
-    },
+export default function Terminal(props) {
+  const [inputValue, setInputValue] = useState("");
+  const [queries, setQueries] = useState([]);
+  const inputRef = useRef();
+  const contentRef = useRef();
 
-    worldWar: () => {
-      this.props.WM.launchApp("worldWar");
-    },
-
-    secretSanta: () => {
-      this.props.WM.launchApp("secretSanta");
-    },
-
-    clear: () => {
-      console.log("clear");
-      console.log(this);
-      this.setState({ queries: [] });
-      console.log(this.state);
-    },
-  };
-
-  handleContentClick = () => {
-    this.inputRef.focus();
-  };
-
-  handleInputChange = (event) => {
-    this.setState({
-      inputValue: event.target.value,
-    });
-  };
-
-  handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      this.submit(this.state.inputValue);
+  useEffect(() => {
+    /* Scroll to the bottom on submit */
+    if (contentRef.current) {
+      contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
+  }, [queries]);
+
+  const COMMANDS = {
+    help: () => {
+      return <SplitText text={help_text} />;
+    },
+
+    war: () => {
+      props.WM.launchApp("worldWar");
+    },
+
+    "help war": () => <SplitText text={help_war_text} />,
+
+    santa: () => {
+      props.WM.launchApp("secretSanta");
+    },
+
+    "help santa": () => {
+      return "This is some help about the war";
+    },
+
+    slime: () => {
+      props.WM.launchApp("secretSanta");
+    },
+
+    "help slime": () => <SplitText text={help_slime_text} />,
+
+    "info hector": () => <SplitText text={info_hector_text} />,
+
+    "help clear": () => "Clears the terminal."
   };
 
-  submit = (query) => {
+  const submit = (query) => {
+    if (query === "clear") {
+      setQueries([]);
+      setInputValue("");
+      return;
+    }
+
     /* Append the new query and its output to the list of
-        queries we have previously submitted */
-    var command = this.COMMANDS[query];
+    queries we have previously submitted */
+    var command = COMMANDS[query];
     if (command) {
       var output = command();
     } else {
@@ -88,30 +138,19 @@ export default class Terminal extends React.Component {
     }
 
     /* Display the new output, clear the input and scroll to the bottom */
-    this.setState(
-      {
-        queries: [...this.state.queries, { input: query, output: output }],
-        inputValue: "",
-      },
-      () => {
-        /* Scroll to the bottom */
-        this.contentRef.scrollTop = this.contentRef.scrollHeight;
-      }
-    );
+    setQueries([...queries, { input: query, output: output }]);
+    setInputValue("");
   };
 
-  render() {
-    return (
-      // <Window title="terminal" width="30rem" height="30rem" icon={}>
-      <div
-        className={styles.terminal}
-        onClick={this.handleContentClick}
-        ref={(el) => {
-          this.contentRef = el;
-        }}
-      >
+  return (
+    <Scrollable
+      className={styles.terminal}
+      onClick={() => inputRef.current.focus()}
+      ref={contentRef}
+    >
+      <div>
         <div className={styles.output}>
-          {this.state.queries.map((item, index) => (
+          {queries.map((item, index) => (
             <Query key={index} input={item.input} output={item.output} />
           ))}
         </div>
@@ -119,16 +158,18 @@ export default class Terminal extends React.Component {
           <div className={styles.prompt}>$</div>
           <input
             className={styles.input}
-            ref={(input) => {
-              this.inputRef = input;
+            ref={inputRef}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submit(inputValue);
+              }
             }}
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
-            onKeyDown={this.handleKeyDown}
+            autoFocus
           />
         </div>
       </div>
-      // </Window>
-    );
-  }
+    </Scrollable>
+  );
 }
