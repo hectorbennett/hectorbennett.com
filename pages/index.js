@@ -16,13 +16,12 @@ import WorldWar from "../components/WorldWar";
 import Terminal from "../components/Terminal";
 // import SecretSanta from "../SecretSanta/SecretSanta.js";
 
-
 const INSTALLED_APPS = [
   {
     name: "terminal",
     title: "terminal",
-    width: 500,
-    height: 500,
+    width: 350,
+    height: 350,
     component: <Terminal WM={this} />,
     icon: <FontAwesomeIcon icon={faTerminal} />,
     closable: false,
@@ -55,7 +54,7 @@ const INSTALLED_APPS = [
     title: "slime soccer",
     width: 722,
     height: 460,
-    component: <SlimeSoccer/>,
+    component: <SlimeSoccer />,
     icon: <FontAwesomeIcon icon={faGift} />,
     closable: true,
     maximisable: true,
@@ -119,6 +118,11 @@ export default function Home() {
             LinkedIn
           </a>
           .
+        </p>
+      </Section>
+      <Section style={{ marginTop: "7rem" }}>
+        <p className="highlight">
+          Type <code>help</code>.
         </p>
       </Section>
       <WindowManager installed_apps={INSTALLED_APPS} />
