@@ -13,6 +13,7 @@ v1 to do:
 v2 to do:
 
 - add secret santa
+- move todos to issues
 
 done:
 
