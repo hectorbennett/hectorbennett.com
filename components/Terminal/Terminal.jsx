@@ -10,7 +10,6 @@ Use \`info hector\' to find out more about Hector in general.
 
 clear
 help
-santa
 slime
 war`;
 
@@ -26,7 +25,7 @@ Right slime: movement: j, i, l; change teams: i, k`;
 
 const help_war_text = `World War Bot is a visualisation of a dumb algorithm for finding the ultimate warmonger.
 
-I stole the country data from <a href="https://github.com/lorey/list-of-countries" target="_blank">https://github.com/lorey/list-of-countries</a>
+Country data comes from <a href="https://github.com/lorey/list-of-countries" target="_blank">https://github.com/lorey/list-of-countries</a>
 
 The procedure works as follows:
 
@@ -102,13 +101,13 @@ export default function Terminal(props) {
 
     "help war": () => <SplitText text={help_war_text} />,
 
-    santa: () => {
-      props.WM.launchApp("secretSanta");
-    },
+    // santa: () => {
+    //   props.WM.launchApp("secretSanta");
+    // },
 
-    "help santa": () => {
-      return "This is some help about the war";
-    },
+    // "help santa": () => {
+    //   return "This is some help about santa";
+    // },
 
     slime: () => {
       props.WM.launchApp("secretSanta");

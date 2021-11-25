@@ -1,12 +1,68 @@
 import { useState, useRef, useEffect } from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTerminal,
+  faGlobeEurope,
+  faGift,
+} from "@fortawesome/free-solid-svg-icons";
+
 import Window from "../Window";
 import Tray from "../Tray";
 
+import SlimeSoccer from "../SlimeSoccer";
+import WorldWar from "../WorldWar";
+import Terminal from "../Terminal";
+
 import styles from "./WindowManager.module.scss";
 
+const INSTALLED_APPS = [
+  {
+    name: "terminal",
+    title: "terminal",
+    width: 350,
+    height: 350,
+    component: <Terminal WM={this} />,
+    icon: <FontAwesomeIcon icon={faTerminal} />,
+    closable: false,
+    maximisable: true,
+  },
+  {
+    name: "worldWar",
+    title: "world war",
+    width: 800,
+    height: 450,
+    component: <WorldWar />,
+    icon: <FontAwesomeIcon icon={faGlobeEurope} />,
+    closable: true,
+    maximisable: true,
+    lockAspectRatio: true,
+  },
+  // {
+  //   name: "secretSanta",
+  //   title: "secret santa",
+  //   width: 700,
+  //   height: 600,
+  //   // component: <SecretSanta />,
+  //   component: <div>Hello world</div>,
+  //   icon: <FontAwesomeIcon icon={faGift} />,
+  //   closable: true,
+  //   maximisable: true,
+  // },
+  {
+    name: "slimeSoccer",
+    title: "slime soccer",
+    width: 722,
+    height: 460,
+    component: <SlimeSoccer />,
+    icon: <FontAwesomeIcon icon={faGift} />,
+    closable: true,
+    maximisable: true,
+  },
+];
+
 export default function WindowManager(props) {
-  const [apps, setApps] = useState(props.installed_apps);
+  const [apps, setApps] = useState(INSTALLED_APPS);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -24,8 +80,8 @@ export default function WindowManager(props) {
   };
 
   const openApp = (appName) => {
-    setApps(
-      apps.map((app) =>
+    setApps((a) =>
+      a.map((app) =>
         app.name === appName
           ? {
               ...app,

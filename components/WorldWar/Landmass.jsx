@@ -6,15 +6,13 @@ export default function Landmass(props) {
   return (
     <path
       className={styles.country}
-      id={props.country.iso_a2}
-      d={props.landmass.shape}
-      // onMouseEnter={props.onMouseEnter}
-      style={{ fill: props.country.color }}
+      d={props.shape}
+      style={{ fill: props.colour }}
     >
       <title>
-        {props.country.name === props.landmass.original_country
-          ? props.country.name
-          : `${props.country.name} occupied ${props.landmass.original_country}`}
+        {props.original_country_name === props.new_country_name
+          ? props.new_country_name
+          : `${props.new_country_name} occupied ${props.original_country_name}`}
       </title>
     </path>
   );

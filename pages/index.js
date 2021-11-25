@@ -1,65 +1,7 @@
 import Head from "next/head";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTerminal,
-  faGlobeEurope,
-  faGift,
-} from "@fortawesome/free-solid-svg-icons";
-
 import { Section } from "../components/Layout";
 import WindowManager from "../components/WindowManager";
-
-import SlimeSoccer from "../components/SlimeSoccer";
-import WorldWar from "../components/WorldWar";
-
-import Terminal from "../components/Terminal";
-// import SecretSanta from "../SecretSanta/SecretSanta.js";
-
-const INSTALLED_APPS = [
-  {
-    name: "terminal",
-    title: "terminal",
-    width: 350,
-    height: 350,
-    component: <Terminal WM={this} />,
-    icon: <FontAwesomeIcon icon={faTerminal} />,
-    closable: false,
-    maximisable: true,
-  },
-  {
-    name: "worldWar",
-    title: "world war",
-    width: 800,
-    height: 450,
-    component: <WorldWar />,
-    icon: <FontAwesomeIcon icon={faGlobeEurope} />,
-    closable: true,
-    maximisable: true,
-    lockAspectRatio: true,
-  },
-  {
-    name: "secretSanta",
-    title: "secret santa",
-    width: 700,
-    height: 600,
-    // component: <SecretSanta />,
-    component: <div>Hello world</div>,
-    icon: <FontAwesomeIcon icon={faGift} />,
-    closable: true,
-    maximisable: true,
-  },
-  {
-    name: "slimeSoccer",
-    title: "slime soccer",
-    width: 722,
-    height: 460,
-    component: <SlimeSoccer />,
-    icon: <FontAwesomeIcon icon={faGift} />,
-    closable: true,
-    maximisable: true,
-  },
-];
 
 export default function Home() {
   return (
@@ -125,7 +67,7 @@ export default function Home() {
           Type <code>help</code>.
         </p>
       </Section>
-      <WindowManager installed_apps={INSTALLED_APPS} />
+      <WindowManager />
     </>
   );
 }
