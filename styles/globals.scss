@@ -18,6 +18,9 @@ $secret-santa-font: "Catamaran Black";
   font-family: "Catamaran Black";
   src: url("/fonts/Catamaran-Black.woff") format("woff");
 }
+html {
+  height: -webkit-fill-available;
+}
 
 html,
 body {

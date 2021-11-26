@@ -5,8 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
   height: 100vh;
+  min-height: -webkit-fill-available;
   border: 8px solid;
   border-image: colours.$gradient 1;
   padding: 1rem;
