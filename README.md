@@ -5,15 +5,15 @@ www.hectorbennett.com
 v1 to do:
 
 - add favicon
-- convert world war to function component
 - Add a license
 - add icon for slime soccer
-- remove secret santa
+- change icons
 
 v2 to do:
 
 - add secret santa
 - move todos to issues
+- convert world war to function component
 
 done:
 
@@ -22,3 +22,4 @@ done:
 - fix appearance of input text in terminal
 - convert terminal to function component
 - Style scrollbar better
+- remove secret santa
