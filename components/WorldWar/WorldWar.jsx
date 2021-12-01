@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import randomColor from "randomcolor";
-
 import Landmass from "./Landmass.jsx";
-
+import countries from "./data.json";
 import styles from "./WorldWar.module.scss";
 
-import COUNTRY_DATA from "./data.json";
-import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+const landmasses = countries.map((country) => {
+  return {
+    shape: country.shape,
+    country: country.iso_a2,
+    original_country: country.name,
+  };
+});
 
-const COUNTRY_DATA_MAP = COUNTRY_DATA.reduce(
-  (ac, a) => ({
-    ...ac,
-    [a.iso_a2]: { ...a, colour: randomColor({ luminosity: "light" }) },
-  }),
-  {}
-);
+countries.forEach((country) => {
+  country.color = randomColor({ luminosity: "light" });
+  country.original_name = country.name;
+});
+
+const getRandomItem = (items) =>
+  items[Math.floor(Math.random() * items.length)];
 
 function Console(props) {
   return (
@@ -26,148 +30,170 @@ function Console(props) {
   );
 }
 
-export default function WorldWar(props) {
-  const [landmasses, setLandmasses] = useState(
-    COUNTRY_DATA.map((country) => ({
-      country_code: country.iso_a2,
-      original_country_code: country.iso_a2,
-    }))
-  );
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    let i = setInterval(() => {
-      fight();
-    }, 100);
-    return () => {
-      clearInterval(i);
+export default class WorldWar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      landmasses: landmasses,
+      countries: countries,
+      scoreboard: {},
+      selectedCountry: null,
+      victoryOrder: [],
+      messages: [],
     };
-  }, []);
+  }
 
-  return (
-    <div className={styles.world_war}>
-      <svg
-        className={styles.world_war_svg}
-        viewBox="-10 -10 720 350"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g>
-          {landmasses.map((landmass, index) => {
-            let original_country =
-              COUNTRY_DATA_MAP[landmass.original_country_code];
-            let new_country = COUNTRY_DATA_MAP[landmass.country_code];
-            return (
+  componentDidMount = () => {
+    this.run();
+  };
+
+  getRandomCountry = () => {
+    return getRandomItem(this.state.countries);
+  };
+
+  getRandomNeighbour = (neighbours) => {
+    /* Return a directly connected neighbour if we can, otherwise pick a random country */
+    var chosen_iso = getRandomItem(neighbours);
+    return (
+      this.state.countries.find((element) => element.iso_a2 === chosen_iso) ||
+      getRandomItem(this.state.countries)
+    );
+  };
+
+  challenge = (country_a, country_b) => {
+    const chance = country_a.population / country_b.population;
+    if (
+      country_a.population >= country_b.population &&
+      chance > Math.random()
+    ) {
+      this.setState({
+        messages: [
+          `${country_a.name} defeated ${country_b.name}`,
+          ...this.state.messages,
+        ],
+      });
+      this.invade(country_a, country_b);
+    } else {
+      // console.log(`${country_b.name} defeated ${country_a.name}`);
+      this.setState({
+        messages: [
+          `${country_b.name} defeated ${country_a.name}`,
+          ...this.state.messages,
+        ],
+      });
+      this.invade(country_b, country_a);
+    }
+  };
+
+  invade = (winner, loser) => {
+    var countries = this.state.countries;
+    var landmasses = this.state.landmasses;
+    var scoreboard = this.state.scoreboard;
+    var victoryOrder = this.state.victoryOrder;
+
+    if (!scoreboard[winner.name]) {
+      scoreboard[winner.name] = 1;
+    } else {
+      scoreboard[winner.name] += 1;
+    }
+
+    victoryOrder.push(loser.name);
+
+    /* Set the landmass's occupying country */
+    landmasses = landmasses.map((landmass) => {
+      if (landmass.country === loser.iso_a2) {
+        return { ...landmass, country: winner.iso_a2 };
+      }
+      return landmass;
+    });
+
+    /* Absorb the population + neighbours of the loser into the winner */
+    countries = countries.map((country) => {
+      if (country.iso_a2 === winner.iso_a2) {
+        return {
+          ...country,
+          population: winner.population + loser.population,
+          neighbours: [...new Set([...winner.neighbours, ...loser.neighbours])],
+        };
+      }
+      return country;
+    });
+
+    /* Delete all references to the loser as a neighbour within every country */
+    countries.forEach((country) => {
+      country.neighbours = country.neighbours.filter((iso_a2) => {
+        return iso_a2 !== loser.iso_a2;
+      });
+    });
+
+    /* Delete all references to itself as a neighbour wihin every country */
+    countries.forEach((country) => {
+      country.neighbours = country.neighbours.filter((iso_a2) => {
+        return iso_a2 !== country.iso_a2;
+      });
+    });
+
+    /* Delete the losing country */
+    countries = countries.filter((country) => {
+      return country.iso_a2 !== loser.iso_a2;
+    });
+
+    this.setState({
+      countries: countries,
+      landmasses: landmasses,
+      scoreboard: scoreboard,
+    });
+  };
+
+  run = () => {
+    var i = setInterval(() => {
+      var random_choice = this.getRandomCountry();
+      var random_neighbour = this.getRandomNeighbour(random_choice.neighbours);
+      if (!random_choice || !random_neighbour) {
+        return;
+      }
+      if (random_choice === random_neighbour) {
+        return;
+      }
+      this.challenge(random_choice, random_neighbour);
+      if (this.state.countries.length === 1) {
+        clearInterval(i);
+        this.setState({
+          messages: [
+            `${this.state.countries[0].name} wins!`,
+            ...this.state.messages,
+          ],
+        });
+      }
+    }, 100);
+  };
+
+  selectCountry = (iso_code) => {
+    this.setState({ selectedCountry: iso_code });
+  };
+
+  render() {
+    return (
+      <div className={styles.world_war}>
+        <svg
+          className={styles.world_war_svg}
+          viewBox="-10 -10 720 350"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g>
+            {this.state.landmasses.map((landmass, index) => (
               <Landmass
                 key={index}
-                shape={original_country.shape}
-                original_country_name={original_country.name}
-                new_country_name={new_country.name}
-                colour={new_country.colour}
+                landmass={landmass}
+                country={this.state.countries.find((country) => {
+                  return landmass.country === country.iso_a2;
+                })}
               />
-            );
-          })}
-        </g>
-      </svg>
-      <Console messages={messages} />
-    </div>
-  );
+            ))}
+          </g>
+        </svg>
+        <Console messages={this.state.messages} />
+      </div>
+    );
+  }
 }
-
-// COUNTRIES.forEach((country) => {
-//   country.color = randomColor({ luminosity: "light" });
-//   country.original_name = country.name;
-// });
-
-// const getRandomItem = (items) =>
-//   items[Math.floor(Math.random() * items.length)];
-
-// function Console(props) {
-//   return (
-//     <div className={styles.console}>
-//       {props.messages.map((message, i) => {
-//         return <div key={i}>{message}</div>;
-//       })}
-//     </div>
-//   );
-// }
-
-// export default function WorldWar(props) {
-//   const [landmasses, setLandmasses] = useState(LANDMASSES);
-//   const [countries, setCountries] = useState(COUNTRIES);
-//   const [messages, setMessages] = useState([]);
-
-//   useEffect(() => {
-//     const i = setInterval(() => {
-//       let random_country = getRandomItem(countries);
-//       let random_neighbour = getRandomNeighbour(random_country);
-//       if (!random_country || !random_neighbour) {
-//         return;
-//       }
-//       if (random_country === random_neighbour) {
-//         return;
-//       }
-//       challenge(random_country, random_neighbour);
-//     }, 100);
-//     return () => {
-//       clearInterval(i);
-//     };
-//   }, []);
-
-//   const challenge = (country_a, country_b) => {
-//     const chance = country_a.population / country_b.population;
-//     if (
-//       country_a.population >= country_b.population &&
-//       chance > Math.random()
-//     ) {
-//       setMessages((m) => [
-//         `${country_a.name} defeated ${country_b.name}`,
-//         ...m,
-//       ]);
-//       return invade(country_a, country_b);
-//     } else {
-//       // console.log(`${country_b.name} defeated ${country_a.name}`);
-//       setMessages((m) => [
-//         `${country_b.name} defeated ${country_a.name}`,
-//         ...m,
-//       ]);
-//       return invade(country_b, country_a);
-//     }
-//   };
-
-//   const invade = (winner, loser) => {
-//     var _countries = countries;
-//     _countries = countries.map((country) => {
-//       if (country.iso_a2 === winner.iso_a2) {
-//         return {
-//           ...country,
-//           population: winner.population + loser.population,
-//           neighbours: [...new Set([...winner.neighbours, ...loser.neighbours])],
-//         };
-//       }
-//       return country;
-//     })
-//   }
-
-//   return (
-//     <div className={styles.world_war}>
-//       <svg
-//         className={styles.world_war_svg}
-//         viewBox="-10 -10 720 350"
-//         xmlns="http://www.w3.org/2000/svg"
-//       >
-//         <g>
-//           {landmasses.map((landmass, index) => (
-//             <Landmass
-//               key={index}
-//               landmass={landmass}
-//               country={countries.find((country) => {
-//                 return landmass.country === country.iso_a2;
-//               })}
-//             />
-//           ))}
-//         </g>
-//       </svg>
-//       <Console messages={messages} />
-//     </div>
-//   );
-// }
