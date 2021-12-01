@@ -5,9 +5,10 @@ www.hectorbennett.com
 v1 to do:
 
 - add favicon
-- add icon for slime soccer
-- change icons
+- create slime icons
+- create world war icon
 - make it so terminal launches new apps on top
+- make buttons clickable again
 
 
 v2 to do:
