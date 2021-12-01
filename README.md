@@ -5,9 +5,10 @@ www.hectorbennett.com
 v1 to do:
 
 - add favicon
-- Add a license
 - add icon for slime soccer
 - change icons
+- make it so terminal launches new apps on top
+
 
 v2 to do:
 
@@ -23,3 +24,5 @@ done:
 - convert terminal to function component
 - Style scrollbar better
 - remove secret santa
+- Add a license
+- make it so terminal can launch apps

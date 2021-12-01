@@ -96,13 +96,13 @@ export default function Terminal(props) {
     },
 
     war: () => {
-      props.WM.launchApp("worldWar");
+      props.openApp("worldWar");
     },
 
     "help war": () => <SplitText text={help_war_text} />,
 
     // santa: () => {
-    //   props.WM.launchApp("secretSanta");
+    //   props.openApp("secretSanta");
     // },
 
     // "help santa": () => {
@@ -110,7 +110,7 @@ export default function Terminal(props) {
     // },
 
     slime: () => {
-      props.WM.launchApp("secretSanta");
+      props.openApp("slimeSoccer");
     },
 
     "help slime": () => <SplitText text={help_slime_text} />,

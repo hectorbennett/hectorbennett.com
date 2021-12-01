@@ -16,56 +16,55 @@ import Terminal from "../Terminal";
 
 import styles from "./WindowManager.module.scss";
 
-const INSTALLED_APPS = [
-  {
-    name: "terminal",
-    title: "terminal",
-    width: 350,
-    height: 350,
-    component: <Terminal WM={this} />,
-    icon: <FontAwesomeIcon icon={faTerminal} />,
-    closable: false,
-    maximisable: true,
-  },
-  {
-    name: "worldWar",
-    title: "world war",
-    width: 800,
-    height: 450,
-    component: <WorldWar />,
-    icon: <FontAwesomeIcon icon={faGlobeEurope} />,
-    closable: true,
-    maximisable: true,
-    lockAspectRatio: true,
-  },
-  // {
-  //   name: "secretSanta",
-  //   title: "secret santa",
-  //   width: 700,
-  //   height: 600,
-  //   // component: <SecretSanta />,
-  //   component: <div>Hello world</div>,
-  //   icon: <FontAwesomeIcon icon={faGift} />,
-  //   closable: true,
-  //   maximisable: true,
-  // },
-  {
-    name: "slimeSoccer",
-    title: "slime soccer",
-    width: 722,
-    height: 460,
-    component: <SlimeSoccer />,
-    icon: <FontAwesomeIcon icon={faGift} />,
-    closable: true,
-    maximisable: true,
-  },
-];
-
 export default function WindowManager(props) {
-  const [apps, setApps] = useState(INSTALLED_APPS);
+  const [apps, setApps] = useState([]);
   const ref = useRef(null);
 
   useEffect(() => {
+    setApps([
+      {
+        name: "terminal",
+        title: "terminal",
+        width: 350,
+        height: 350,
+        component: <Terminal openApp={openApp} />,
+        icon: <FontAwesomeIcon icon={faTerminal} />,
+        closable: false,
+        maximisable: true,
+      },
+      {
+        name: "worldWar",
+        title: "world war",
+        width: 800,
+        height: 450,
+        component: <WorldWar />,
+        icon: <FontAwesomeIcon icon={faGlobeEurope} />,
+        closable: true,
+        maximisable: true,
+        lockAspectRatio: true,
+      },
+      // {
+      //   name: "secretSanta",
+      //   title: "secret santa",
+      //   width: 700,
+      //   height: 600,
+      //   // component: <SecretSanta />,
+      //   component: <div>Hello world</div>,
+      //   icon: <FontAwesomeIcon icon={faGift} />,
+      //   closable: true,
+      //   maximisable: true,
+      // },
+      {
+        name: "slimeSoccer",
+        title: "slime soccer",
+        width: 722,
+        height: 460,
+        component: <SlimeSoccer />,
+        icon: <FontAwesomeIcon icon={faGift} />,
+        closable: true,
+        maximisable: true,
+      },
+    ]);
     setTimeout(() => {
       openApp("terminal");
     }, 2000);
