@@ -31,7 +31,7 @@ export default function WindowManager(props) {
         height: 350,
         component: <Terminal openApp={openApp} />,
         icon: <FontAwesomeIcon icon={faTerminal} />,
-        closable: false,
+        closable: true,
         maximisable: true,
       },
       {
