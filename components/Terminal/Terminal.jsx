@@ -16,7 +16,7 @@ war`;
 const help_slime_text = `Slime Soccer is my remake of Quin Pendragon's Java game from the very early 2000s which unfortunately no longer works on modern browsers :(.
 This remake was made in the Godot game engine.
 
-Source can be found at <a href="https://github.com/hectorbennett/slime-soccer" target="_blank">https://github.com/hectorbennett/slime-soccer</a>
+Source can be found at <a href="https://github.com/hectorbennett/slime-soccer" target="_blank" rel="noreferrer">https://github.com/hectorbennett/slime-soccer</a>
 
 Controls
 --------
@@ -25,7 +25,7 @@ Right slime: movement: j, i, l; change teams: i, k`;
 
 const help_war_text = `World War Bot is a visualisation of a dumb algorithm for finding the ultimate warmonger.
 
-Country data comes from <a href="https://github.com/lorey/list-of-countries" target="_blank">https://github.com/lorey/list-of-countries</a>
+Country data comes from <a href="https://github.com/lorey/list-of-countries" target="_blank" rel="noreferrer">https://github.com/lorey/list-of-countries</a>
 
 The procedure works as follows:
 
@@ -52,7 +52,7 @@ const info_hector_text = `
  - Pretty mediocre with C++, GDScript and a few other random languages.
  - London based.
 
-This website was built with React, The source code can be found at <a href="https://github.com/hectorbennett/hectorbennett.com." target="_blank">https://github.com/hectorbennett/hectorbennett.com.</a>
+This website was built with React, The source code can be found at <a href="https://github.com/hectorbennett/hectorbennett.com." target="_blank" rel="noreferrer">https://github.com/hectorbennett/hectorbennett.com.</a>
 
 :)`;
 
