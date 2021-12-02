@@ -1,15 +1,18 @@
 .scrollable {
   &.x {
+    overflow-x: auto;
     overflow-x: overlay;
     overflow-y: hidden;
   }
 
   &.y {
+    overflow-y: auto;
     overflow-y: overlay;
     overflow-x: hidden;
   }
 
   &.both {
+    overflow: auto;
     overflow: overlay;
   }
 
