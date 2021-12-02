@@ -96,16 +96,16 @@ export default function WindowManager(props) {
   };
 
   const closeApp = (appName) => {
-    setApps(
-      apps.map((app) =>
+    setApps((a) =>
+      a.map((app) =>
         app.name === appName ? { ...app, isOpen: false, hasFocus: false } : app
       )
     );
   };
 
   const minimiseApp = (appName) => {
-    setApps(
-      apps.map((app) =>
+    setApps((a) =>
+      a.map((app) =>
         app.name === appName
           ? { ...app, isMinimised: true, hasFocus: false }
           : app
@@ -114,24 +114,22 @@ export default function WindowManager(props) {
   };
 
   const maximiseApp = (appName) => {
-    setApps(
-      apps.map((app) =>
+    setApps((a) =>
+      a.map((app) =>
         app.name === appName ? { ...app, mode: "maximised" } : app
       )
     );
   };
 
   const compressApp = (appName) => {
-    setApps(
-      apps.map((app) =>
-        app.name === appName ? { ...app, mode: "normal" } : app
-      )
+    setApps((a) =>
+      a.map((app) => (app.name === appName ? { ...app, mode: "normal" } : app))
     );
   };
 
   const focusApp = (appName) => {
-    setApps(
-      apps.map((app) => {
+    setApps((a) =>
+      a.map((app) => {
         if (app.name === appName) {
           return {
             ...app,
@@ -146,20 +144,23 @@ export default function WindowManager(props) {
     );
   };
 
-  const unfocusAll = () => {
-    setApps(apps.map((app) => ({ ...app, hasFocus: false })));
+  const unfocusApp = (appName) => {
+    setApps((a) =>
+      a.map((app) => {
+        if (app.name === appName) {
+          return {
+            ...app,
+            hasFocus: false,
+          };
+        } else {
+          return app;
+        }
+      })
+    );
   };
 
   return (
-    <div
-      className={styles.window_manager}
-      ref={ref}
-      onMouseDown={(e) => {
-        if (e.target === ref.current) {
-          unfocusAll();
-        }
-      }}
-    >
+    <div className={styles.window_manager} ref={ref}>
       {/* Windows */}
       {apps.map((app, index) => {
         return (
@@ -181,7 +182,8 @@ export default function WindowManager(props) {
             onClickMaximise={() => maximiseApp(app.name)}
             onClickCompress={() => compressApp(app.name)}
             onClickClose={() => closeApp(app.name)}
-            onMouseDown={() => focusApp(app.name)}
+            onMouseDown={() => setTimeout(focusApp(app.name), 10)}
+            onClickOutside={() => unfocusApp(app.name)}
           >
             {app.component}
           </Window>

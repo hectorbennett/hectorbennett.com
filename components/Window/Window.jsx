@@ -11,6 +11,8 @@ import {
 
 import WindowWrapper from "../WindowWrapper";
 
+import useClickOutside from "../../utils/useClickOutside";
+
 import styles from "./Window.module.scss";
 
 function TopBar(props) {
@@ -62,12 +64,15 @@ function TopBar(props) {
 }
 
 export default function Window(props) {
+  const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [classNames, setClassNames] = useState([
     styles.window,
     props.hasFocus ? styles.focused : "",
   ]);
   const contentRef = useRef(null);
+
+  useClickOutside(ref, props.onClickOutside);
 
   useEffect(() => {
     var _classNames = classNames;
@@ -108,7 +113,7 @@ export default function Window(props) {
       zIndex={props.zIndex}
       onMouseDown={props.onMouseDown}
     >
-      <div className={classNames.join(" ")}>
+      <div className={classNames.join(" ")} ref={ref}>
         <TopBar
           mode={props.mode}
           icon={props.icon}
