@@ -7,6 +7,7 @@ const randomIntFromInterval = (min, max) =>
 
 export default function WindowWrapper(props) {
   const [component, setComponent] = useState(null);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [classNames, setClassNames] = useState([styles.window_wrapper]);
   const [isMaximised, setIsMaximised] = useState(props.isMaximised);
   const [isMinimised, setIsMinimised] = useState(props.isMinimised);
@@ -18,6 +19,12 @@ export default function WindowWrapper(props) {
     width: props.width,
     height: props.height,
   });
+
+  useEffect(() => {
+    if (/Mobi/.test(navigator.userAgent)) {
+      setIsMobileDevice(true);
+    }
+  }, []);
 
   useEffect(() => {
     setPosition({
@@ -60,7 +67,7 @@ export default function WindowWrapper(props) {
         }}
         lockAspectRatio={props.lockAspectRatio}
         dragHandleClassName={props.dragHandleClassName}
-        disableDragging={isMaximised}
+        disableDragging={isMaximised || isMobileDevice}
         onDragStop={(e, d) => {
           setPosition(d);
         }}
@@ -71,19 +78,21 @@ export default function WindowWrapper(props) {
         size={
           isMinimised
             ? { width: 50, height: 50 }
-            : isMaximised
+            : isMaximised || isMobileDevice
             ? { width: "100vw", height: "100vh" }
             : size
         }
         position={
           isMinimised
             ? { y: window.innerHeight / 2, x: window.innerWidth - 50 }
-            : isMaximised
+            : isMaximised || isMobileDevice
             ? { x: 0, y: 0 }
             : position
         }
         minWidth={isMinimised ? null : props.minWidth}
         minHeight={isMinimised ? null : props.minHeight}
+        maxWidth={window.innerWidth}
+        maxHeight={window.innerHeight}
         style={{
           zIndex: props.zIndex,
           opacity: isMinimised ? 0 : 1,
@@ -93,7 +102,7 @@ export default function WindowWrapper(props) {
         {props.children}
       </Rnd>
     );
-  }, [classNames, isMaximised, isMinimised, position, size, props]);
+  }, [classNames, isMaximised, isMobileDevice, isMinimised, position, size, props]);
   return component;
 }
 

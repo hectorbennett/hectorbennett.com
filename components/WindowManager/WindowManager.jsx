@@ -68,7 +68,10 @@ export default function WindowManager(props) {
       },
     ]);
     setTimeout(() => {
-      openApp("terminal");
+      // if not a mobile device
+      if (!/Mobi/.test(navigator.userAgent)) {
+        openApp("terminal");
+      }
     }, 2000);
   }, []);
 
