@@ -52,7 +52,9 @@ const info_hector_text = `
  - Pretty mediocre with C++, GDScript and a few other random languages.
  - London based.
 
-This website was built with React, The source code can be found at <a href="https://github.com/hectorbennett/hectorbennett.com." target="_blank">https://github.com/hectorbennett/hectorbennett.com.</a>`;
+This website was built with React, The source code can be found at <a href="https://github.com/hectorbennett/hectorbennett.com." target="_blank">https://github.com/hectorbennett/hectorbennett.com.</a>
+
+:)`;
 
 function Query(props) {
   return (
