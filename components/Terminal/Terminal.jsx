@@ -4,8 +4,9 @@ import styles from "./Terminal.module.scss";
 import Scrollable from "../Scrollable";
 
 const help_text = `hectorbennett.com, version 2.0
-These shell commands are defined internally.  Type \`help\' to see this list.
-Type \`help name\' to find out more about the function \`name\'.
+These shell commands are defined internally.
+Type \`help\' to see this list.
+Type \`help\' followed by the name of a command to find out more about the command. e.g. to find out more about the function \`name', type \`help name\'.
 Use \`info hector\' to find out more about Hector in general.
 
 clear
