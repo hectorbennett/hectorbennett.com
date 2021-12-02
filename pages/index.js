@@ -9,7 +9,7 @@ export default function Home() {
       <Head>
         <title>Hector Bennett | Web Developer</title>
         <meta name="description" content="hectorbennett.com" />
-        <link rel="icon" href="/img/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         <link
           rel="preload"
           href="/fonts/Alice-Regular.woff"
@@ -36,27 +36,40 @@ export default function Home() {
           </span>
         </h1>
         <p className="highlight">
-          I'm a web developer at{" "}
-          <a href="https://www.artlogic.net" target="_blank">
+          I&apos;m a web developer at{" "}
+          <a href="https://www.artlogic.net" target="_blank" rel="noreferrer">
             Artlogic
           </a>
           . I write{" "}
-          <a href="https://github.com/hectorbennett" target="_blank">
+          <a
+            href="https://github.com/hectorbennett"
+            target="_blank"
+            rel="noreferrer"
+          >
             nice code
           </a>
           . I make{" "}
           <a
             href="https://open.spotify.com/artist/48J4JtAcKjlqknQaZOf3Jf"
             target="_blank"
+            rel="noreferrer"
           >
             music
           </a>{" "}
           in my spare time. I can be contacted via{" "}
-          <a href="mailto:contact@hectorbennett.com" target="_blank">
+          <a
+            href="mailto:contact@hectorbennett.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             email
           </a>{" "}
           or{" "}
-          <a href="https://uk.linkedin.com/in/hector-bennett" target="_blank">
+          <a
+            href="https://uk.linkedin.com/in/hector-bennett"
+            target="_blank"
+            rel="noreferrer"
+          >
             LinkedIn
           </a>
           .
