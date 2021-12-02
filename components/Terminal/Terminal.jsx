@@ -135,7 +135,7 @@ export default function Terminal(props) {
     if (command) {
       var output = command();
     } else {
-      output = `${query}: command not found. Type 'help' for a list of available commands.`;
+      output = `${query}: command not found. Type \`help' for a list of available commands.`;
     }
 
     /* Display the new output, clear the input and scroll to the bottom */
