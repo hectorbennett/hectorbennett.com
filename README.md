@@ -2,18 +2,13 @@
 
 www.hectorbennett.com
 
-v1 to do:
-
-- add favicon
-- make it so terminal launches new apps on top
-- make buttons clickable again
-
-
 v2 to do:
 
 - add secret santa
 - move todos to issues
 - convert world war to function component
+- make it so terminal launches new apps on top
+
 
 done:
 
@@ -26,3 +21,5 @@ done:
 - Add a license
 - make it so terminal can launch apps
 - create slime icons
+- add favicon
+- make links clickable again
