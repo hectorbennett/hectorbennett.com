@@ -80,7 +80,6 @@ export default function WorldWar(props) {
       ]);
       invade(country_a, country_b);
     } else {
-      // console.log(`${country_b.name} defeated ${country_a.name}`);
       setMessages((m) => [
         `${country_b.name} defeated ${country_a.name}`,
         ...m,

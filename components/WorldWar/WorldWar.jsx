@@ -74,7 +74,6 @@ export default class WorldWar extends React.Component {
       });
       this.invade(country_a, country_b);
     } else {
-      // console.log(`${country_b.name} defeated ${country_a.name}`);
       this.setState({
         messages: [
           `${country_b.name} defeated ${country_a.name}`,
