@@ -5,8 +5,6 @@ www.hectorbennett.com
 v1 to do:
 
 - add favicon
-- create slime icons
-- create world war icon
 - make it so terminal launches new apps on top
 - make buttons clickable again
 
@@ -27,3 +25,4 @@ done:
 - remove secret santa
 - Add a license
 - make it so terminal can launch apps
+- create slime icons
