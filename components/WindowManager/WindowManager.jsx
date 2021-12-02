@@ -7,6 +7,8 @@ import {
   faGift,
 } from "@fortawesome/free-solid-svg-icons";
 
+import Icon, { slime } from "../Icon";
+
 import Window from "../Window";
 import Tray from "../Tray";
 
@@ -60,7 +62,7 @@ export default function WindowManager(props) {
         width: 722,
         height: 460,
         component: <SlimeSoccer />,
-        icon: <FontAwesomeIcon icon={faGift} />,
+        icon: <Icon icon={slime} />,
         closable: true,
         maximisable: true,
       },
