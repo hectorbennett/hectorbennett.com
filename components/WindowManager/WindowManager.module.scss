@@ -1,0 +1,9 @@
+@use "styles/colours";
+@use "styles/screens";
+@use "styles/fonts";
+
+.window_manager {
+  position: fixed;
+  top: 0;
+  left: 0;
+}

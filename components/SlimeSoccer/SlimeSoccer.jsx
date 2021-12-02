@@ -9,8 +9,8 @@ export default function SlimeSoccer(props) {
         frameBorder="0"
         src="https://itch.io/embed-upload/4800053?color=333333"
         allowFullScreen=""
-        width="1024"
-        height="596"
+        width="100%"
+        height="100%"
       >
         <a href="https://hectorbennett.itch.io/slime-soccer">
           Play slime soccer (remake) on itch.io

@@ -1,0 +1,50 @@
+@use "styles/colours";
+@use "styles/fonts";
+
+.terminal {
+  padding: 0.1rem 0.4rem;
+  flex: 1;
+  font-family: fonts.$monospace-font;
+  font-size: 13px;
+  background: colours.$steelgrey;
+  height: 100%;
+  cursor: text;
+
+  a {
+    color: colours.$whisper;
+    text-decoration-color: colours.$whisper;
+  }
+}
+
+.input_container {
+  display: flex;
+}
+
+.prompt {
+  color: #05b9fe;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.input {
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: colours.$whisper;
+  flex: 1;
+  font-family: fonts.$monospace-font;
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+}
+
+.minimized {
+  // max-width: 400px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
