@@ -56,6 +56,11 @@ This website was built with React, The source code can be found at <a href="http
 
 :)`;
 
+const help_name_text = `
+\`help name' was just an example you dummy.
+Swap \`name' for the name of the command you need help with.
+e.g. \`help war'`;
+
 function Query(props) {
   return (
     <div className={styles.query}>
@@ -93,33 +98,27 @@ export default function Terminal(props) {
   }, [queries]);
 
   const COMMANDS = {
-    help: () => {
-      return <SplitText text={help_text} />;
-    },
+    help: () => <SplitText text={help_text} />,
 
-    war: () => {
-      props.openApp("worldWar");
-    },
+    war: () => props.openApp("worldWar"),
 
     "help war": () => <SplitText text={help_war_text} />,
 
-    // santa: () => {
-    //   props.openApp("secretSanta");
-    // },
+    // santa: () => props.openApp("secretSanta"),
 
-    // "help santa": () => {
-    //   return "This is some help about santa";
-    // },
+    // "help santa": () => "This is some help about santa",
 
-    slime: () => {
-      props.openApp("slimeSoccer");
-    },
+    slime: () => props.openApp("slimeSoccer"),
 
     "help slime": () => <SplitText text={help_slime_text} />,
 
     "info hector": () => <SplitText text={info_hector_text} />,
 
     "help clear": () => "Clears the terminal.",
+
+    "help help": () => "Type `help' to get help",
+
+    "help name": () => <SplitText text={help_name_text} />,
   };
 
   const submit = (query) => {
