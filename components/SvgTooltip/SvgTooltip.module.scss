@@ -1,11 +1,17 @@
 @use "styles/colours";
 @use "styles/fonts";
 
+.tooltip_outer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
 
 .tooltip {
   position: absolute;
   font-family: fonts.$monospace-font;
   font-size: 13px;
   background: colours.$steelgrey;
-  pointer-events: none;
+  bottom: 0;
 }

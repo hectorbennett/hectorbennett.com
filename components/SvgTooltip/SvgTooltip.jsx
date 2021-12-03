@@ -4,17 +4,9 @@ import { createPortal } from "react-dom";
 import styles from "./SvgTooltip.module.scss";
 
 const svgPoint = (svg, e) => {
-  if (svg.createSVGPoint) {
-    let point = svg.createSVGPoint();
-    point.x = e.clientX;
-    point.y = e.clientY;
-    point = point.matrixTransform(svg.getScreenCTM().inverse());
-    return { x: point.x, y: point.y };
-  }
-  const rect = svg.getBoundingClientRect();
   return {
-    x: e.clientX - rect.left - svg.clientLeft,
-    y: e.clientY - rect.top - svg.clientTop,
+    x: e.clientX - svg.clientLeft,
+    y: e.clientY - svg.clientTop,
   };
 };
 
@@ -23,16 +15,15 @@ function Tooltip(props) {
     return;
   }
   return createPortal(
-    <g
-      className={styles.tooltip}
-      transform={`translate(${props.position.x}, ${props.position.y})`}
+    <div
+      className={styles.tooltip_outer}
+      style={{
+        transform: `translate(${props.position.x}px, ${props.position.y}px)`,
+      }}
     >
-      <rect x="0" y="0" width="100" height="100" fill="red"></rect>
-      <text x="0" y="50" fill="blue">
-        {props.children}
-      </text>
-    </g>,
-    props.svg
+      <div className={styles.tooltip}>{props.children}</div>
+    </div>,
+    document.body
   );
 }
 
@@ -50,11 +41,10 @@ export default function SvgTooltip(props) {
       }}
       onMouseLeave={() => {
         console.log("mouse leave");
-        setIsVisible(false);
+        // setIsVisible(false);
       }}
       onMouseMove={(e) => {
         setPosition(svgPoint(ref.current.viewportElement, e));
-        console.log(position);
       }}
     >
       {props.children}
