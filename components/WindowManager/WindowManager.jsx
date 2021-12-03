@@ -14,6 +14,7 @@ import Tray from "../Tray";
 
 import SlimeSoccer from "../SlimeSoccer";
 import WorldWar from "../WorldWar";
+import WorldWarNew from "../WorldWarNew";
 import Terminal from "../Terminal";
 
 import styles from "./WindowManager.module.scss";
@@ -40,6 +41,17 @@ export default function WindowManager(props) {
         width: 800,
         height: 450,
         component: <WorldWar />,
+        icon: <FontAwesomeIcon icon={faGlobeEurope} />,
+        closable: true,
+        maximisable: true,
+        lockAspectRatio: true,
+      },
+      {
+        name: "worldWarNew",
+        title: "world war new",
+        width: 800,
+        height: 450,
+        component: <WorldWarNew />,
         icon: <FontAwesomeIcon icon={faGlobeEurope} />,
         closable: true,
         maximisable: true,
