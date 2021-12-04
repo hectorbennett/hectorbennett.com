@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, Fragment } from "react";
+import levenshtein from "js-levenshtein";
 import styles from "./Terminal.module.scss";
 
 import Scrollable from "../Scrollable";
@@ -135,12 +136,21 @@ export default function Terminal(props) {
     if (command) {
       var output = command();
     } else {
-      output = `${query}: command not found. Type \`help' for a list of available commands.`;
+      output = getNotFoundOutput(query);
     }
 
     /* Display the new output, clear the input and scroll to the bottom */
     setQueries([...queries, { input: query, output: output }]);
     setInputValue("");
+  };
+
+  const getNotFoundOutput = (query) => {
+    for (let command in COMMANDS) {
+      if (levenshtein(command, query) <= 2) {
+        return `${query}: command not found. Did you mean to type \`${command}'?.`;
+      }
+    }
+    return `${query}: command not found. Type \`help' for a list of available commands.`;
   };
 
   return (
