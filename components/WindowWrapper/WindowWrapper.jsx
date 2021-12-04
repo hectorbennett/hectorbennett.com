@@ -91,8 +91,8 @@ export default function WindowWrapper(props) {
         }
         minWidth={isMinimised ? null : props.minWidth}
         minHeight={isMinimised ? null : props.minHeight}
-        maxWidth={window.innerWidth}
-        maxHeight={window.innerHeight}
+        maxWidth="100vw"
+        maxHeight="100vh"
         style={{
           zIndex: props.zIndex,
           opacity: isMinimised ? 0 : 1,
@@ -102,7 +102,15 @@ export default function WindowWrapper(props) {
         {props.children}
       </Rnd>
     );
-  }, [classNames, isMaximised, isMobileDevice, isMinimised, position, size, props]);
+  }, [
+    classNames,
+    isMaximised,
+    isMobileDevice,
+    isMinimised,
+    position,
+    size,
+    props,
+  ]);
   return component;
 }
 
