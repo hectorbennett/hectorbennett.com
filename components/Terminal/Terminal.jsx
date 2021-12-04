@@ -121,15 +121,11 @@ export default function Terminal(props) {
     "help help": () => "Type `help' to get help",
 
     "help name": () => <SplitText text={help_name_text} />,
+
+    clear: () => setQueries([]),
   };
 
   const submit = (query) => {
-    if (query === "clear") {
-      setQueries([]);
-      setInputValue("");
-      return;
-    }
-
     /* Append the new query and its output to the list of
     queries we have previously submitted */
     var command = COMMANDS[query];
@@ -139,8 +135,10 @@ export default function Terminal(props) {
       output = getNotFoundOutput(query);
     }
 
-    /* Display the new output, clear the input and scroll to the bottom */
-    setQueries([...queries, { input: query, output: output }]);
+    if (query !== "clear") {
+      /* Display the new output, clear the input and scroll to the bottom */
+      setQueries((q) => [...q, { input: query, output: output }]);
+    }
     setInputValue("");
   };
 
