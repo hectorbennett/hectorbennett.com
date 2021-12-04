@@ -44,11 +44,11 @@ export default function WorldWar(props) {
       setMessages((m) => [`${warData.countries[0].name} wins!`, ...m]);
       return true;
     } else {
-      doThing();
+      run();
     }
   }, 100);
 
-  function doThing() {
+  function run() {
     var random_choice = getRandomCountry();
     var random_neighbour = getRandomNeighbour(random_choice.neighbours);
     if (!random_choice || !random_neighbour) {
@@ -132,8 +132,6 @@ export default function WorldWar(props) {
           }
           return landmass;
         }),
-
-        battleCount: d.battleCount + 1,
       };
     });
   }
