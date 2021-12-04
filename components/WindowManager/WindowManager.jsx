@@ -15,6 +15,7 @@ import Tray from "../Tray";
 import SlimeSoccer from "../SlimeSoccer";
 import WorldWar from "../WorldWar";
 import Terminal from "../Terminal";
+import SecretSanta from "../SecretSanta";
 
 import styles from "./WindowManager.module.scss";
 
@@ -47,17 +48,16 @@ export default function WindowManager(props) {
         maximisable: true,
         lockAspectRatio: true,
       },
-      // {
-      //   name: "secretSanta",
-      //   title: "secret santa",
-      //   width: 700,
-      //   height: 600,
-      //   // component: <SecretSanta />,
-      //   component: <div>Hello world</div>,
-      //   icon: <FontAwesomeIcon icon={faGift} />,
-      //   closable: true,
-      //   maximisable: true,
-      // },
+      {
+        name: "secretSanta",
+        title: "secret santa",
+        width: 700,
+        height: 600,
+        component: <SecretSanta />,
+        icon: <FontAwesomeIcon icon={faGift} />,
+        closable: true,
+        maximisable: true,
+      },
       {
         name: "slimeSoccer",
         title: "slime soccer",
