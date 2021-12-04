@@ -102,9 +102,9 @@
     height: 1.2rem;
   }
 
-  :hover,
-  :focus {
+  &:hover,
+  &:focus {
     background: colours.$steelgrey;
-    color: colours.$whisper;
+    color: colours.$blue;
   }
 }

@@ -1,0 +1,23 @@
+@use "styles/colours";
+@use "styles/fonts";
+
+.tooltip_outer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  width: 100%;
+}
+
+.tooltip {
+  display: inline-block;
+  font-family: fonts.$monospace-font;
+  font-size: 13px;
+  background: colours.$steelgrey;
+  background: colours.$whisper;
+  padding: 5px;
+  color: colours.$steelgrey;
+  border: 1px solid black;
+  border-image: colours.$gradient 1;
+  margin-left: 10px;
+}
