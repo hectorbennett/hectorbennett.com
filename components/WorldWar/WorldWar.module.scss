@@ -22,11 +22,13 @@
 .console {
   position: absolute;
   overflow: hidden;
-  height: 11.3rem;
-  width: 50%;
+  height: 6.8rem;
+  width: 13rem;
   bottom: 0;
   margin: 1rem;
   font-family: fonts.$monospace-font;
-  background: rgba(colours.$steelgrey, 0.3);
+  background: rgba(colours.$steelgrey, 0.1);
   padding: 0.2rem 0.4rem;
+  font-size: 0.6rem;
+  pointer-events: none;
 }
