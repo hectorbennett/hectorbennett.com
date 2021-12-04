@@ -1,12 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import styles from "./SvgTooltip.module.scss";
 
 const svgPoint = (svg, e) => {
+  const rect = svg.getBoundingClientRect();
   return {
-    x: e.clientX - svg.clientLeft,
-    y: e.clientY - svg.clientTop,
+    x: e.clientX - rect.x,
+    y: e.clientY - rect.y,
   };
 };
 
@@ -23,7 +24,7 @@ function Tooltip(props) {
     >
       <div className={styles.tooltip}>{props.children}</div>
     </div>,
-    document.body
+    props.svg.parentElement
   );
 }
 
@@ -35,17 +36,9 @@ export default function SvgTooltip(props) {
   return (
     <g
       ref={ref}
-      onMouseEnter={() => {
-        console.log("mouse enter");
-        setIsVisible(true);
-      }}
-      onMouseLeave={() => {
-        console.log("mouse leave");
-        // setIsVisible(false);
-      }}
-      onMouseMove={(e) => {
-        setPosition(svgPoint(ref.current.viewportElement, e));
-      }}
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
+      onMouseMove={(e) => setPosition(svgPoint(ref.current.viewportElement, e))}
     >
       {props.children}
       {isVisible ? (

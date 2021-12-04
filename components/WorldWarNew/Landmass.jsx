@@ -1,14 +1,28 @@
 import styles from "./WorldWar.module.scss";
 import SvgTooltip from "../SVGTooltip";
 
-export default function Landmass(props) {
-  const tooltip =
-    props.country?.name === props.landmass.original_country
-      ? props.country?.name
-      : `${props.country?.name} occupied ${props.landmass.original_country}`;
+function Tooltip(props) {
   return (
     <>
-      <SvgTooltip tooltip={tooltip}>
+      <div>{props.original_country}</div>
+      {props.country && props.country !== props.original_country ? (
+        <div>Occupied by {props.country}</div>
+      ) : null}
+    </>
+  );
+}
+
+export default function Landmass(props) {
+  return (
+    <>
+      <SvgTooltip
+        tooltip={
+          <Tooltip
+            country={props.country.name}
+            original_country={props.landmass.original_country}
+          />
+        }
+      >
         <path
           className={styles.country}
           d={props.landmass.shape}
