@@ -18,6 +18,8 @@ import Terminal from "../Terminal";
 
 import styles from "./WindowManager.module.scss";
 
+let highestZIndex = 0;
+
 export default function WindowManager(props) {
   const [apps, setApps] = useState([]);
   const ref = useRef(null);
@@ -75,13 +77,10 @@ export default function WindowManager(props) {
     }, 2000);
   }, []);
 
-  const getNextHighestZIndex = () => {
-    var current_max = 0;
-    apps.forEach((app) => {
-      current_max = app.zIndex >= current_max ? app.zIndex : current_max;
-    });
-    return current_max + 1;
-  };
+  function getNextHighestZIndex() {
+    highestZIndex += 1;
+    return highestZIndex;
+  }
 
   const openApp = (appName) => {
     setApps((a) =>
