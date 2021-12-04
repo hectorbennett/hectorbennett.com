@@ -1,5 +1,5 @@
 import styles from "./WorldWar.module.scss";
-import SvgTooltip from "../SVGTooltip";
+import SvgTooltip from "../SvgTooltip";
 
 function Tooltip(props) {
   return (
