@@ -14,3 +14,9 @@ Secret santa todo:
  - split out styles into classes
  - split out components
  - Add santa help text
+ - Add bcc
+
+
+
+done:
+- stop windows disappearing
