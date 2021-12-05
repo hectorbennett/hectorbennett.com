@@ -51,7 +51,7 @@ export default function WindowManager(props) {
       {
         name: "secretSanta",
         title: "secret santa",
-        width: 700,
+        width: 1200,
         height: 600,
         component: <SecretSanta />,
         icon: <FontAwesomeIcon icon={faGift} />,
