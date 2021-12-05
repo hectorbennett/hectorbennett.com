@@ -13,3 +13,4 @@ Secret santa todo:
  - make scrollbar visible
  - split out styles into classes
  - split out components
+ - Add santa help text
