@@ -89,6 +89,13 @@ function Santa(props) {
             <Input
               label="Name"
               type="text"
+              placeholder="Name"
+              error={
+                props.santas.filter((santa) => santa.name === props.name)
+                  .length > 1
+                  ? "Names must be unique"
+                  : null
+              }
               value={props.name || ""}
               onChange={props.onChangeName}
             />
@@ -96,7 +103,15 @@ function Santa(props) {
             <Input
               label="Email"
               type="text"
-              name="email"
+              placeholder="Email"
+              error={
+                !props.email && props.santas.length > props.index + 2
+                  ? "Please enter an email address"
+                  : !/\S+@\S+\.\S+/.test(props.email) &&
+                    props.santas.length > props.index + 2
+                  ? "Invalid email address"
+                  : null
+              }
               value={props.email}
               onChange={props.onChangeEmail}
             />
@@ -152,10 +167,15 @@ function Checkbox(props) {
 }
 
 function Input(props) {
+  const classNames = [styles.input];
+  if (props.error) {
+    classNames.push(styles.error);
+  }
   return (
-    <label className={styles.input}>
+    <label className={classNames.join(" ")}>
       <span className={styles.label}>{props.label}</span>
       <input {...props} />
+      {props.error ? <span className={styles.error}>{props.error}</span> : null}
     </label>
   );
 }
