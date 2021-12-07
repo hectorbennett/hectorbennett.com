@@ -152,7 +152,7 @@ export default function Terminal(props) {
   };
 
   return (
-    <Scrollable
+    <Scrollable.div
       className={styles.terminal}
       onClick={() => inputRef.current.focus()}
       ref={contentRef}
@@ -183,6 +183,6 @@ export default function Terminal(props) {
           />
         </div>
       </div>
-    </Scrollable>
+    </Scrollable.div>
   );
 }
