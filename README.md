@@ -11,10 +11,10 @@ Secret santa todo:
  - split out components
  - Add santa help text
  - Add bcc
- - add focus css to checkboxes
 
 done:
 - stop windows disappearing
 - match by ids instead of names
 - Warn if invalid email address
 - Warn if duplicate names
+- add focus css to checkboxes
