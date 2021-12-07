@@ -6,8 +6,9 @@ import styles from "./SecretSanta.module.scss";
 import Card from "../Card";
 
 export default function SecretSanta(props) {
-  const [santas, setSantas] = useState([{ name: "", email: "" }]);
+  const [santas, setSantas] = useState([{ name: "", email: "", id: 0 }]);
   const [invalidPairs, setInvalidPairs] = useState([]);
+  // console.log(santas);
   return (
     <Scrollable className={styles.secret_santa}>
       <div
@@ -17,6 +18,7 @@ export default function SecretSanta(props) {
           <Santa
             key={i}
             index={i}
+            id={santa.id}
             {...santa}
             santas={santas}
             invalidPairs={invalidPairs}
@@ -29,9 +31,11 @@ export default function SecretSanta(props) {
                   return santa;
                 });
                 if (e.target.value && santas.length === i + 1) {
-                  _santas.push([{ name: "", email: "" }]);
+                  _santas.push({ name: "", email: "", id: i + 1 });
                 } else if (!e.target.value && santas.length > i + 1) {
-                  _santas = _santas.slice(0, -1);
+                  if (!santas[i + 1].name) {
+                    _santas = _santas.slice(0, -1);
+                  }
                 }
                 return _santas;
               });
@@ -58,9 +62,6 @@ export default function SecretSanta(props) {
                 );
               });
             }}
-            onRemoveSanta={() =>
-              setSantas((santas) => santas.filter((s, j) => j !== i))
-            }
           />
         ))}
       </div>
@@ -69,9 +70,11 @@ export default function SecretSanta(props) {
 }
 
 function Santa(props) {
-  const doNotPairWith = props.invalidPairs
-    .filter((pair) => pair.includes(props.name))
+  const doNotPairWithIds = props.invalidPairs
+    .filter((pair) => pair.includes(props.id))
     .flat();
+
+  console.log(props);
 
   return (
     <div style={{ width: "50%", minWidth: "30rem", padding: 5 }}>
@@ -111,23 +114,20 @@ function Santa(props) {
         > */}
                 <Scrollable className={styles.checkboxes}>
                   {props.santas
-                    .filter((santa) => santa.name && santa.name !== props.name)
+                    .filter((santa) => santa.id !== props.id && santa.name)
                     .map((santa, i) => {
-                      const selected = doNotPairWith.includes(santa.name);
+                      const selected = doNotPairWithIds.includes(santa.id);
 
                       return (
                         <Checkbox
                           label={santa.name}
                           checked={selected}
                           key={i}
-                          value={santa.name}
+                          value={santa.id}
                           onChange={() =>
                             selected
-                              ? props.onRemoveInvalidPair([
-                                  props.name,
-                                  santa.name,
-                                ])
-                              : props.onAddInvalidPair([props.name, santa.name])
+                              ? props.onRemoveInvalidPair([props.id, santa.id])
+                              : props.onAddInvalidPair([props.id, santa.id])
                           }
                         />
                       );

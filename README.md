@@ -4,8 +4,6 @@ www.hectorbennett.com
 
 
 Secret santa todo:
-
- - match by ids instead of names
  - Add subject and message
  - Warn if impossible combination
  - Warn if invalid email address
@@ -15,8 +13,8 @@ Secret santa todo:
  - split out components
  - Add santa help text
  - Add bcc
-
-
+ - add focus css to checkboxes
 
 done:
 - stop windows disappearing
+- match by ids instead of names
