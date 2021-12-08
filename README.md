@@ -9,8 +9,10 @@ Secret santa todo:
  - make scrollbar visible
  - split out styles into classes
  - split out components
- - Add santa help text
+ - Add santa help text to terminal
  - Add bcc
+ - animate cards
+ - make dark mode checkboxes
 
 done:
 - stop windows disappearing
