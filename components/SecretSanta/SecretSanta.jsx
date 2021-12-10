@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 import Scrollable from "../Scrollable";
+import Checkbox from "../Checkbox";
 import styles from "./SecretSanta.module.scss";
 
 import Card from "../Card";
@@ -255,7 +256,7 @@ function InvalidPairs(props) {
             const selected = doNotPairWithIds.includes(santa.id);
 
             return (
-              <Checkbox
+              <CheckboxLabel
                 label={santa.name}
                 checked={selected}
                 key={i}
@@ -279,10 +280,10 @@ function InvalidPairs(props) {
   );
 }
 
-function Checkbox(props) {
+function CheckboxLabel(props) {
   return (
     <label className={styles.checkbox}>
-      <input type="checkbox" {...props} />
+      <Checkbox type="checkbox" {...props} />
       <span className={styles.label}>{props.label}</span>
     </label>
   );
