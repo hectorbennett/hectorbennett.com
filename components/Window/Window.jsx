@@ -1,13 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTimes,
-  faMinus,
-  faExpandAlt,
-  faCompressAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { CgClose, CgMathMinus, CgCompressRight, CgExpand } from "react-icons/cg";
 
 import WindowWrapper from "../WindowWrapper";
 
@@ -27,7 +21,7 @@ function TopBar(props) {
           onClick={props.onClickMinimise}
           tabIndex={props.hasFocus ? "0" : "-1"}
         >
-          <FontAwesomeIcon icon={faMinus} />
+          <CgMathMinus />
         </button>
         {/* Maximise button */}
         {props.mode === "maximised" ? (
@@ -36,7 +30,7 @@ function TopBar(props) {
             onClick={props.onClickCompress}
             tabIndex={props.hasFocus ? "0" : "-1"}
           >
-            <FontAwesomeIcon icon={faCompressAlt} />
+            <CgCompressRight />
           </button>
         ) : props.maximisable ? (
           <button
@@ -44,7 +38,7 @@ function TopBar(props) {
             onClick={props.onClickMaximise}
             tabIndex={props.hasFocus ? "0" : "-1"}
           >
-            <FontAwesomeIcon icon={faExpandAlt} />
+            <CgExpand />
           </button>
         ) : null}
 
@@ -55,7 +49,7 @@ function TopBar(props) {
             onClick={props.onClickClose}
             tabIndex={props.hasFocus ? "0" : "-1"}
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <CgClose />
           </button>
         ) : null}
       </div>

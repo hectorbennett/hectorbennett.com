@@ -2,13 +2,16 @@ import "../styles/globals.scss";
 
 import Layout from "../components/Layout";
 import { RecoilRoot } from "recoil";
+import { IconContext } from "react-icons";
 
 function MyApp({ Component, pageProps }) {
   return (
     <RecoilRoot>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <IconContext.Provider value={{ className: "icon" }}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </IconContext.Provider>
     </RecoilRoot>
   );
 }

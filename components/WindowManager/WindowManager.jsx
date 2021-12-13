@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTerminal,
-  faGlobeEurope,
-  faGift,
-} from "@fortawesome/free-solid-svg-icons";
+  RiSwordLine,
+  RiTerminalLine,
+  RiGiftLine,
+  RiGamepadLine,
+} from "react-icons/ri";
 
 import Icon, { slime } from "../Icon";
 
@@ -33,7 +33,7 @@ export default function WindowManager(props) {
         width: 350,
         height: 350,
         component: <Terminal openApp={openApp} />,
-        icon: <FontAwesomeIcon icon={faTerminal} />,
+        icon: <RiTerminalLine />,
         closable: true,
         maximisable: true,
       },
@@ -43,7 +43,7 @@ export default function WindowManager(props) {
         width: 800,
         height: 450,
         component: <WorldWar />,
-        icon: <FontAwesomeIcon icon={faGlobeEurope} />,
+        icon: <RiSwordLine />,
         closable: true,
         maximisable: true,
         lockAspectRatio: true,
@@ -54,7 +54,7 @@ export default function WindowManager(props) {
         width: 1200,
         height: 600,
         component: <SecretSanta />,
-        icon: <FontAwesomeIcon icon={faGift} />,
+        icon: <RiGiftLine />,
         closable: true,
         maximisable: true,
       },
@@ -64,7 +64,7 @@ export default function WindowManager(props) {
         width: 722,
         height: 460,
         component: <SlimeSoccer />,
-        icon: <Icon icon={slime} />,
+        icon: <RiGamepadLine />,
         closable: true,
         maximisable: true,
       },

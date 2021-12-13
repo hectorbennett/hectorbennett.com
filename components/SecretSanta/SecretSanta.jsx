@@ -1,8 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
+import {
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from "recoil";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { RiSendPlaneLine } from "react-icons/ri";
 
 import Scrollable from "../Scrollable";
 import Checkbox from "../Checkbox";
@@ -34,6 +39,17 @@ const messageState = atom({
   default: DEFAULT_MESSAGE,
 });
 
+const subjectErrorState = selector({
+  key: "subjectErrorState",
+  get: ({ get }) => {
+    const subject = get(subjectState);
+    if (!subject) {
+      return "Add a subject";
+    }
+    return "";
+  },
+});
+
 const messageErrorState = selector({
   key: "messageErrorState",
   get: ({ get }) => {
@@ -46,17 +62,6 @@ const messageErrorState = selector({
     }
     if (!message.includes("{giftee}")) {
       return "The text '{giftee}' (without quotation marks) must exist at least once within the body of the email";
-    }
-    return "";
-  },
-});
-
-const subjectErrorState = selector({
-  key: "subjectErrorState",
-  get: ({ get }) => {
-    const subject = get(subjectState);
-    if (!subject) {
-      return "Add a subject";
     }
     return "";
   },
@@ -82,6 +87,25 @@ const invalidPairsState = atom({
 
 export default function SecretSanta(props) {
   const [santas, setSantas] = useRecoilState(santaListState);
+
+  const resetSubject = useResetRecoilState(subjectState);
+  const resetMessage = useResetRecoilState(messageState);
+  // const resetSubjectErrors = useResetRecoilState(subjectErrorState);
+  // const resetMessageErrors = useResetRecoilState(messageErrorState);
+  const resetSantaList = useResetRecoilState(santaListState);
+  const resetInvalidPairs = useResetRecoilState(invalidPairsState);
+
+  useEffect(() => {
+    return () => {
+      resetSubject();
+      resetMessage();
+      // resetSubjectErrors();
+      // resetMessageErrors();
+      resetSantaList();
+      resetInvalidPairs();
+    };
+  }, []);
+
   return (
     <Scrollable.div className={styles.secret_santa}>
       <div
@@ -424,7 +448,7 @@ function SendButton(props) {
         disabled={errors.length}
         onClick={handleClick}
       >
-        Send <FontAwesomeIcon icon={faPaperPlane} />
+        <RiSendPlaneLine /> Send
       </button>
     </>
   );

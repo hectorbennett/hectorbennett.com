@@ -88,16 +88,16 @@
 }
 
 .control_button {
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  cursor: pointer;
-  margin: 0 0.2rem;
-  padding: 0.7rem;
-  font-size: 0.7rem;
-  width: 1.2rem;
-  height: 1.2rem;
+  // border-radius: 100%;
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-evenly;
+  // cursor: pointer;
+  // margin: 0 0.2rem;
+  // padding: 0.7rem;
+  // font-size: 0.7rem;
+  // width: 1.2rem;
+  // height: 1.2rem;
 
   @include screens.touchscreen {
     font-size: 1rem;

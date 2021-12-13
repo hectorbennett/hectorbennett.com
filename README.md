@@ -4,7 +4,6 @@ www.hectorbennett.com
 
 
 Secret santa todo:
- - Add subject and message
  - Warn if impossible combination
  - make scrollbar visible
  - split out styles into classes
@@ -12,7 +11,8 @@ Secret santa todo:
  - Add santa help text to terminal
  - Add bcc
  - animate cards
- - make dark mode checkboxes
+ - add colors as sass variables
+ - improve appearance of alert
 
 done:
 - stop windows disappearing
@@ -20,3 +20,6 @@ done:
 - Warn if invalid email address
 - Warn if duplicate names
 - add focus css to checkboxes
+- make dark mode checkboxes
+- Add subject and message
+- clear data on window close
