@@ -1,0 +1,75 @@
+@use "sass:math";
+// @use "Shared/screens";
+
+$widths: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.col {
+  display: flex;
+  flex: 1;
+}
+
+.grid.xs,
+.grid.sm,
+.grid.md,
+.grid.lg,
+.grid.xl {
+  @each $width in $widths {
+    .col-xs-#{$width} {
+      flex: none;
+      width: math.div(100%, 12) * $width;
+    }
+  }
+}
+
+.grid.sm,
+.grid.md,
+.grid.lg,
+.grid.xl {
+  @each $width in $widths {
+    .col-sm-#{$width} {
+      flex: none;
+      width: math.div(100%, 12) * $width;
+    }
+  }
+}
+
+.grid.md,
+.grid.lg,
+.grid.xl {
+  @each $width in $widths {
+    .col-md-#{$width} {
+      flex: none;
+      width: math.div(100%, 12) * $width;
+    }
+  }
+}
+
+.grid.lg,
+.grid.xl {
+  @each $width in $widths {
+    .col-lg-#{$width} {
+      flex: none;
+      width: math.div(100%, 12) * $width;
+    }
+  }
+}
+
+.grid.xl {
+  @each $width in $widths {
+    .col-xl-#{$width} {
+      flex: none;
+      width: math.div(100%, 12) * $width;
+    }
+  }
+}

@@ -9,6 +9,8 @@ import {
 
 import { RiSendPlaneLine, RiSpamLine } from "react-icons/ri";
 
+import { Grid, Row, Col } from "../Grid";
+
 import Scrollable from "../Scrollable";
 import Checkbox from "../Checkbox";
 import styles from "./SecretSanta.module.scss";
@@ -108,48 +110,54 @@ export default function SecretSanta(props) {
 
   return (
     <Scrollable.div className={styles.secret_santa}>
-      <div
+      {/* <div
         style={{ display: "flex", width: "100%", flexWrap: "wrap", padding: 5 }}
-      >
-        {/* <TransitionGroup> */}
-        {santas.map((santa, i) => (
-          // <CSSTransition key={i} timeout={500} classNames="item">
-          <Santa
-            key={i}
-            id={santa.id}
-            onChangeName={(e) => {
-              setSantas((santas) => {
-                var _santas = santas.map((santa, j) => {
-                  if (i == j) {
-                    return { ...santa, name: e.target.value };
-                  }
-                  return santa;
-                });
-                if (e.target.value && santas.length === i + 1) {
-                  _santas.push({ name: "", email: "", id: i + 1 });
-                } else if (!e.target.value && santas.length > i + 1) {
-                  if (!santas[i + 1].name) {
-                    _santas = _santas.slice(0, -1);
-                  }
-                }
-                return _santas;
-              });
-            }}
-            onChangeEmail={(e) => {
-              setSantas((santas) =>
-                santas.map((santa, j) => {
-                  if (i == j) {
-                    return { ...santa, email: e.target.value };
-                  }
-                  return santa;
-                })
-              );
-            }}
-          />
-          // </CSSTransition>
-        ))}
-        {/* </TransitionGroup> */}
-      </div>
+      > */}
+      <Grid>
+        <Row>
+          {/* <TransitionGroup> */}
+          {santas.map((santa, i) => (
+            // <CSSTransition key={i} timeout={500} classNames="item">
+            <Col key={i} sm={12} md={6} lg={4}>
+              <Santa
+                id={santa.id}
+                onChangeName={(e) => {
+                  setSantas((santas) => {
+                    var _santas = santas.map((santa, j) => {
+                      if (i == j) {
+                        return { ...santa, name: e.target.value };
+                      }
+                      return santa;
+                    });
+                    if (e.target.value && santas.length === i + 1) {
+                      _santas.push({ name: "", email: "", id: i + 1 });
+                    } else if (!e.target.value && santas.length > i + 1) {
+                      if (!santas[i + 1].name) {
+                        _santas = _santas.slice(0, -1);
+                      }
+                    }
+                    return _santas;
+                  });
+                }}
+                onChangeEmail={(e) => {
+                  setSantas((santas) =>
+                    santas.map((santa, j) => {
+                      if (i == j) {
+                        return { ...santa, email: e.target.value };
+                      }
+                      return santa;
+                    })
+                  );
+                }}
+              />
+            </Col>
+            // </CSSTransition>
+          ))}
+        </Row>
+      </Grid>
+
+      {/* </TransitionGroup> */}
+      {/* </div> */}
       <Message />
     </Scrollable.div>
   );
@@ -220,11 +228,7 @@ function Santa(props) {
   };
 
   return (
-    <div
-      style={{ width: "50%", minWidth: "30rem", padding: 5 }}
-      onBlur={handleBlur}
-      ref={ref}
-    >
+    <div style={{ width: "100%", padding: 5 }} onBlur={handleBlur} ref={ref}>
       <Card>
         <div
           style={{ padding: "1rem", textAlign: "center", fontWeight: "bold" }}
