@@ -107,6 +107,7 @@ export default function Window(props) {
       height={props.height}
       lockAspectRatio={props.lockAspectRatio}
       dragHandleClassName={styles.top_bar}
+      isOpen={props.isOpen}
       isMaximised={props.mode === "maximised"}
       isMinimised={props.isMinimised}
       zIndex={props.zIndex}

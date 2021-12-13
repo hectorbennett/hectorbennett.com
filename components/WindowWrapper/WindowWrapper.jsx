@@ -57,10 +57,14 @@ export default function WindowWrapper(props) {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      addClassName(styles.open);
-    }, 300)
-  }, [])
+    if (props.isOpen) {
+      setTimeout(() => {
+        addClassName(styles.open);
+      }, 300);
+    } else {
+      removeClassName(styles.open);
+    }
+  }, [props.isOpen]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -70,8 +74,8 @@ export default function WindowWrapper(props) {
         setTimeout(() => {
           removeClassName(styles.transitioning);
         }, 200);
-      }, 10);
-    }, 10);
+      }, 50);
+    }, 50);
   }, [props.isMaximised]);
 
   useEffect(() => {
@@ -82,8 +86,8 @@ export default function WindowWrapper(props) {
         setTimeout(() => {
           removeClassName(styles.transitioning);
         }, 200);
-      }, 10);
-    }, 10);
+      }, 50);
+    }, 50);
   }, [props.isMinimised]);
 
   const getValidPosition = (position) => {
