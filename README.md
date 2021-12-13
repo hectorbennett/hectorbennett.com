@@ -14,6 +14,7 @@ Secret santa todo:
  - improve appearance of alert
  - fix secret santa not unfocusing on click outside
  - swap react-transition-group for react-transition-state
+ - add ellipsis to checkboxes
 
 done:
 - stop windows disappearing
@@ -27,3 +28,4 @@ done:
 - add full screen toggle
 - fix awkward box shadow on window close
 - animate cards
+- improve responsivity
