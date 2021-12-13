@@ -14,7 +14,6 @@ Secret santa todo:
  - add colors as sass variables
  - improve appearance of alert
  - fix secret santa not unfocusing on click outside
- - fix awkward box shadow on window close
 
 done:
 - stop windows disappearing
@@ -26,3 +25,4 @@ done:
 - Add subject and message
 - clear data on window close
 - add full screen toggle
+- fix awkward box shadow on window close

@@ -7,6 +7,8 @@ import {
   useResetRecoilState,
 } from "recoil";
 
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+
 import { RiSendPlaneLine } from "react-icons/ri";
 
 import Scrollable from "../Scrollable";
@@ -111,41 +113,43 @@ export default function SecretSanta(props) {
       <div
         style={{ display: "flex", width: "100%", flexWrap: "wrap", padding: 5 }}
       >
-        {santas.map((santa, i) => (
-          <Santa
-            key={i}
-            index={i}
-            id={santa.id}
-            onChangeName={(e) => {
-              setSantas((santas) => {
-                var _santas = santas.map((santa, j) => {
-                  if (i == j) {
-                    return { ...santa, name: e.target.value };
-                  }
-                  return santa;
-                });
-                if (e.target.value && santas.length === i + 1) {
-                  _santas.push({ name: "", email: "", id: i + 1 });
-                } else if (!e.target.value && santas.length > i + 1) {
-                  if (!santas[i + 1].name) {
-                    _santas = _santas.slice(0, -1);
-                  }
-                }
-                return _santas;
-              });
-            }}
-            onChangeEmail={(e) => {
-              setSantas((santas) =>
-                santas.map((santa, j) => {
-                  if (i == j) {
-                    return { ...santa, email: e.target.value };
-                  }
-                  return santa;
-                })
-              );
-            }}
-          />
-        ))}
+        <TransitionGroup>
+          {santas.map((santa, i) => (
+            <CSSTransition key={i} timeout={500} classNames="item">
+              <Santa
+                id={santa.id}
+                onChangeName={(e) => {
+                  setSantas((santas) => {
+                    var _santas = santas.map((santa, j) => {
+                      if (i == j) {
+                        return { ...santa, name: e.target.value };
+                      }
+                      return santa;
+                    });
+                    if (e.target.value && santas.length === i + 1) {
+                      _santas.push({ name: "", email: "", id: i + 1 });
+                    } else if (!e.target.value && santas.length > i + 1) {
+                      if (!santas[i + 1].name) {
+                        _santas = _santas.slice(0, -1);
+                      }
+                    }
+                    return _santas;
+                  });
+                }}
+                onChangeEmail={(e) => {
+                  setSantas((santas) =>
+                    santas.map((santa, j) => {
+                      if (i == j) {
+                        return { ...santa, email: e.target.value };
+                      }
+                      return santa;
+                    })
+                  );
+                }}
+              />
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
       </div>
       <Message />
     </Scrollable.div>
