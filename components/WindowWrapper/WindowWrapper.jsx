@@ -48,13 +48,27 @@ export default function WindowWrapper(props) {
     });
   }, []);
 
+  function addClassName(className) {
+    setClassNames((c) => [...new Set(c.concat([className]))]);
+  }
+
+  function removeClassName(className) {
+    setClassNames((c) => c.filter((c) => c !== className));
+  }
+
   useEffect(() => {
     setTimeout(() => {
-      setClassNames([styles.window_wrapper, styles.transitioning]);
+      addClassName(styles.open);
+    }, 300)
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      addClassName(styles.transitioning);
       setTimeout(() => {
         setIsMaximised(props.isMaximised);
         setTimeout(() => {
-          setClassNames([styles.window_wrapper]);
+          removeClassName(styles.transitioning);
         }, 200);
       }, 10);
     }, 10);
@@ -62,11 +76,11 @@ export default function WindowWrapper(props) {
 
   useEffect(() => {
     setTimeout(() => {
-      setClassNames([styles.window_wrapper, styles.transitioning]);
+      addClassName(styles.transitioning);
       setTimeout(() => {
         setIsMinimised(props.isMinimised);
         setTimeout(() => {
-          setClassNames([styles.window_wrapper]);
+          removeClassName(styles.transitioning);
         }, 200);
       }, 10);
     }, 10);

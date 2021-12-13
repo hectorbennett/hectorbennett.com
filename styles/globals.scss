@@ -78,10 +78,11 @@ button {
   vertical-align: middle;
   user-select: none;
   width: 1em;
+  min-width: 1em;
   height: 1em;
+  min-height: 1em;
   display: inline-block;
   fill: currentcolor;
-  font-size: 1.25rem;
   path {
     stroke: currentColor;
   }

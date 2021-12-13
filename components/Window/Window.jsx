@@ -1,7 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { CgClose, CgMathMinus, CgCompressRight, CgExpand } from "react-icons/cg";
+import {
+  CgClose,
+  CgMathMinus,
+  CgCompressRight,
+  CgExpand,
+} from "react-icons/cg";
 
 import WindowWrapper from "../WindowWrapper";
 
