@@ -10,10 +10,10 @@ Secret santa todo:
  - split out components
  - Add santa help text to terminal
  - Add bcc
- - animate cards
  - add colors as sass variables
  - improve appearance of alert
  - fix secret santa not unfocusing on click outside
+ - swap react-transition-group for react-transition-state
 
 done:
 - stop windows disappearing
@@ -26,3 +26,4 @@ done:
 - clear data on window close
 - add full screen toggle
 - fix awkward box shadow on window close
+- animate cards
