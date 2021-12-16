@@ -7,8 +7,6 @@ import {
   RiGamepadLine,
 } from "react-icons/ri";
 
-import Icon, { slime } from "../Icon";
-
 import Window from "../Window";
 import Tray from "../Tray";
 
@@ -48,16 +46,16 @@ export default function WindowManager(props) {
         maximisable: true,
         lockAspectRatio: true,
       },
-      {
-        name: "secretSanta",
-        title: "secret santa",
-        width: 1200,
-        height: 600,
-        component: <SecretSanta />,
-        icon: <RiGiftLine />,
-        closable: true,
-        maximisable: true,
-      },
+      // {
+      //   name: "secretSanta",
+      //   title: "secret santa",
+      //   width: 1200,
+      //   height: 600,
+      //   component: <SecretSanta />,
+      //   icon: <RiGiftLine />,
+      //   closable: true,
+      //   maximisable: true,
+      // },
       {
         name: "slimeSoccer",
         title: "slime soccer",
