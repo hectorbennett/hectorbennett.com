@@ -15,6 +15,8 @@ import Scrollable from "../Scrollable";
 import Checkbox from "../Checkbox";
 import styles from "./SecretSanta.module.scss";
 
+import { has_valid_derangement } from "./has_valid_derangement";
+
 import Card from "../Card";
 
 const DEFAULT_SUBJECT = `Top secret santa email for {santa}`;
@@ -66,6 +68,24 @@ const messageErrorState = selector({
       return "The text '{giftee}' (without quotation marks) must exist at least once within the body of the email";
     }
     return "";
+  },
+});
+
+const hasValidDerangementState = selector({
+  key: "hasValidDerangement",
+  get: ({ get }) => {
+    const santas = get(santaListState);
+    const invalidPairs = get(invalidPairsState);
+    const getSantaNameFromId = (id) => {
+      return santas.find((santa) => santa.id === id).name;
+    };
+    return has_valid_derangement(
+      santas.map((santa) => santa.name).filter(Boolean),
+      invalidPairs.map((pair) => [
+        getSantaNameFromId(pair[0]),
+        getSantaNameFromId(pair[1]),
+      ])
+    );
   },
 });
 
@@ -132,7 +152,7 @@ export default function SecretSanta(props) {
                     if (e.target.value && santas.length === i + 1) {
                       _santas.push({ name: "", email: "", id: i + 1 });
                     } else if (!e.target.value && santas.length > i + 1) {
-                      if (!santas[i + 1].name) {
+                      if (!santas[i + 1]?.name) {
                         _santas = _santas.slice(0, -1);
                       }
                     }
@@ -166,8 +186,8 @@ export default function SecretSanta(props) {
 function Santa(props) {
   const ref = useRef();
   const [santas, setSantas] = useRecoilState(santaListState);
-  const [nameError, setNameError] = useState("name error");
-  const [emailError, setEmailError] = useState("email error");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [showingNameError, setShowingNameError] = useState(false);
   const [showingEmailError, setShowingEmailError] = useState(false);
 
@@ -274,13 +294,19 @@ function Santa(props) {
 function InvalidPairs(props) {
   const santas = useRecoilValue(santaListState);
   const [invalidPairs, setInvalidPairs] = useRecoilState(invalidPairsState);
+  const hasValidDerangement = useRecoilValue(hasValidDerangementState);
   const doNotPairWithIds = invalidPairs
     .filter((pair) => pair.includes(props.id))
     .flat();
+
+  const classNames = [styles.checkboxes];
+  if (santas.length >= 3 && !hasValidDerangement) {
+    classNames.push(styles.error);
+  }
   return (
     <label style={{ display: "flex", flexDirection: "column", flex: 1 }}>
       <span style={{ marginTop: 10 }}>Do not pair with</span>
-      <Scrollable.div className={styles.checkboxes} style={{ flex: 1 }}>
+      <Scrollable.div className={classNames.join(" ")} style={{ flex: 1 }}>
         {santas
           .filter((santa) => santa.id !== props.id && santa.name)
           .map((santa, i) => {
@@ -292,6 +318,7 @@ function InvalidPairs(props) {
                 checked={selected}
                 key={i}
                 value={santa.id}
+                disabled={!selected && !hasValidDerangement}
                 onChange={() =>
                   selected
                     ? setInvalidPairs((pairs) =>
@@ -408,6 +435,8 @@ function SendButton(props) {
     (santa) => santa.name || santa.email
   );
   const invalidPairs = useRecoilValue(invalidPairsState);
+  const hasValidDerangement = useRecoilValue(hasValidDerangementState);
+  // const [hasValidDerangement, setHasValidDerangement] = useState(false);
 
   const getSantaNameFromId = (id) => {
     return santas.find((santa) => santa.id === id).name;
@@ -427,25 +456,30 @@ function SendButton(props) {
     if (messageError) {
       e.push("You must fix all the errors on the message");
     }
+    if (santas.length >= 3 && !hasValidDerangement) {
+      e.push("Too many restrictions");
+    }
     return e;
   })();
 
+  const data = {
+    santas: santas.map((santa) => ({
+      santa: santa.name,
+      email: santa.email,
+    })),
+    invalid_pairs: invalidPairs.map((pair) => [
+      getSantaNameFromId(pair[0]),
+      getSantaNameFromId(pair[1]),
+    ]),
+    subject: subject,
+    message: message,
+    test: true,
+  };
+
   const handleClick = () => {
-    const data = {
-      santas: santas.map((santa) => ({
-        santa: santa.name,
-        email: santa.email,
-      })),
-      invalid_pairs: invalidPairs.map((pair) => [
-        getSantaNameFromId(pair[0]),
-        getSantaNameFromId(pair[1]),
-      ]),
-      subject: subject,
-      message: message,
-      test: true,
-    };
     console.log(data);
   };
+
   return (
     <>
       {errors.length ? (
