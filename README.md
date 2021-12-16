@@ -4,7 +4,6 @@ www.hectorbennett.com
 
 
 Secret santa todo:
- - Warn if impossible combination
  - make scrollbar visible
  - split out styles into classes
  - split out components
@@ -15,6 +14,9 @@ Secret santa todo:
  - fix secret santa not unfocusing on click outside
  - swap react-transition-group for react-transition-state
  - add ellipsis to checkboxes
+ - fix error when clicking checkbox in field with blank name
+ - don't run checks till blur, rather than onChange
+ - prevent checkbox overflow
 
 done:
 - stop windows disappearing
@@ -29,3 +31,4 @@ done:
 - fix awkward box shadow on window close
 - animate cards
 - improve responsivity
+- Warn if impossible combination
