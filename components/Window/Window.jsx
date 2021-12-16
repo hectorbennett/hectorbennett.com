@@ -95,7 +95,7 @@ export default function Window(props) {
     }
 
     setClassNames(_classNames);
-  }, [props.hasFocus, props.isOpen]);
+  }, [props.hasFocus, props.isOpen, classNames]);
 
   if (!isOpen) {
     return null;
