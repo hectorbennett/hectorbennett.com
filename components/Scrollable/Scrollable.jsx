@@ -2,22 +2,35 @@ import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./Scrollable.module.scss";
 
-const Scrollable = forwardRef(function Scrollable(props, ref) {
-  const { scroll, className, ..._props } = props;
+const ScrollableBase = forwardRef(function Scrollable(props, ref) {
+  const { scroll, className, nodeType, ..._props } = props;
   var classNames = [styles.scrollable, styles[scroll]];
   if (className) {
     classNames.push(className);
   }
-  return <div ref={ref} {..._props} className={classNames.join(" ")} />;
+  return (
+    <props.nodeType ref={ref} {..._props} className={classNames.join(" ")} />
+  );
 });
 
-Scrollable.propTypes = {
+ScrollableBase.propTypes = {
   scroll: PropTypes.oneOf(["x", "y", "both"]),
   className: PropTypes.string,
+  nodeType: PropTypes.string,
 };
 
-Scrollable.defaultProps = {
+ScrollableBase.defaultProps = {
   scroll: "y",
+  nodeType: "div",
 };
 
-export default Scrollable;
+const ScrollableTextArea = forwardRef(function ScrollableTextArea(props, ref) {
+  return <ScrollableBase ref={ref} nodeType="textarea" {...props} />;
+});
+
+const out = {
+  div: ScrollableBase,
+  textarea: ScrollableTextArea,
+};
+
+export default out;

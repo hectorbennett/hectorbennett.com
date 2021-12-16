@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, Fragment } from "react";
+import levenshtein from "js-levenshtein";
 import styles from "./Terminal.module.scss";
 
 import Scrollable from "../Scrollable";
@@ -10,6 +11,7 @@ Type \`help\' followed by the name of a command to find out more about the comma
 Use \`info hector\' to find out more about Hector in general.
 
 clear
+fullscreen
 help
 slime
 war`;
@@ -17,7 +19,7 @@ war`;
 const help_slime_text = `Slime Soccer is my remake of Quin Pendragon's Java game from the very early 2000s which unfortunately no longer works on modern browsers :(.
 This remake was made in the Godot game engine.
 
-Source can be found at <a href="https://github.com/hectorbennett/slime-soccer" target="_blank" rel="noreferrer">https://github.com/hectorbennett/slime-soccer</a>
+Source can be found at <a href="https://github.com/hectorbennett/slime-soccer" target="_blank" rel="noreferrer">https://github.com/hectorbennett/slime-soccer</a>.
 
 Controls
 --------
@@ -38,7 +40,7 @@ The procedure works as follows:
 
 Repeat until only one country remains. China usually wins.
 
-I won't list all the victors but running the algorithm 10,000 times I found the following likelyhood of victory
+I won't list all the victors but running the algorithm 10,000 times I found the following likelyhood of victory:
 
 China - 69%
 India - 24%
@@ -117,34 +119,51 @@ export default function Terminal(props) {
 
     "help clear": () => "Clears the terminal.",
 
-    "help help": () => "Type `help' to get help",
+    "help help": () => "Type `help' to get help.",
 
     "help name": () => <SplitText text={help_name_text} />,
+
+    fullscreen: () => {
+      if (!document.fullscreenElement) {
+        document.body.requestFullscreen();
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    },
+
+    "help fullscreen": () => "Toggles full screen mode.",
+
+    clear: () => setQueries([]),
   };
 
   const submit = (query) => {
-    if (query === "clear") {
-      setQueries([]);
-      setInputValue("");
-      return;
-    }
-
     /* Append the new query and its output to the list of
     queries we have previously submitted */
     var command = COMMANDS[query];
     if (command) {
       var output = command();
     } else {
-      output = `${query}: command not found. Type \`help' for a list of available commands.`;
+      output = getNotFoundOutput(query);
     }
 
-    /* Display the new output, clear the input and scroll to the bottom */
-    setQueries([...queries, { input: query, output: output }]);
+    if (query !== "clear") {
+      /* Display the new output, clear the input and scroll to the bottom */
+      setQueries((q) => [...q, { input: query, output: output }]);
+    }
     setInputValue("");
   };
 
+  const getNotFoundOutput = (query) => {
+    for (let command in COMMANDS) {
+      if (levenshtein(command, query) <= 2) {
+        return `${query}: command not found. Did you mean to type \`${command}'?.`;
+      }
+    }
+    return `${query}: command not found. Type \`help' for a list of available commands.`;
+  };
+
   return (
-    <Scrollable
+    <Scrollable.div
       className={styles.terminal}
       onClick={() => inputRef.current.focus()}
       ref={contentRef}
@@ -175,6 +194,6 @@ export default function Terminal(props) {
           />
         </div>
       </div>
-    </Scrollable>
+    </Scrollable.div>
   );
 }

@@ -36,18 +36,12 @@ export default function Home() {
         />
         <link
           rel="preload"
-          href="/fonts/Catamaran-Black.woff"
-          as="font"
-          crossOrigin=""
-        />
-        <link
-          rel="preload"
           href="/fonts/Droid-Sans-Mono.woff"
           as="font"
           crossOrigin=""
         />
       </Head>
-      <Scrollable style={{ width: "100%" }}>
+      <Scrollable.div style={{ width: "100%" }}>
         <Section>
           <h1>
             <span className="highlight">
@@ -99,7 +93,7 @@ export default function Home() {
             Type <code>help</code>.
           </p>
         </Section>
-      </Scrollable>
+      </Scrollable.div>
       <WindowManager />
     </>
   );

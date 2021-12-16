@@ -1,12 +1,12 @@
 @use "styles/colours";
 @use "styles/fonts";
+@use "styles/screens";
 
 .tray {
   min-height: 10px;
   position: fixed;
   right: 8px;
-  top: 50%;
-  transform: translate(0, -50%);
+  bottom: 3rem;
   background: colours.$steelgrey;
   display: flex;
   flex-direction: column;
@@ -16,13 +16,19 @@
   border-right: none;
   border-radius: 5px 0px 0px 5px;
   z-index: 0;
+  box-shadow: 0 4px 30px rgb(0 0 0 / 30%);
+
+  @include screens.md {
+    top: 50%;
+    transform: translate(0, -50%);
+    bottom: initial;
+  }
 
   &:hover,
   &:focus-within {
     z-index: 2147483647;
   }
 }
-
 
 .tray_item {
   display: flex;
@@ -97,4 +103,5 @@
   white-space: nowrap;
   opacity: 0;
   transition: all 0.2s;
+  pointer-events: none;
 }

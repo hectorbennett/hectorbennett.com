@@ -1,0 +1,26 @@
+.card {
+  background-color: #3e4145;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
+  border-radius: 5px;
+  transition: all 100ms;
+  opacity: 0;
+  transform: scale(0.8);
+  border-bottom: 2px solid #ffffff3d;
+}
+
+.exited,
+.exiting {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.entering {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.entered {
+  transform: scale(1);
+  opacity: 1;
+}

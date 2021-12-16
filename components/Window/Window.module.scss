@@ -6,7 +6,7 @@
   position: fixed;
   border: 2px solid colours.$cornflower;
   background: colours.$cornflower;
-  font-size: 16px;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -71,7 +71,12 @@
 .control_buttons {
   position: absolute;
   display: flex;
-  right: 0rem;
+  right: 0.4rem;
+  
+  @include screens.touchscreen {
+    right: 0.4rem;
+  }
+
 }
 
 .icon {
@@ -94,8 +99,6 @@
   justify-content: space-evenly;
   cursor: pointer;
   margin: 0 0.2rem;
-  padding: 0.7rem;
-  font-size: 0.7rem;
   width: 1.2rem;
   height: 1.2rem;
 

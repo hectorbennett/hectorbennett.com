@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useEffect, useState } from "react";
 import { Rnd } from "react-rnd";
 import styles from "./WindowWrapper.module.scss";
 
@@ -26,36 +26,84 @@ export default function WindowWrapper(props) {
     }
   }, []);
 
+  useLayoutEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
+  const handleWindowResize = () => {
+    setPosition((position) => getValidPosition(position));
+  };
+
   useEffect(() => {
     setPosition({
-      x: window.innerWidth - props.width - randomIntFromInterval(100, 150),
-      y: window.innerHeight - props.height - randomIntFromInterval(100, 150),
+      x: Math.max(
+        window.innerWidth - props.width - randomIntFromInterval(100, 150),
+        50
+      ),
+      y: Math.max(
+        window.innerHeight - props.height - randomIntFromInterval(100, 150),
+        50
+      ),
     });
   }, []);
 
+  function addClassName(className) {
+    setClassNames((c) => [...new Set(c.concat([className]))]);
+  }
+
+  function removeClassName(className) {
+    setClassNames((c) => c.filter((c) => c !== className));
+  }
+
+  useEffect(() => {
+    if (props.isOpen) {
+      setTimeout(() => {
+        addClassName(styles.open);
+      }, 300);
+    } else {
+      removeClassName(styles.open);
+    }
+  }, [props.isOpen]);
+
   useEffect(() => {
     setTimeout(() => {
-      setClassNames([styles.window_wrapper, styles.transitioning]);
+      addClassName(styles.transitioning);
       setTimeout(() => {
         setIsMaximised(props.isMaximised);
         setTimeout(() => {
-          setClassNames([styles.window_wrapper]);
+          removeClassName(styles.transitioning);
         }, 200);
-      }, 10);
-    }, 10);
+      }, 50);
+    }, 50);
   }, [props.isMaximised]);
 
   useEffect(() => {
     setTimeout(() => {
-      setClassNames([styles.window_wrapper, styles.transitioning]);
+      addClassName(styles.transitioning);
       setTimeout(() => {
         setIsMinimised(props.isMinimised);
         setTimeout(() => {
-          setClassNames([styles.window_wrapper]);
+          removeClassName(styles.transitioning);
         }, 200);
-      }, 10);
-    }, 10);
+      }, 50);
+    }, 50);
   }, [props.isMinimised]);
+
+  const getValidPosition = (position) => {
+    const newPosition = { x: position.x, y: position.y };
+    if (position.y < 0) {
+      newPosition.y = 0;
+    } else if (position.y > window.innerHeight) {
+      newPosition.y = window.innerHeight - 50;
+    }
+    if (position.x < -size.width + 50) {
+      newPosition.x = -size.width + 100;
+    } else if (position.x > window.innerWidth) {
+      newPosition.x = window.innerWidth - 50;
+    }
+    return newPosition;
+  };
 
   useEffect(() => {
     setComponent(
@@ -69,11 +117,11 @@ export default function WindowWrapper(props) {
         dragHandleClassName={props.dragHandleClassName}
         disableDragging={isMaximised || isMobileDevice}
         onDragStop={(e, d) => {
-          setPosition(d);
+          setPosition(getValidPosition(d));
         }}
         onResizeStop={(e, direction, ref, delta, position) => {
           setSize({ width: ref.style.width, height: ref.style.height });
-          setPosition(position);
+          setPosition(getValidPosition(position));
         }}
         size={
           isMinimised
@@ -93,6 +141,8 @@ export default function WindowWrapper(props) {
         minHeight={isMinimised ? null : props.minHeight}
         maxWidth="100vw"
         maxHeight="100vh"
+        // bounds="window"
+        enableUserSelectHack={true}
         style={{
           zIndex: props.zIndex,
           opacity: isMinimised ? 0 : 1,

@@ -1,6 +1,6 @@
 $default-font: "Alice Regular", serif;
 $monospace-font: "Droid Sans Mono", monospace;
-$secret-santa-font: "Catamaran Black";
+$secret-santa-font: "Readex Pro", serif;
 
 @font-face {
   font-family: "Alice Regular";
@@ -13,6 +13,16 @@ $secret-santa-font: "Catamaran Black";
 }
 
 @font-face {
-  font-family: "Catamaran Black";
-  src: url("/fonts/Catamaran-Black.woff") format("woff");
+  font-family: "Readex Pro";
+  src: url("/fonts/ReadexPro-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Readex Pro";
+  src: url("/fonts/ReadexPro-Light.woff") format("woff");
+  font-weight: lighter;
+}
+@font-face {
+  font-family: "Readex Pro";
+  src: url("/fonts/ReadexPro-SemiBold.woff") format("woff");
+  font-weight: bold;
 }

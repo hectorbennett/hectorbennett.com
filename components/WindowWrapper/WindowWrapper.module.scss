@@ -1,5 +1,13 @@
 .window_wrapper {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: none;
+
   &.transitioning {
     transition: all 0.2s ease-in;
   }
+}
+
+.open {
+  box-shadow: 0 4px 30px rgb(0 0 0 / 30%);
 }

@@ -11,6 +11,7 @@
   overflow: hidden;
   border: 8px solid;
   border-image: colours.$gradient 1;
+  background: colours.$background;
 
   @include screens.md {
     font-size: 1.5rem;

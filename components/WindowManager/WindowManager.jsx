@@ -1,13 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTerminal,
-  faGlobeEurope,
-  faGift,
-} from "@fortawesome/free-solid-svg-icons";
-
-import Icon, { slime } from "../Icon";
+  RiSwordLine,
+  RiTerminalLine,
+  RiGiftLine,
+  RiGamepadLine,
+} from "react-icons/ri";
 
 import Window from "../Window";
 import Tray from "../Tray";
@@ -15,8 +13,11 @@ import Tray from "../Tray";
 import SlimeSoccer from "../SlimeSoccer";
 import WorldWar from "../WorldWar";
 import Terminal from "../Terminal";
+import SecretSanta from "../SecretSanta";
 
 import styles from "./WindowManager.module.scss";
+
+let highestZIndex = 0;
 
 export default function WindowManager(props) {
   const [apps, setApps] = useState([]);
@@ -30,7 +31,7 @@ export default function WindowManager(props) {
         width: 350,
         height: 350,
         component: <Terminal openApp={openApp} />,
-        icon: <FontAwesomeIcon icon={faTerminal} />,
+        icon: <RiTerminalLine />,
         closable: true,
         maximisable: true,
       },
@@ -40,7 +41,7 @@ export default function WindowManager(props) {
         width: 800,
         height: 450,
         component: <WorldWar />,
-        icon: <FontAwesomeIcon icon={faGlobeEurope} />,
+        icon: <RiSwordLine />,
         closable: true,
         maximisable: true,
         lockAspectRatio: true,
@@ -48,11 +49,10 @@ export default function WindowManager(props) {
       // {
       //   name: "secretSanta",
       //   title: "secret santa",
-      //   width: 700,
+      //   width: 1200,
       //   height: 600,
-      //   // component: <SecretSanta />,
-      //   component: <div>Hello world</div>,
-      //   icon: <FontAwesomeIcon icon={faGift} />,
+      //   component: <SecretSanta />,
+      //   icon: <RiGiftLine />,
       //   closable: true,
       //   maximisable: true,
       // },
@@ -62,7 +62,7 @@ export default function WindowManager(props) {
         width: 722,
         height: 460,
         component: <SlimeSoccer />,
-        icon: <Icon icon={slime} />,
+        icon: <RiGamepadLine />,
         closable: true,
         maximisable: true,
       },
@@ -75,13 +75,10 @@ export default function WindowManager(props) {
     }, 2000);
   }, []);
 
-  const getNextHighestZIndex = () => {
-    var current_max = 0;
-    apps.forEach((app) => {
-      current_max = app.zIndex >= current_max ? app.zIndex : current_max;
-    });
-    return current_max + 1;
-  };
+  function getNextHighestZIndex() {
+    highestZIndex += 1;
+    return highestZIndex;
+  }
 
   const openApp = (appName) => {
     setApps((a) =>

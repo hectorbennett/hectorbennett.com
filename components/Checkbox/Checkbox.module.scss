@@ -1,0 +1,62 @@
+@use "styles/colours";
+
+.checkbox_outer {
+  position: relative;
+  //   transform: translateY(0.3em);
+  display: inline-flex;
+  margin: 0.2em 0.2em 0.2em 0em;
+}
+
+.checkbox {
+  appearance: none;
+  font: inherit;
+  width: 1em;
+  height: 1em;
+  border: 1px solid #222427;
+  border-radius: 0.15em;
+  place-content: center;
+  display: inline-block;
+  margin: 0;
+  // border-color: black;
+  background-color: #3e4145;
+
+  &:focus-visible {
+    outline: 1px solid colours.$blue;
+  }
+
+  &:checked {
+    border-color: colours.$blue;
+    background: colours.$blue;
+    // &::after {
+    //   font-family: "Font Awesome 5 Free";
+    //   font-weight: 900;
+    //   content: "\f007";
+    //   color: white;
+    // }
+    & + .check {
+      display: inline-flex;
+    }
+  }
+}
+
+.check {
+  position: absolute;
+  top: -0.19em;
+  left: -0.18em;
+  font-size: 1.6em;
+  color: white;
+  margin: 0px;
+  display: none;
+}
+
+// .checkbox:focus {
+//   outline: max(2px, 0.15em) solid currentColor;
+//   outline-offset: max(2px, 0.15em);
+// }
+
+.checkbox:disabled {
+  --form-control-color: var(--form-control-disabled);
+
+  color: var(--form-control-disabled);
+  cursor: not-allowed;
+}
