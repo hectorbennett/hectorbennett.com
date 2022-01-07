@@ -1,5 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useTransition } from "react-transition-state";
+import classNames from "classnames";
 
 import {
   CgClose,
@@ -64,40 +66,33 @@ function TopBar(props) {
 
 export default function Window(props) {
   const ref = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [classNames, setClassNames] = useState([
-    styles.window,
-    props.hasFocus ? styles.focused : "",
-  ]);
   const contentRef = useRef(null);
 
   useClickOutside(ref, props.onClickOutside);
 
+  const [state, toggle] = useTransition({
+    timeout: { enter: 0, exit: 300 },
+    mountOnEnter: true,
+    unmountOnExit: true,
+  });
+  const stateClasses = {
+    unmounted: styles.unmounted,
+    entering: styles.entering,
+    entered: styles.entered,
+    exiting: styles.exiting,
+    exited: styles.exited,
+  };
+  const className = classNames({
+    [styles.window]: true,
+    [stateClasses[state]]: true,
+    [styles.focused]: props.hasFocus,
+  });
+
   useEffect(() => {
-    var _classNames = classNames;
+    toggle(props.isOpen === true);
+  }, [props.isOpen]);
 
-    if (props.hasFocus) {
-      _classNames = [...classNames, styles.focused];
-    } else {
-      _classNames = classNames.filter((c) => c !== styles.focused);
-    }
-
-    if (props.isOpen) {
-      setIsOpen(true);
-      setTimeout(() => {
-        setClassNames((c) => [...c, styles.open]);
-      }, 1);
-    } else {
-      _classNames = classNames.filter((c) => c !== styles.open);
-      setTimeout(() => {
-        setIsOpen(false);
-      }, 200);
-    }
-
-    setClassNames(_classNames);
-  }, [props.hasFocus, props.isOpen, classNames]);
-
-  if (!isOpen) {
+  if (state === "unmounted") {
     return null;
   }
 
@@ -107,13 +102,13 @@ export default function Window(props) {
       height={props.height}
       lockAspectRatio={props.lockAspectRatio}
       dragHandleClassName={styles.top_bar}
-      isOpen={props.isOpen}
+      isOpen={state === "open"}
       isMaximised={props.mode === "maximised"}
       isMinimised={props.isMinimised}
       zIndex={props.zIndex}
       onMouseDown={props.onMouseDown}
     >
-      <div className={classNames.join(" ")} ref={ref}>
+      <div className={className} ref={ref}>
         <TopBar
           mode={props.mode}
           icon={props.icon}

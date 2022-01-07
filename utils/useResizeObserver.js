@@ -1,18 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 export default function useResizeObserver(ref, callback) {
-  const observer = new ResizeObserver(callback);
+  const observer = useMemo(() => new ResizeObserver(callback), [callback]);
+  const element = ref.current;
 
   useEffect(() => {
-    if (!ref.current) {
+    if (!element) {
       return;
     }
-    observer.observe(ref.current);
+    observer.observe(element);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (element) {
+        observer.unobserve(element);
       }
     };
-  }, [ref]);
+  }, [element, observer]);
 }
