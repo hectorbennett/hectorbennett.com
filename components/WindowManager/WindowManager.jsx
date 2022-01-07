@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 import {
   RiSwordLine,
@@ -22,6 +22,21 @@ let highestZIndex = 0;
 export default function WindowManager(props) {
   const [apps, setApps] = useState([]);
   const ref = useRef(null);
+
+  const openApp = useCallback((appName) => {
+    setApps((a) =>
+      a.map((app) =>
+        app.name === appName
+          ? {
+              ...app,
+              isOpen: true,
+              hasFocus: true,
+              zIndex: getNextHighestZIndex(),
+            }
+          : { ...app, hasFocus: false }
+      )
+    );
+  }, []);
 
   useEffect(() => {
     setApps([
@@ -73,27 +88,12 @@ export default function WindowManager(props) {
         openApp("terminal");
       }
     }, 2000);
-  }, []);
+  }, [openApp]);
 
   function getNextHighestZIndex() {
     highestZIndex += 1;
     return highestZIndex;
   }
-
-  const openApp = (appName) => {
-    setApps((a) =>
-      a.map((app) =>
-        app.name === appName
-          ? {
-              ...app,
-              isOpen: true,
-              hasFocus: true,
-              zIndex: getNextHighestZIndex(),
-            }
-          : { ...app, hasFocus: false }
-      )
-    );
-  };
 
   const closeApp = (appName) => {
     setApps((a) =>
