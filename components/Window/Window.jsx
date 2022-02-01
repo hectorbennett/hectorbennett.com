@@ -84,7 +84,7 @@ export default function Window(props) {
   };
   const className = classNames({
     [styles.window]: true,
-    [stateClasses[state]]: true,
+    [stateClasses[state]]: Boolean(stateClasses[state]),
     [styles.focused]: props.hasFocus,
   });
 

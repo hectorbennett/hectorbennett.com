@@ -11,3 +11,10 @@ export default function Checkbox(props) {
     </span>
   );
 }
+
+Checkbox.label = ({ label, children }) => {
+  <label className={styles.checkbox_label}>
+    {children}
+    <span>{label}</span>
+  </label>;
+};

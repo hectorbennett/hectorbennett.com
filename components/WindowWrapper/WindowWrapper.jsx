@@ -1,3 +1,5 @@
+// todo: use react-transition-state instead of all the setTimeout bits
+
 import { useLayoutEffect, useEffect, useState, useCallback } from "react";
 import { Rnd } from "react-rnd";
 import styles from "./WindowWrapper.module.scss";

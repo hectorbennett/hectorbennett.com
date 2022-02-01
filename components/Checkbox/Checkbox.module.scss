@@ -60,3 +60,10 @@
   color: var(--form-control-disabled);
   cursor: not-allowed;
 }
+
+.checkbox_label {
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}

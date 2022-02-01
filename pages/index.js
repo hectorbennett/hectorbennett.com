@@ -4,6 +4,8 @@ import { Section } from "../components/Layout";
 import WindowManager from "../components/WindowManager";
 import Scrollable from "../components/Scrollable";
 
+// import { Button } from "@hectorbennett/hcl";
+
 export default function Home() {
   return (
     <>
@@ -46,6 +48,7 @@ export default function Home() {
           <h1>
             <span className="highlight">
               Hector Bennett, Full Stack Web Developer :)
+              {/* <Button label="Hello world!" />; */}
             </span>
           </h1>
           <p className="highlight">
