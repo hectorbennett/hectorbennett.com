@@ -32,3 +32,7 @@ done:
 - animate cards
 - improve responsivity
 - Warn if impossible combination
+
+
+inspo:
+ - https://hughsk.io/
