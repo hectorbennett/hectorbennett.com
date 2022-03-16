@@ -14,7 +14,8 @@ clear
 fullscreen
 help
 slime
-war`;
+war
+webglgears`;
 
 const help_slime_text = `Slime Soccer is my remake of Quin Pendragon's Java game from the very early 2000s which unfortunately no longer works on modern browsers :(.
 This remake was made in the Godot game engine.
@@ -49,6 +50,15 @@ Russia - 1%
 Nigeria - 0.7%
 etc.
 `;
+
+const help_webglgears_text = `
+A recreation of the glxgears demo that comes with GNU/Linux distributions, remade in WebGL.
+
+It's not a direct copy, although I did use the original <a href="https://github.com/JoakimSoderberg/mesademos/blob/master/src/xdemos/glxgears.c" target="_blank" rel="noreferrer">source code</a> as inspiration.
+
+The screensaver is built the same way ;).
+
+Source for both can be found at <a href="https://github.com/hectorbennett/webgldemos" target="_blank" rel="noreferrer">https://github.com/hectorbennett/webgldemos</a>.`
 
 const info_hector_text = `
  - Very good with Python, Javascript, MySQL, HTML/CSS, Sketch and various Adobe design software.
@@ -134,6 +144,10 @@ export default function Terminal(props) {
     "help fullscreen": () => "Toggles full screen mode.",
 
     clear: () => setQueries([]),
+
+    webglgears: () => props.openApp("webGLGears"),
+
+    "help webglgears": () => <SplitText text={help_webglgears_text} />,
   };
 
   const submit = (query) => {

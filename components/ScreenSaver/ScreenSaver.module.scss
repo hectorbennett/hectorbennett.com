@@ -1,0 +1,24 @@
+@use "styles/colours";
+
+.screensaver {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.screensaver_inner {
+  animation: fadein 2s;
+  background: colours.$background;
+}

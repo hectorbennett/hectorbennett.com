@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Section } from "../components/Layout";
 import WindowManager from "../components/WindowManager";
 import Scrollable from "../components/Scrollable";
+import ScreenSaver from "../components/ScreenSaver";
 
 // import { Button } from "@hectorbennett/hcl";
 
@@ -106,6 +107,7 @@ export default function Home() {
         </Section>
       </Scrollable.div>
       <WindowManager />
+      <ScreenSaver/>
     </>
   );
 }

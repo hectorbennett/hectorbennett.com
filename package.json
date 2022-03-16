@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.0.0",
     "@fortawesome/react-fontawesome": "^0.1.17",
+    "@hectorbennett/webgldemos": "0.0.8",
     "classnames": "^2.3.1",
     "js-levenshtein": "^1.1.6",
     "next": "^12.1.0",

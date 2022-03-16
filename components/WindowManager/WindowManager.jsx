@@ -6,6 +6,7 @@ import {
   RiGiftLine,
   RiGamepadLine,
 } from "react-icons/ri";
+import { FaCogs } from "react-icons/fa";
 
 import Window from "../Window";
 import Tray from "../Tray";
@@ -14,6 +15,7 @@ import SlimeSoccer from "../SlimeSoccer";
 import WorldWar from "../WorldWar";
 import Terminal from "../Terminal";
 import SecretSanta from "../SecretSanta";
+import Gears from "../Gears";
 
 import styles from "./WindowManager.module.scss";
 
@@ -78,6 +80,16 @@ export default function WindowManager(props) {
         height: 460,
         component: <SlimeSoccer />,
         icon: <RiGamepadLine />,
+        closable: true,
+        maximisable: true,
+      },
+      {
+        name: "webGLGears",
+        title: "WebGLGears",
+        width: 500,
+        height: 500,
+        component: <Gears />,
+        icon: <FaCogs />,
         closable: true,
         maximisable: true,
       },
