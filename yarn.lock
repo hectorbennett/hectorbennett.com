@@ -99,10 +99,10 @@
   dependencies:
     prop-types "^15.8.1"
 
-"@hectorbennett/webgldemos@0.0.8":
-  version "0.0.8"
-  resolved "https://npm.pkg.github.com/download/@hectorbennett/webgldemos/0.0.8/e41a0c11ffca6783f29210515e7098987632369a30ba490febf674610e32530a#d55bfb9ee1154656b5e5f7a15384a84ba165d700"
-  integrity sha512-Lg6uVd61i88qWdWRPCwp9wRBRhAwvmsBVgx8O0RiLKvevHOYqmWHQHsl9j6fwlH2iJMaaH5Yh7BDvSYGUrprDQ==
+"@hectorbennett/webgldemos@0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@hectorbennett/webgldemos/-/webgldemos-0.0.11.tgz#2cfac70f2acd0c30c49de159bb52ea58b243bfd6"
+  integrity sha512-OOwnLllb1tWCKyYu5k495BkKUvEyBsBrbqSDq+c6kr2ksyZjWVPOcadPlFYEwJTT+9a8awY4zfumoCN12tKOTw==
   dependencies:
     chroma-js "^2.4.2"
     rollup-plugin-babel "^4.4.0"
