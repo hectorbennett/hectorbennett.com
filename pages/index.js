@@ -61,11 +61,7 @@ export default function Home() {
             </span>
           </h1>
           <p className="highlight">
-            I&apos;m a web developer at{" "}
-            <a href="https://www.artlogic.net" target="_blank" rel="noreferrer">
-              Artlogic
-            </a>
-            . I write{" "}
+            I write{" "}
             <a
               href="https://github.com/hectorbennett"
               target="_blank"
@@ -88,14 +84,6 @@ export default function Home() {
               rel="noreferrer"
             >
               email
-            </a>{" "}
-            or{" "}
-            <a
-              href="https://uk.linkedin.com/in/hector-bennett"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn
             </a>
             .
           </p>
@@ -107,7 +95,7 @@ export default function Home() {
         </Section>
       </Scrollable.div>
       <WindowManager />
-      <ScreenSaver/>
+      <ScreenSaver />
     </>
   );
 }
