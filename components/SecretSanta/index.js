@@ -1,1 +1,1 @@
-export { default } from "./SecretSanta.jsx"
+export { default } from "./SecretSanta.jsx";

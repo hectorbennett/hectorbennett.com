@@ -3,12 +3,7 @@ import PropTypes from "prop-types";
 import { useTransition } from "react-transition-state";
 import classNames from "classnames";
 
-import {
-  CgClose,
-  CgMathMinus,
-  CgCompressRight,
-  CgExpand,
-} from "react-icons/cg";
+import { CgClose, CgMathMinus, CgCompressRight, CgExpand } from "react-icons/cg";
 
 import WindowWrapper from "../WindowWrapper";
 

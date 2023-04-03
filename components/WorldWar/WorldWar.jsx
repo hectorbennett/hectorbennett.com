@@ -4,7 +4,7 @@ import Landmass from "./Landmass.jsx";
 import COUNTRIES from "./data.json";
 import styles from "./WorldWar.module.scss";
 
-import useRecursiveTimeout from "../../utils/useRecursiveTimeout.js"
+import useRecursiveTimeout from "../../utils/useRecursiveTimeout.js";
 
 const LANDMASSES = COUNTRIES.map((country) => {
   return {
@@ -19,8 +19,7 @@ COUNTRIES.forEach((country) => {
   country.original_name = country.name;
 });
 
-const getRandomItem = (items) =>
-  items[Math.floor(Math.random() * items.length)];
+const getRandomItem = (items) => items[Math.floor(Math.random() * items.length)];
 
 function Console(props) {
   return (
@@ -75,20 +74,11 @@ export default function WorldWar(props) {
 
   function challenge(country_a, country_b) {
     const chance = country_a.population / country_b.population;
-    if (
-      country_a.population >= country_b.population &&
-      chance > Math.random()
-    ) {
-      setMessages((m) => [
-        `${country_a.name} defeated ${country_b.name}`,
-        ...m,
-      ]);
+    if (country_a.population >= country_b.population && chance > Math.random()) {
+      setMessages((m) => [`${country_a.name} defeated ${country_b.name}`, ...m]);
       invade(country_a, country_b);
     } else {
-      setMessages((m) => [
-        `${country_b.name} defeated ${country_a.name}`,
-        ...m,
-      ]);
+      setMessages((m) => [`${country_b.name} defeated ${country_a.name}`, ...m]);
       invade(country_b, country_a);
     }
   }
@@ -103,9 +93,7 @@ export default function WorldWar(props) {
               return {
                 ...country,
                 population: winner.population + loser.population,
-                neighbours: [
-                  ...new Set([...winner.neighbours, ...loser.neighbours]),
-                ],
+                neighbours: [...new Set([...winner.neighbours, ...loser.neighbours])],
               };
             }
             return country;

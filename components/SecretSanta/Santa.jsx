@@ -1,11 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-} from "recoil";
+import { atom, selector, useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
 import { Grid, Row, Col } from "../Grid";
 
@@ -23,9 +17,7 @@ function InvalidPairs(props) {
   const santas = useRecoilValue(santaListState);
   const [invalidPairs, setInvalidPairs] = useRecoilState(invalidPairsState);
   const hasValidDerangement = useRecoilValue(hasValidDerangementState);
-  const doNotPairWithIds = invalidPairs
-    .filter((pair) => pair.includes(props.id))
-    .flat();
+  const doNotPairWithIds = invalidPairs.filter((pair) => pair.includes(props.id)).flat();
 
   const classNames = [styles.checkboxes];
   if (santas.length >= 3 && !hasValidDerangement) {
@@ -48,10 +40,7 @@ function InvalidPairs(props) {
                   onChange={() =>
                     selected
                       ? setInvalidPairs((pairs) =>
-                          pairs.filter(
-                            (p) =>
-                              !(p.includes(props.id) && p.includes(santa.id))
-                          )
+                          pairs.filter((p) => !(p.includes(props.id) && p.includes(santa.id))),
                         )
                       : setInvalidPairs((pairs) => {
                           return [...pairs, [props.id, santa.id]];
@@ -88,7 +77,7 @@ export default function Santa(props) {
         });
       });
     },
-    [setSantas, santa.id]
+    [setSantas, santa.id],
   );
 
   useEffect(() => {
@@ -110,10 +99,7 @@ export default function Santa(props) {
 
     if (!santa.name) {
       setNameError("Please enter a name");
-    } else if (
-      santas.filter((s) => s.name.toLowerCase() == santa.name.toLowerCase())
-        .length > 1
-    ) {
+    } else if (santas.filter((s) => s.name.toLowerCase() == santa.name.toLowerCase()).length > 1) {
       setNameError("Duplicate");
     } else {
       setNameError("");
@@ -136,9 +122,7 @@ export default function Santa(props) {
   return (
     <div style={{ width: "100%", padding: 5 }} onBlur={handleBlur} ref={ref}>
       <Card>
-        <div
-          style={{ padding: "1rem", textAlign: "center", fontWeight: "bold" }}
-        >
+        <div style={{ padding: "1rem", textAlign: "center", fontWeight: "bold" }}>
           Santa {props.index + 1}
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", padding: 5 }}>

@@ -24,7 +24,7 @@ function Tooltip(props) {
     >
       <div className={styles.tooltip}>{props.children}</div>
     </div>,
-    props.svg.parentElement
+    props.svg.parentElement,
   );
 }
 
