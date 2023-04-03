@@ -1,10 +1,49 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
+import matter, { GrayMatterFile } from "gray-matter";
+import { remark } from "remark";
+import html from "remark-html";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
-const getAllPostsData = () => {
+export interface PostData {
+  id: string;
+  data: {
+    title: string;
+    date: string;
+  };
+  content: string;
+}
+
+export interface Post extends PostData {
+  html: string;
+}
+
+function getPostDataFromMatterResult(id: string, matterResult: GrayMatterFile<string>): PostData {
+  return {
+    id,
+    data: {
+      title: matterResult.data.title || "",
+      date: matterResult.data.date || "",
+    },
+    content: matterResult.content,
+  };
+}
+
+async function getPostFromMatterResult(
+  id: string,
+  matterResult: GrayMatterFile<string>,
+): Promise<Post> {
+  const postData = getPostDataFromMatterResult(id, matterResult);
+  const processedContent = await remark().use(html).process(postData.content);
+
+  return {
+    ...postData,
+    html: processedContent.toString(),
+  };
+}
+
+function getAllPostsData(): Array<PostData> {
   // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames.map((fileName) => {
@@ -17,26 +56,31 @@ const getAllPostsData = () => {
 
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
-
-    console.log(matterResult);
-    console.log(matterResult.content);
-
-    // Combine the data with the id
-    return {
-      id,
-      data: matterResult.data,
-      content: matterResult.content,
-    };
+    return getPostDataFromMatterResult(id, matterResult);
   });
-};
+}
 
-export function getSortedPostsData() {
+export function getSortedPostsData(): Array<PostData> {
   // Sort posts by date
   return getAllPostsData().sort((a, b) => {
-    if (a.data.date && b.data.date && a.data.date < b.data.date) {
+    if (a.data.date < b.data.date) {
       return 1;
     } else {
       return -1;
     }
   });
+}
+
+export const getAllPostIds = () =>
+  fs.readdirSync(postsDirectory).map((fileName: string) => fileName.replace(/\.md$/, ""));
+
+export async function getPost(id: string): Promise<Post> {
+  const fullPath = path.join(postsDirectory, `${id}.md`);
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+
+  // Use gray-matter to parse the post metadata section
+  const matterResult = matter(fileContents);
+
+  // Combine the data with the id
+  return getPostFromMatterResult(id, matterResult);
 }

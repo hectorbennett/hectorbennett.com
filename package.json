@@ -33,6 +33,8 @@
     "react-rnd": "^10.4.1",
     "react-transition-state": "^2.1.0",
     "recoil": "^0.7.7",
+    "remark": "^14.0.2",
+    "remark-html": "^15.0.2",
     "sass": "^1.60.0"
   },
   "devDependencies": {

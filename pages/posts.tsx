@@ -1,14 +1,10 @@
 import Head from "../components/Head";
 import { Section } from "../components/Layout";
-import WindowManager from "../components/WindowManager";
 import Scrollable from "../components/Scrollable";
-import ScreenSaver from "../components/ScreenSaver";
-
-// import { Button } from "@hectorbennett/hcl";
 
 import { getSortedPostsData } from "../lib/posts";
 
-export default function Blog({ allPostsData }) {
+export default function Posts({ allPostsData }) {
   return (
     <>
       <Head title="This is a title" />
@@ -22,13 +18,21 @@ export default function Blog({ allPostsData }) {
             <span className="highlight">Blog</span>
           </h3>
           <ul>
-            {allPostsData.map(({ id, date, title }) => (
+            {allPostsData.map(({ id, data }) => (
               <li key={id}>
-                {title}
-                <br />
-                {id}
-                <br />
-                {date}
+                {data.title || ""}
+                {id && (
+                  <>
+                    <br />
+                    {id}
+                  </>
+                )}
+                {data.date && (
+                  <>
+                    <br />
+                    {data.date}
+                  </>
+                )}
               </li>
             ))}
           </ul>
