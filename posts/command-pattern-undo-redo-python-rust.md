@@ -13,7 +13,7 @@ Although Python and Rust have different implementations of the Command Pattern, 
 
 ## Python example
 
-In this tutorial, we will use a simple [Graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) object containing nodes and edges to illustrate the Command Pattern. Here is an example of the pattern in action:
+In this tutorial, we will use a simple [Graph](<https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)>) object containing nodes and edges to illustrate the Command Pattern. Here is an example of the pattern in action:
 
 ### Example
 
@@ -63,9 +63,7 @@ assert graph.nodes == {(0, 0), (1, 1), (2, 2)}
 
 ### History class
 
-
 The History instance keeps a log of each action and also instructions on how to revert them:
-
 
 ```python
 # python/src/history.py
@@ -127,7 +125,6 @@ class History:
 
 Commands offer `execute()` and `rollback()` methods that instruct the history instance how to move forwards and backwards through the commands:
 
-
 ```python
 # python/src/commands.py
 
@@ -185,7 +182,7 @@ class Graph:
 
 ## Implementing in Rust
 
-Although some parts of the above python example can be translated very straighforwardly, there are some parts that will require some extra thought. 
+Although some parts of the above python example can be translated very straighforwardly, there are some parts that will require some extra thought.
 
 ### Graph struct
 
@@ -243,11 +240,11 @@ The second issue is that when we come to use these command objects, we will stru
 
 To get around both of these problems, we will store our graph inside a smart pointer and also enable some form of shared mutibility. There are a few ways to do this, but here we will make use of `Rc<T>` and `RefCell<T>`, taking inspiration from the [official Rust documentation](https://doc.rust-lang.org/std/cell/index.html#introducing-mutability-inside-of-something-immutable).
 
-Note, as per above the above documentation, that if we wanted this to work in a multi-threaded situation then we could use an `Arc<T>` and a `Mutex<T>` or an `RwLock<T>` 
+Note, as per above the above documentation, that if we wanted this to work in a multi-threaded situation then we could use an `Arc<T>` and a `Mutex<T>` or an `RwLock<T>`
 
 Here is an example of what our commands file looks like now:
 
-```rust 
+```rust
 // rust/src/commands.rs
 
 use crate::graph::{Graph, Node};
