@@ -1,14 +1,8 @@
-import { useRef, useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { useRef, useEffect, ReactNode } from "react";
 import { useTransition } from "react-transition-state";
 import classNames from "classnames";
 
-import {
-  CgClose,
-  CgMathMinus,
-  CgCompressRight,
-  CgExpand,
-} from "react-icons/cg";
+import { CgClose, CgMathMinus, CgCompressRight, CgExpand } from "react-icons/cg";
 
 import WindowWrapper from "../WindowWrapper";
 
@@ -16,7 +10,20 @@ import useClickOutside from "../../utils/useClickOutside";
 
 import styles from "./Window.module.scss";
 
-function TopBar(props) {
+interface TopBarProps {
+  title: ReactNode;
+  icon: ReactNode;
+  hasFocus: boolean;
+  mode: "maximised" | "normal";
+  maximisable: boolean;
+  closable: boolean;
+  onClickClose: () => void;
+  onClickMaximise: () => void;
+  onClickMinimise: () => void;
+  onClickCompress: () => void;
+}
+
+function TopBar(props: TopBarProps) {
   return (
     <div className={styles.top_bar}>
       <div className={styles.icon}>{props.icon}</div>
@@ -26,7 +33,7 @@ function TopBar(props) {
         <button
           className={styles.control_button}
           onClick={props.onClickMinimise}
-          tabIndex={props.hasFocus ? "0" : "-1"}
+          tabIndex={props.hasFocus ? 0 : -1}
         >
           <CgMathMinus />
         </button>
@@ -35,7 +42,7 @@ function TopBar(props) {
           <button
             className={styles.control_button}
             onClick={props.onClickCompress}
-            tabIndex={props.hasFocus ? "0" : "-1"}
+            tabIndex={props.hasFocus ? 0 : -1}
           >
             <CgCompressRight />
           </button>
@@ -43,7 +50,7 @@ function TopBar(props) {
           <button
             className={styles.control_button}
             onClick={props.onClickMaximise}
-            tabIndex={props.hasFocus ? "0" : "-1"}
+            tabIndex={props.hasFocus ? 0 : -1}
           >
             <CgExpand />
           </button>
@@ -54,7 +61,7 @@ function TopBar(props) {
           <button
             className={styles.control_button}
             onClick={props.onClickClose}
-            tabIndex={props.hasFocus ? "0" : "-1"}
+            tabIndex={props.hasFocus ? 0 : -1}
           >
             <CgClose />
           </button>
@@ -64,7 +71,29 @@ function TopBar(props) {
   );
 }
 
-export default function Window(props) {
+interface WindowProps {
+  isOpen: boolean;
+  hasFocus: boolean;
+  width: number;
+  height: number;
+  lockAspectRatio: boolean;
+  mode: "maximised" | "normal";
+  isMinimised: boolean;
+  zIndex: number;
+  icon: ReactNode;
+  title: ReactNode;
+  maximisable: boolean;
+  closable: boolean;
+  children: ReactNode;
+  onClickClose: () => void;
+  onClickMaximise: () => void;
+  onClickMinimise: () => void;
+  onClickCompress: () => void;
+  onClickOutside: () => void;
+  onMouseDown: () => void;
+}
+
+export default function Window(props: WindowProps) {
   const ref = useRef(null);
   const contentRef = useRef(null);
 
@@ -84,7 +113,7 @@ export default function Window(props) {
   };
   const className = classNames({
     [styles.window]: true,
-    [stateClasses[state]]: Boolean(stateClasses[state]),
+    [stateClasses[state.status]]: Boolean(stateClasses[state.status]),
     [styles.focused]: props.hasFocus,
   });
 
@@ -92,7 +121,7 @@ export default function Window(props) {
     toggle(props.isOpen === true);
   }, [props.isOpen]);
 
-  if (state === "unmounted") {
+  if (state.status === "unmounted") {
     return null;
   }
 
@@ -102,7 +131,7 @@ export default function Window(props) {
       height={props.height}
       lockAspectRatio={props.lockAspectRatio}
       dragHandleClassName={styles.top_bar}
-      isOpen={state === "open"}
+      isOpen={state.status === "entered"}
       isMaximised={props.mode === "maximised"}
       isMinimised={props.isMinimised}
       zIndex={props.zIndex}
@@ -128,11 +157,6 @@ export default function Window(props) {
     </WindowWrapper>
   );
 }
-
-Window.propTypes = {
-  mode: PropTypes.oneOf(["maximised", "normal"]),
-  isMinimised: PropTypes.bool,
-};
 
 Window.defaultProps = {
   minimisable: true,

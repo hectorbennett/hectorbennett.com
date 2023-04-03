@@ -11,11 +11,7 @@ function TrayItem(props) {
 
   return (
     <div className={classNames.join(" ")}>
-      <button
-        className={styles.tray_item_button}
-        onClick={props.onClick}
-        tabIndex="0"
-      >
+      <button className={styles.tray_item_button} onClick={props.onClick} tabIndex="0">
         <div className={styles.tooltip}>{props.title}</div>
         <div className={styles.icon}>{props.icon}</div>
       </button>

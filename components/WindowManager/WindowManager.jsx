@@ -1,11 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
-import {
-  RiSwordLine,
-  RiTerminalLine,
-  RiGiftLine,
-  RiGamepadLine,
-} from "react-icons/ri";
+import { RiSwordLine, RiTerminalLine, RiGiftLine, RiGamepadLine } from "react-icons/ri";
 import { FaCogs } from "react-icons/fa";
 
 import Window from "../Window";
@@ -35,8 +30,8 @@ export default function WindowManager(props) {
               hasFocus: true,
               zIndex: getNextHighestZIndex(),
             }
-          : { ...app, hasFocus: false }
-      )
+          : { ...app, hasFocus: false },
+      ),
     );
   }, []);
 
@@ -109,34 +104,22 @@ export default function WindowManager(props) {
 
   const closeApp = (appName) => {
     setApps((a) =>
-      a.map((app) =>
-        app.name === appName ? { ...app, isOpen: false, hasFocus: false } : app
-      )
+      a.map((app) => (app.name === appName ? { ...app, isOpen: false, hasFocus: false } : app)),
     );
   };
 
   const minimiseApp = (appName) => {
     setApps((a) =>
-      a.map((app) =>
-        app.name === appName
-          ? { ...app, isMinimised: true, hasFocus: false }
-          : app
-      )
+      a.map((app) => (app.name === appName ? { ...app, isMinimised: true, hasFocus: false } : app)),
     );
   };
 
   const maximiseApp = (appName) => {
-    setApps((a) =>
-      a.map((app) =>
-        app.name === appName ? { ...app, mode: "maximised" } : app
-      )
-    );
+    setApps((a) => a.map((app) => (app.name === appName ? { ...app, mode: "maximised" } : app)));
   };
 
   const compressApp = (appName) => {
-    setApps((a) =>
-      a.map((app) => (app.name === appName ? { ...app, mode: "normal" } : app))
-    );
+    setApps((a) => a.map((app) => (app.name === appName ? { ...app, mode: "normal" } : app)));
   };
 
   const focusApp = (appName) => {
@@ -152,7 +135,7 @@ export default function WindowManager(props) {
         } else {
           return { ...app, hasFocus: false };
         }
-      })
+      }),
     );
   };
 
@@ -167,7 +150,7 @@ export default function WindowManager(props) {
         } else {
           return app;
         }
-      })
+      }),
     );
   };
 

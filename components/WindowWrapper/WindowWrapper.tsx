@@ -1,16 +1,36 @@
 // todo: use react-transition-state instead of all the setTimeout bits
-
-import { useLayoutEffect, useEffect, useState, useCallback } from "react";
+import React from "react";
+import { useLayoutEffect, useEffect, useState, useCallback, ReactNode } from "react";
 import { Rnd } from "react-rnd";
 import styles from "./WindowWrapper.module.scss";
 
-const randomIntFromInterval = (min, max) =>
+const randomIntFromInterval = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 
-export default function WindowWrapper(props) {
-  const [component, setComponent] = useState(null);
+interface WindowWrapperProps {
+  width: number;
+  height: number;
+  isMaximised: boolean;
+  isMinimised: boolean;
+  isOpen: boolean;
+  lockAspectRatio: boolean;
+  dragHandleClassName: string;
+  minWidth: number;
+  minHeight: number;
+  zIndex: number;
+  onMouseDown: () => void;
+  children: ReactNode;
+}
+
+interface Position {
+  x: number;
+  y: number;
+}
+
+export default function WindowWrapper(props: WindowWrapperProps) {
+  // const [component, setComponent] = useState(null);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
-  const [classNames, setClassNames] = useState([styles.window_wrapper]);
+  const [classNames, setClassNames] = useState<Array<string>>([styles.window_wrapper]);
   const [isMaximised, setIsMaximised] = useState(props.isMaximised);
   const [isMinimised, setIsMinimised] = useState(props.isMinimised);
   const [position, setPosition] = useState({
@@ -29,7 +49,7 @@ export default function WindowWrapper(props) {
   }, []);
 
   const getValidPosition = useCallback(
-    (position) => {
+    (position: Position) => {
       const newPosition = { x: position.x, y: position.y };
       if (position.y < 0) {
         newPosition.y = 0;
@@ -43,7 +63,7 @@ export default function WindowWrapper(props) {
       }
       return newPosition;
     },
-    [size.width]
+    [size.width],
   );
 
   const handleWindowResize = useCallback(() => {
@@ -57,22 +77,16 @@ export default function WindowWrapper(props) {
 
   useEffect(() => {
     setPosition({
-      x: Math.max(
-        window.innerWidth - props.width - randomIntFromInterval(100, 150),
-        50
-      ),
-      y: Math.max(
-        window.innerHeight - props.height - randomIntFromInterval(100, 150),
-        50
-      ),
+      x: Math.max(window.innerWidth - props.width - randomIntFromInterval(100, 150), 50),
+      y: Math.max(window.innerHeight - props.height - randomIntFromInterval(100, 150), 50),
     });
   }, [props.height, props.width]);
 
-  function addClassName(className) {
+  function addClassName(className: string) {
     setClassNames((c) => [...new Set(c.concat([className]))]);
   }
 
-  function removeClassName(className) {
+  function removeClassName(className: string) {
     setClassNames((c) => c.filter((c) => c !== className));
   }
 
@@ -110,64 +124,54 @@ export default function WindowWrapper(props) {
     }, 50);
   }, [props.isMinimised]);
 
-  useEffect(() => {
-    setComponent(
-      <Rnd
-        className={classNames.join(" ")}
-        default={{
-          width: props.width,
-          height: props.height,
-        }}
-        lockAspectRatio={props.lockAspectRatio}
-        dragHandleClassName={props.dragHandleClassName}
-        disableDragging={isMaximised || isMobileDevice}
-        onDragStop={(e, d) => {
-          setPosition(getValidPosition(d));
-        }}
-        onResizeStop={(e, direction, ref, delta, position) => {
-          setSize({ width: ref.style.width, height: ref.style.height });
-          setPosition(getValidPosition(position));
-        }}
-        size={
-          isMinimised
-            ? { width: 50, height: 50 }
-            : isMaximised || isMobileDevice
-            ? { width: "100vw", height: "100vh" }
-            : size
-        }
-        position={
-          isMinimised
-            ? { y: window.innerHeight / 2, x: window.innerWidth - 50 }
-            : isMaximised || isMobileDevice
-            ? { x: 0, y: 0 }
-            : position
-        }
-        minWidth={isMinimised ? null : props.minWidth}
-        minHeight={isMinimised ? null : props.minHeight}
-        maxWidth="100vw"
-        maxHeight="100vh"
-        // bounds="window"
-        enableUserSelectHack={true}
-        style={{
-          zIndex: props.zIndex,
-          opacity: isMinimised ? 0 : 1,
-        }}
-        onMouseDown={props.onMouseDown}
-      >
-        {props.children}
-      </Rnd>
-    );
-  }, [
-    classNames,
-    isMaximised,
-    isMobileDevice,
-    isMinimised,
-    position,
-    size,
-    getValidPosition,
-    props,
-  ]);
-  return component;
+  return (
+    <Rnd
+      className={classNames.join(" ")}
+      default={{
+        width: props.width,
+        height: props.height,
+        x: 0,
+        y: 0,
+      }}
+      lockAspectRatio={props.lockAspectRatio}
+      dragHandleClassName={props.dragHandleClassName}
+      disableDragging={isMaximised || isMobileDevice}
+      onDragStop={(e, d) => {
+        setPosition(getValidPosition(d));
+      }}
+      onResizeStop={(e, direction, ref, delta, position) => {
+        setSize({ width: parseInt(ref.style.width), height: parseInt(ref.style.height) });
+        setPosition(getValidPosition(position));
+      }}
+      size={
+        isMinimised
+          ? { width: 50, height: 50 }
+          : isMaximised || isMobileDevice
+          ? { width: "100vw", height: "100vh" }
+          : size
+      }
+      position={
+        isMinimised
+          ? { y: window.innerHeight / 2, x: window.innerWidth - 50 }
+          : isMaximised || isMobileDevice
+          ? { x: 0, y: 0 }
+          : position
+      }
+      minWidth={isMinimised ? undefined : props.minWidth}
+      minHeight={isMinimised ? undefined : props.minHeight}
+      maxWidth="100vw"
+      maxHeight="100vh"
+      // bounds="window"
+      enableUserSelectHack={true}
+      style={{
+        zIndex: props.zIndex,
+        opacity: isMinimised ? 0 : 1,
+      }}
+      onMouseDown={props.onMouseDown}
+    >
+      {props.children}
+    </Rnd>
+  );
 }
 
 WindowWrapper.defaultProps = {

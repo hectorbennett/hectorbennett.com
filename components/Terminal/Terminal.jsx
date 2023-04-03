@@ -58,7 +58,7 @@ It's not a direct copy, although I did use the original <a href="https://github.
 
 The screensaver is built the same way ;).
 
-Source for both can be found at <a href="https://github.com/hectorbennett/webgldemos" target="_blank" rel="noreferrer">https://github.com/hectorbennett/webgldemos</a>.`
+Source for both can be found at <a href="https://github.com/hectorbennett/webgldemos" target="_blank" rel="noreferrer">https://github.com/hectorbennett/webgldemos</a>.`;
 
 const info_hector_text = `
  - Very good with Python, Javascript, MySQL, HTML/CSS, Sketch and various Adobe design software.

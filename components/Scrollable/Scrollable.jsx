@@ -8,9 +8,7 @@ const ScrollableBase = forwardRef(function Scrollable(props, ref) {
   if (className) {
     classNames.push(className);
   }
-  return (
-    <props.nodeType ref={ref} {..._props} className={classNames.join(" ")} />
-  );
+  return <props.nodeType ref={ref} {..._props} className={classNames.join(" ")} />;
 });
 
 ScrollableBase.propTypes = {
