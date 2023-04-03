@@ -17,10 +17,7 @@ function is_valid(arr1, arr2, invalid_pairs) {
       return false;
     }
     for (let j in invalid_pairs) {
-      if (
-        invalid_pairs[j].includes(arr1[i]) &&
-        invalid_pairs[j].includes(arr2[i])
-      ) {
+      if (invalid_pairs[j].includes(arr1[i]) && invalid_pairs[j].includes(arr2[i])) {
         return false;
       }
     }

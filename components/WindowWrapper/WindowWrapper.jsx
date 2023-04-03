@@ -4,8 +4,7 @@ import { useLayoutEffect, useEffect, useState, useCallback } from "react";
 import { Rnd } from "react-rnd";
 import styles from "./WindowWrapper.module.scss";
 
-const randomIntFromInterval = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
+const randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 export default function WindowWrapper(props) {
   const [component, setComponent] = useState(null);
@@ -39,14 +38,8 @@ export default function WindowWrapper(props) {
 
   useEffect(() => {
     setPosition({
-      x: Math.max(
-        window.innerWidth - props.width - randomIntFromInterval(100, 150),
-        50
-      ),
-      y: Math.max(
-        window.innerHeight - props.height - randomIntFromInterval(100, 150),
-        50
-      ),
+      x: Math.max(window.innerWidth - props.width - randomIntFromInterval(100, 150), 50),
+      y: Math.max(window.innerHeight - props.height - randomIntFromInterval(100, 150), 50),
     });
   }, [props.height, props.width]);
 
@@ -107,7 +100,7 @@ export default function WindowWrapper(props) {
       }
       return newPosition;
     },
-    [size.width]
+    [size.width],
   );
 
   useEffect(() => {
@@ -155,7 +148,7 @@ export default function WindowWrapper(props) {
         onMouseDown={props.onMouseDown}
       >
         {props.children}
-      </Rnd>
+      </Rnd>,
     );
   }, [
     classNames,

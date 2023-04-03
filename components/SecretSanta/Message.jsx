@@ -1,7 +1,4 @@
-import {
-  useRecoilState,
-  useRecoilValue,
-} from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import { RiSendPlaneLine, RiSpamLine } from "react-icons/ri";
 
@@ -26,9 +23,7 @@ function SendButton(props) {
   const message = useRecoilValue(messageState);
   const messageError = useRecoilValue(messageErrorState);
   const subjectError = useRecoilValue(subjectErrorState);
-  const santas = useRecoilValue(santaListState).filter(
-    (santa) => santa.name || santa.email
-  );
+  const santas = useRecoilValue(santaListState).filter((santa) => santa.name || santa.email);
   const invalidPairs = useRecoilValue(invalidPairsState);
   const hasValidDerangement = useRecoilValue(hasValidDerangementState);
   // const [hasValidDerangement, setHasValidDerangement] = useState(false);
@@ -86,11 +81,7 @@ function SendButton(props) {
           </ul>
         </ErrorAlert>
       ) : null}
-      <button
-        className={styles.button}
-        disabled={errors.length}
-        onClick={handleClick}
-      >
+      <button className={styles.button} disabled={errors.length} onClick={handleClick}>
         <RiSendPlaneLine /> Send
       </button>
     </>
