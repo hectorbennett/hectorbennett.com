@@ -28,14 +28,32 @@ export default function WindowWrapper(props) {
     }
   }, []);
 
-  useLayoutEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
-    return () => window.removeEventListener("resize", handleWindowResize);
-  }, [handleWindowResize]);
+  const getValidPosition = useCallback(
+    (position) => {
+      const newPosition = { x: position.x, y: position.y };
+      if (position.y < 0) {
+        newPosition.y = 0;
+      } else if (position.y > window.innerHeight) {
+        newPosition.y = window.innerHeight - 50;
+      }
+      if (position.x < -size.width + 50) {
+        newPosition.x = -size.width + 100;
+      } else if (position.x > window.innerWidth) {
+        newPosition.x = window.innerWidth - 50;
+      }
+      return newPosition;
+    },
+    [size.width]
+  );
 
   const handleWindowResize = useCallback(() => {
     setPosition((position) => getValidPosition(position));
   }, [getValidPosition]);
+
+  useLayoutEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, [handleWindowResize]);
 
   useEffect(() => {
     setPosition({
@@ -91,24 +109,6 @@ export default function WindowWrapper(props) {
       }, 50);
     }, 50);
   }, [props.isMinimised]);
-
-  const getValidPosition = useCallback(
-    (position) => {
-      const newPosition = { x: position.x, y: position.y };
-      if (position.y < 0) {
-        newPosition.y = 0;
-      } else if (position.y > window.innerHeight) {
-        newPosition.y = window.innerHeight - 50;
-      }
-      if (position.x < -size.width + 50) {
-        newPosition.x = -size.width + 100;
-      } else if (position.x > window.innerWidth) {
-        newPosition.x = window.innerWidth - 50;
-      }
-      return newPosition;
-    },
-    [size.width]
-  );
 
   useEffect(() => {
     setComponent(

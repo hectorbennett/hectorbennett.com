@@ -9,24 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@hectorbennett/webgldemos": "0.0.11",
     "classnames": "^2.3.2",
+    "gray-matter": "^4.0.3",
     "js-levenshtein": "^1.1.6",
-    "next": "^12.1.0",
+    "next": "^13.2.4",
     "randomcolor": "^0.6.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-rnd": "^10.4.1",
     "react-transition-state": "^1.1.3",
     "recoil": "^0.6.1",
-    "sass": "^1.58.3"
+    "sass": "^1.60.0"
   },
   "devDependencies": {
-    "eslint": "^8.35.0",
-    "eslint-config-next": "12.1.0"
+    "eslint": "^8.37.0",
+    "eslint-config-next": "^13.2.4"
   }
 }
