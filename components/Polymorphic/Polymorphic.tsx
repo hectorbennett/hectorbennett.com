@@ -33,19 +33,16 @@ export type PolymorphicComponent = <C extends React.ElementType = "span">(
   props: PolymorphicProps<C>,
 ) => React.ReactElement | null;
 
-export const Polymorphic: PolymorphicComponent = React.forwardRef(
-  <C extends React.ElementType = "span">(
-    { tag, children, ...props }: PolymorphicProps<C>,
-    ref?: PolymorphicRef<C>,
-  ) => {
-    const Component = tag || "span";
+export const Polymorphic: PolymorphicComponent = React.forwardRef(function PolymorphicComponent<
+  C extends React.ElementType = "span",
+>({ tag, children, ...props }: PolymorphicProps<C>, ref?: PolymorphicRef<C>) {
+  const Component = tag || "span";
 
-    return (
-      <Component {...props} ref={ref}>
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component {...props} ref={ref}>
+      {children}
+    </Component>
+  );
+});
 
 export default Polymorphic;
