@@ -31,12 +31,15 @@ p {
 }
 
 a {
-  color: colours.$violet;
-  text-decoration: underline colours.$woodsmoke;
-}
+  color: colours.$blue;
+  text-decoration: none;
+  border-bottom: 3px solid colours.$blue;
+  padding-bottom: 1px;
 
-a:hover {
-  color: colours.$whisper;
+  &:hover,
+  &:focus {
+    color: colours.$whisper;
+  }
 }
 
 ::selection,
@@ -61,18 +64,19 @@ button {
   -ms-box-decoration-break: clone;
   -o-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-.highlight a {
-  color: colours.$rose;
-  text-decoration: none;
-  border-bottom: 3px solid colours.$woodsmoke;
-  padding-bottom: 1px;
-}
-.highlight a:hover,
-.highlight a:focus {
-  color: colours.$blue;
-  // box-shadow: 0px 0px 0px 3px colours.$blue;
-  border-bottom-color: colours.$blue;
+
+  a {
+    color: colours.$rose;
+    text-decoration: none;
+    border-bottom: 3px solid colours.$woodsmoke;
+    padding-bottom: 1px;
+
+    &:hover,
+    &:focus {
+      color: colours.$blue;
+      border-bottom-color: colours.$blue;
+    }
+  }
 }
 
 .icon {
@@ -108,4 +112,14 @@ button {
 .item-exit-active {
   opacity: 0;
   transition: opacity 500ms ease-in;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2.2rem;
+}
+h3 {
+  font-size: 2rem;
 }

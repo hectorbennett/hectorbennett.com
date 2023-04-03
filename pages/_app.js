@@ -1,4 +1,5 @@
 import "../styles/globals.scss";
+import "../styles/code-highlighting.scss";
 
 import Layout from "../components/Layout";
 import { RecoilRoot } from "recoil";

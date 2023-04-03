@@ -1,8 +1,12 @@
 import fs from "fs";
 import path from "path";
-import matter, { GrayMatterFile } from "gray-matter";
 import { remark } from "remark";
-import html from "remark-html";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
+import rehypeHighlight from "rehype-highlight";
+
+import matter, { GrayMatterFile } from "gray-matter";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
@@ -35,7 +39,13 @@ async function getPostFromMatterResult(
   matterResult: GrayMatterFile<string>,
 ): Promise<Post> {
   const postData = getPostDataFromMatterResult(id, matterResult);
-  const processedContent = await remark().use(html).process(postData.content);
+
+  const processedContent = await remark()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeHighlight)
+    .use(rehypeStringify)
+    .process(postData.content);
 
   return {
     ...postData,
