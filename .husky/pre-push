@@ -5,10 +5,10 @@
 yarn run type:check
 
 # check js linting errors
-yarn run lint:js:check || (echo "run 'yarn run lint:js' to fix any auto-fixable linting errors"; false);
+yarn run lint:check || (echo "run 'yarn run lint:fix' to fix any auto-fixable linting errors"; false);
 
 # check formatting errors
-yarn run format:check || (echo "run 'yarn run format' to fix any formatting errors"; false);
+yarn run format:check || (echo "run 'yarn run format:fix' to fix any formatting errors"; false);
 
 # run tests
 yarn run test
