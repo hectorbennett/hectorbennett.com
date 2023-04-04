@@ -15,7 +15,7 @@
     "check": "yarn run type:check && yarn run lint:check && yarn run format:check"
   },
   "engines": {
-    "node": "19.7.0"
+    "node": "17.9.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
