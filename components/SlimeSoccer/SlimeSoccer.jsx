@@ -15,7 +15,7 @@ export default function SlimeSoccer(props) {
         <a href="https://hectorbennett.itch.io/slime-soccer">
           Play slime soccer (remake) on itch.io
         </a>
-      </iframe>
+      </iframe>,
     );
   }, []);
   return <div className={styles.slime_soccer}>{game}</div>;
