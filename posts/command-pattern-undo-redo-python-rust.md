@@ -320,10 +320,9 @@ impl History {
 
 If we attempt to compile something like the above, we will get [an error](https://github.com/rust-lang/rust/blob/master/compiler/rustc_error_codes/src/error_codes/E0782.md) about Trait objects and the dyn keyword. The error states:
 
-```rust
-Trait objects are a way to call methods on types that are not known until runtime but conform to some trait.
-Trait objects should be formed with `Box<dyn Foo>`.
-```
+
+> Trait objects are a way to call methods on types that are not known until runtime but conform to some trait.
+> Trait objects should be formed with `Box<dyn Foo>`.
 
 So in light of this, we will rewrite the above as
 

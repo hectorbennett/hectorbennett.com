@@ -1,9 +1,16 @@
 @use "../../styles/colours.scss";
+@use "../../styles/screens.scss";
 
 .article {
-  margin: 5rem auto;
+  margin: 1rem;
+  @include screens.sm {
+    margin: 2rem;
+  }
+  @include screens.lg {
+    margin: 5rem auto;
+  }
 
-  max-width: 70rem;
+  max-width: 66rem;
 
   h1 {
     margin-top: 2rem;
@@ -29,8 +36,15 @@
     margin-bottom: 2rem;
 
     & code {
-      padding: 2rem;
+      padding: 1rem;
+      @include screens.sm {
+        padding: 2rem;
+      }
+
       border-radius: 1rem;
+      display: block;
+      overflow: auto;
+      font-size: 1rem;
     }
   }
 
