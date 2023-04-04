@@ -1,5 +1,5 @@
 ---
-title: "Implementing the Command Pattern and undo/redo functionality in both Python and Rust"
+title: "The Command Pattern and undo/redo in Python and Rust"
 date: "2023-03-04"
 ---
 

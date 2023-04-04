@@ -1,8 +1,10 @@
+import Link from "next/link";
 import Head from "../components/Head";
 import { Section } from "../components/Layout";
 import Scrollable from "../components/Scrollable";
 
 import { getSortedPostsData } from "../lib/posts";
+import BackButton from "../components/BackButton";
 
 export default function Posts({ allPostsData }) {
   return (
@@ -15,27 +17,17 @@ export default function Posts({ allPostsData }) {
           </h1>
 
           <h3>
-            <span className="highlight">Blog</span>
+            <span className="highlight">Posts</span>
           </h3>
           <ul>
             {allPostsData.map(({ id, data }) => (
               <li key={id}>
-                {data.title || ""}
-                {id && (
-                  <>
-                    <br />
-                    {id}
-                  </>
-                )}
-                {data.date && (
-                  <>
-                    <br />
-                    {data.date}
-                  </>
-                )}
+                <Link href={`/posts/${id}`}>{data.title}</Link>
               </li>
             ))}
           </ul>
+
+          <BackButton href="/" />
         </Section>
       </Scrollable.div>
     </>
