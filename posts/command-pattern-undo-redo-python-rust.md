@@ -9,7 +9,8 @@ The Command Pattern is a design pattern that allows instructions to be encapsula
 
 The Command Pattern is especially useful when developing applications that require undo/redo functionality, as it enables us to store a history of commands along with both `execute()` and `rollback()` methods that allow us to move forwards and backwards through the command history.
 
-We will demonstrate these principles using a brief Python example where the concepts can be demonstrated very simply, before diving into Rust, where we need to take additional steps to handle memory allocation and satisfy the Rust borrow checker.
+These principles will be demonstrated using a brief Python example as a simple illustration of the concepts, before diving into Rust, where we need to take additional steps to handle memory allocation and satisfy the Rust borrow checker. 
+
 
 ## Python example
 
@@ -61,7 +62,7 @@ assert graph.nodes == {(0, 0), (1, 1), (2, 2)}
 
 ```
 
-The most important thing to take away from the above is how we are calling our commands, that is, rather than calling a method on the object:
+The most important takeaway from the above is how we are calling our commands. Rather than calling a method on the object:
 
 ```python
 graph.add_node(node)
@@ -251,7 +252,7 @@ pub struct AddNode {
 
 We run into two problems.
 
-The first problem is that the compiler throws a 'missing lifetime specifier' error. The compiler recommends in this scenario that we fix this by making lifetime annotations, however, we have another way to solve this (which we will get into in a bit).
+The first problem is that the compiler throws a 'missing lifetime specifier' error. The compiler recommends in this scenario that we fix this by making lifetime annotations. However, we have another way to solve this (which we will get into shortly).
 
 The second issue is that when we come to use these command objects, we will struggle to satisfy the borrow checker. As we continue to append commands to the history, we will be storing new references to the same Graph object, which Rust will not like.
 
