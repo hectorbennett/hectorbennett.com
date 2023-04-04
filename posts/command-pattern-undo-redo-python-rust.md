@@ -9,8 +9,7 @@ The Command Pattern is a design pattern that allows instructions to be encapsula
 
 The Command Pattern is especially useful when developing applications that require undo/redo functionality, as it enables us to store a history of commands along with both `execute()` and `rollback()` methods that allow us to move forwards and backwards through the command history.
 
-These principles will be demonstrated using a brief Python example as a simple illustration of the concepts, before diving into Rust, where we need to take additional steps to handle memory allocation and satisfy the Rust borrow checker. 
-
+These principles will be demonstrated using a brief Python example as a simple illustration of the concepts, before diving into Rust, where we need to take additional steps to handle memory allocation and satisfy the Rust borrow checker.
 
 ## Python example
 
@@ -109,7 +108,6 @@ class AddEdge:
 
 ```
 
-
 ### History class
 
 The History instance keeps a log of each action along with the functionality to execute or revert them:
@@ -170,7 +168,6 @@ class History:
 
 ```
 
-
 ### Graph class
 
 And finally the graph itself is built very simply, with some very basic methods for adding and removing nodes and edges:
@@ -196,7 +193,6 @@ class Graph:
         self.edges.remove((node1, node2))
 
 ```
-
 
 ## Implementing in Rust
 
