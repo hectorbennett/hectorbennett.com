@@ -18,11 +18,12 @@
     "node": "19.7.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@hectorbennett/webgldemos": "0.0.11",
     "classnames": "^2.3.2",
+    "gray-matter": "^4.0.3",
     "js-levenshtein": "^1.1.6",
     "next": "^13.2.4",
     "randomcolor": "^0.6.2",
@@ -32,11 +33,16 @@
     "react-rnd": "^10.4.1",
     "react-transition-state": "^2.1.0",
     "recoil": "^0.7.7",
+    "rehype-highlight": "^6.0.0",
+    "rehype-stringify": "^9.0.3",
+    "remark": "^14.0.2",
+    "remark-html": "^15.0.2",
+    "remark-rehype": "^10.1.0",
     "sass": "^1.60.0"
   },
   "devDependencies": {
     "@types/react": "18.0.32",
-    "eslint": "^8.35.0",
+    "eslint": "^8.37.0",
     "eslint-config-next": "^13.2.4",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.7",

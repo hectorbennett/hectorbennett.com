@@ -1,5 +1,5 @@
 // todo: use react-transition-state instead of all the setTimeout bits
-
+import React from "react";
 import { useLayoutEffect, useEffect, useState, useCallback, ReactNode } from "react";
 import { Rnd } from "react-rnd";
 import styles from "./WindowWrapper.module.scss";
@@ -157,8 +157,8 @@ export default function WindowWrapper(props: WindowWrapperProps) {
           ? { x: 0, y: 0 }
           : position
       }
-      minWidth={isMinimised ? null : props.minWidth}
-      minHeight={isMinimised ? null : props.minHeight}
+      minWidth={isMinimised ? undefined : props.minWidth}
+      minHeight={isMinimised ? undefined : props.minHeight}
       maxWidth="100vw"
       maxHeight="100vh"
       // bounds="window"
