@@ -233,7 +233,7 @@ impl Graph {
 
 The Command struct is the first place we need to make changes and think about how we manage memory.
 
-For example, if we implement an example Command like this:
+For example, if we attempt to implement an example Command like this, storing a `&` reference to the graph:
 
 ```rust
 // rust/src/commands.rs
@@ -246,15 +246,24 @@ pub struct AddNode {
 // etc.
 ```
 
-We run into two problems.
+Then we run into two problems.
 
-The first problem is that the compiler throws a 'missing lifetime specifier' error. The compiler recommends in this scenario that we fix this by making lifetime annotations. However, we have another way to solve this (which we will get into shortly).
+The first problem is that the compiler throws a 'missing lifetime specifier' error. The compiler recommends in this scenario that we fix this by making lifetime annotations, for example:
+
+```rust
+pub struct AddNode<'a> {
+    graph: &'a Graph,
+    node: Node,
+}
+```
+
+However, this doesn't solve the second issue.
 
 The second issue is that when we come to use these command objects, we will struggle to satisfy the borrow checker. As we continue to append commands to the history, we will be storing new references to the same Graph object, which Rust will not like.
 
 To get around both of these problems, we will store our graph inside a smart pointer, and also enable some form of shared mutibility. There are a few ways to do this, but here we will make use of `Rc<T>` and `RefCell<T>`, taking inspiration from the [official Rust documentation](https://doc.rust-lang.org/std/cell/index.html#introducing-mutability-inside-of-something-immutable).
 
-Note, as per above the above link, that if we wanted this to work in a multi-threaded situation then we could use an `Arc<T>` along with either a `Mutex<T>` or an `RwLock<T>`
+Note, as per above the above link, that if we wanted this to work in a multi-threaded environment then we could use an `Arc<T>` along with either a `Mutex<T>` or an `RwLock<T>`.
 
 Here is an example of what our commands file looks like now:
 
@@ -345,7 +354,7 @@ impl History {
 
 ### Rust command pattern in action
 
-Now we can put it all together. Each command must go inside a new `Box<T>`.
+Now we can start putting it all together. Each command must go inside a new `Box<T>`.
 
 ```rust
 // rust/tests/test.rs
@@ -356,8 +365,25 @@ let mut history: History = History::new();
 // Add a node to the graph at (0, 0)
 history.append(Box::new(AddNode::new(graph.clone(), [0, 0])));
 
+// etc.
+```
+
+Notice how we are calling `clone` on the `graph`. The behaviour here is a little confusing. This isn't creating a new graph each time. What it is doing is doing is duplicating the pointer `Rc<T>` to create a new 'owner' for the graph object. An `Rc` (or reference counter) keeps track of the number of owners and will free the memory as soon as the count drops to zero. There is some alternative syntax here that does the exact same thing but makes it clear what our intentions are, which is `Rc::clone(&rc)`.
+
+So finally:
+
+```rust
+// rust/tests/test.rs
+
+let graph = Rc::new(RefCell::new(Graph::new()));
+let mut history: History = History::new();
+
+// Add a node to the graph at (0, 0)
+history.append(Box::new(AddNode::new(Rc::clone(&graph), [0, 0])));
+
+
 // Add a node to the graph at (1, 1)
-history.append(Box::new(AddNode::new(graph.clone(), [1, 1])));
+history.append(Box::new(AddNode::new(Rc::clone(&graph), [1, 1])));
 
 // Check that the graph is still unchanged
 assert_eq!(graph.borrow().nodes, vec![]);
@@ -367,7 +393,7 @@ history.execute();
 assert_eq!(graph.borrow().nodes, [[0, 0], [1, 1]]);
 
 // Connect the two nodes into a vertex
-history.append(Box::new(AddEdge::new(graph.clone(), [0, 0], [1, 1])));
+history.append(Box::new(AddEdge::new(Rc::clone(&graph), [0, 0], [1, 1])));
 history.execute();
 assert_eq!(graph.borrow().edges, [[[0, 0], [1, 1]]]);
 
@@ -380,8 +406,6 @@ history.redo();
 assert_eq!(graph.borrow().edges, [[[0, 0], [1, 1]]]);
 
 ```
-
-Notice how we clone `graph` for every command - don't worry, this isn't creating a new graph each time. What it is doing is duplicating the `Rc<T>` to create a new 'owner' for the graph object. An `Rc` (or reference counter) keeps track of the number of owners and will free the memory as soon as the count drops to zero.
 
 Hopefully this has been useful and can be adapted easily for your use case. The full source code can be found on [my GitHub](https://github.com/hectorbennett/command-pattern).
 
