@@ -9,7 +9,7 @@ import BackButton from "../components/BackButton";
 export default function Posts({ allPostsData }) {
   return (
     <>
-      <Head title="This is a title" />
+      <Head title="Posts | Hector Bennett" />
       <Scrollable.div style={{ width: "100%" }}>
         <Section>
           <h1>
