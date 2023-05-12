@@ -15,6 +15,7 @@ fullscreen
 help
 slime
 war
+waveviz
 webglgears`;
 
 const help_slime_text = `Slime Soccer is my remake of Quin Pendragon's Java game from the very early 2000s which unfortunately no longer works on modern browsers :(.
@@ -73,6 +74,8 @@ const help_name_text = `
 \`help name' was just an example you dummy.
 Swap \`name' for the name of the command you need help with.
 e.g. \`help war'`;
+
+const help_waveviz_text = `Interact with waveforms via equations and see the changes in real time.`;
 
 function Query(props) {
   return (
@@ -144,6 +147,10 @@ export default function Terminal(props) {
     "help fullscreen": () => "Toggles full screen mode.",
 
     clear: () => setQueries([]),
+
+    waveviz: () => props.openApp("WaveViz"),
+
+    "help waveviz": () => <SplitText text={help_waveviz_text} />,
 
     webglgears: () => props.openApp("webGLGears"),
 

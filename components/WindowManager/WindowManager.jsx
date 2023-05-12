@@ -1,15 +1,14 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
-import { RiSwordLine, RiTerminalLine, RiGiftLine, RiGamepadLine } from "react-icons/ri";
-import { FaCogs } from "react-icons/fa";
+import { RiSwordLine, RiTerminalLine, RiGamepadLine } from "react-icons/ri";
+import { FaCogs, FaWaveSquare } from "react-icons/fa";
 
 import Window from "../Window";
 import Tray from "../Tray";
 
-import SlimeSoccer from "../SlimeSoccer";
+import IframeContainer from "../IframeContainer";
 import WorldWar from "../WorldWar";
 import Terminal from "../Terminal";
-import SecretSanta from "../SecretSanta";
 import Gears from "../Gears";
 
 import styles from "./WindowManager.module.scss";
@@ -73,8 +72,18 @@ export default function WindowManager(props) {
         title: "slime soccer",
         width: 722,
         height: 460,
-        component: <SlimeSoccer />,
+        component: <IframeContainer url="https://itch.io/embed-upload/4800053?color=333333" />,
         icon: <RiGamepadLine />,
+        closable: true,
+        maximisable: true,
+      },
+      {
+        name: "WaveViz",
+        title: "WaveViz",
+        width: 800,
+        height: 500,
+        component: <IframeContainer url="https://wave-viz.hectorbennett.com/" />,
+        icon: <FaWaveSquare />,
         closable: true,
         maximisable: true,
       },
