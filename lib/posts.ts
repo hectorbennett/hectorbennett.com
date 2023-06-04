@@ -2,7 +2,9 @@ import fs from "fs";
 import path from "path";
 import { remark } from "remark";
 import remarkParse from "remark-parse";
+import remarkMath from "remark-math";
 import remarkRehype from "remark-rehype";
+import rehypeMathjax from "rehype-mathjax";
 import rehypeStringify from "rehype-stringify";
 import rehypeHighlight from "rehype-highlight";
 
@@ -42,9 +44,11 @@ async function getPostFromMatterResult(
 
   const processedContent = await remark()
     .use(remarkParse)
-    .use(remarkRehype)
+    .use(remarkMath)
+    .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeHighlight)
-    .use(rehypeStringify)
+    .use(rehypeMathjax)
+    .use(rehypeStringify, { allowDangerousHtml: true })
     .process(postData.content);
 
   return {
