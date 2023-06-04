@@ -122,3 +122,84 @@ doing this blend operation would take 36.9805824 milliseconds. To maintain a sol
 Let's see where we can optimise!
 
 
+The first thing we can do is to simplify the equations, we can achieve a bit of an increase by removing the need to divide by 255 and then multiply by 255 again, e.g.
+
+```rust
+fn blend_rgba(bg: Rgba, fg: Rgba) -> Rgba {
+    let r_fg = fg[0] as f32;
+    let g_fg = fg[1] as f32;
+    let b_fg = fg[2] as f32;
+    let a_fg = fg[3] as f32;
+    let r_bg = bg[0] as f32;
+    let g_bg = bg[1] as f32;
+    let b_bg = bg[2] as f32;
+    let a_bg = bg[3] as f32;
+
+    // calculate final alpha * 255
+    let a_0 = (a_fg * 255.0) + (a_bg * 255.0) - (a_fg * a_bg);
+
+    let r = (255.0 * r_fg * a_fg + 255.0 * a_bg * r_bg - a_fg * a_bg * r_bg) / a_0;
+    let g = (255.0 * g_fg * a_fg + 255.0 * a_bg * g_bg - a_fg * a_bg * g_bg) / a_0;
+    let b = (255.0 * b_fg * a_fg + 255.0 * a_bg * b_bg - a_fg * a_bg * b_bg) / a_0;
+
+    [r as u8, g as u8, b as u8, (a_0 / 255.0) as u8]
+}
+```
+
+This gives us a very moderate speed increase, but nothing drastic. What it does is set us up to to remove those conversions to floats:
+
+```rust
+pub fn blend_rgba(bg: Rgba, fg: Rgba) -> Rgba {
+    let r_fg = fg[0] as u32;
+    let g_fg = fg[1] as u32;
+    let b_fg = fg[2] as u32;
+    let a_fg = fg[3] as u32;
+    let r_bg = bg[0] as u32;
+    let g_bg = bg[1] as u32;
+    let b_bg = bg[2] as u32;
+    let a_bg = bg[3] as u32;
+
+    // calculate final alpha * 255
+    let a_0 = (a_fg * 255) + (a_bg * 255) - (a_fg * a_bg);
+
+    let r = (255 * r_fg * a_fg + 255 * a_bg * r_bg - a_fg * a_bg * r_bg) / a_0;
+    let g = (255 * g_fg * a_fg + 255 * a_bg * g_bg - a_fg * a_bg * g_bg) / a_0;
+    let b = (255 * b_fg * a_fg + 255 * a_bg * b_bg - a_fg * a_bg * b_bg) / a_0;
+
+    [r as u8, g as u8, b as u8, (a_0 / 255) as u8]
+}
+```
+
+Now we're getting somewhere! Our benchmark is down from ~4.5ns to ~3ns.
+
+There is a special trick for dividing by 255 for all positive integers less than 65,535. Let's use it:
+
+65535
+
+
+```rust
+#[inline]
+pub fn fast_divide_by_255(i: u32) -> u32 {
+    (i + 1 + (i >> 8)) >> 8
+}
+
+pub fn blend_rgba(bg: Rgba, fg: Rgba) -> Rgba {
+    let r_fg = fg[0] as u32;
+    let g_fg = fg[1] as u32;
+    let b_fg = fg[2] as u32;
+    let a_fg = fg[3] as u32;
+    let r_bg = bg[0] as u32;
+    let g_bg = bg[1] as u32;
+    let b_bg = bg[2] as u32;
+    let a_bg = bg[3] as u32;
+
+    // calculate final alpha * 255
+    let a_0 = (a_fg * 255) + (a_bg * 255) - (a_fg * a_bg);
+
+    let r = (255 * r_fg * a_fg + 255 * a_bg * r_bg - a_fg * a_bg * r_bg) / a_0;
+    let g = (255 * g_fg * a_fg + 255 * a_bg * g_bg - a_fg * a_bg * g_bg) / a_0;
+    let b = (255 * b_fg * a_fg + 255 * a_bg * b_bg - a_fg * a_bg * b_bg) / a_0;
+
+    [r as u8, g as u8, b as u8, fast_divide_by_255(a_0) as u8]
+}
+```
