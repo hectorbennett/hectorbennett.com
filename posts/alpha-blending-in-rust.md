@@ -95,7 +95,6 @@ harness = false
 
 and write our first benchmark:
 
-
 ```rust
 // benches/benchmarks.rs
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
@@ -120,7 +119,6 @@ pretty fast, however we need it to be faster. On a 4k monitor with resolution 38
 doing this blend operation would take 36.9805824 milliseconds. To maintain a solid 60fps at 4k we would (theoretically) need to get this down to below 16 milliseconds.
 
 Let's see where we can optimise!
-
 
 The first thing we can do is to simplify the equations, we can achieve a bit of an increase by removing the need to divide by 255 and then multiply by 255 again, e.g.
 
@@ -176,7 +174,6 @@ There is a special trick for dividing by 255 for all positive integers less than
 
 65535
 
-
 ```rust
 #[inline]
 pub fn fast_divide_by_255(i: u32) -> u32 {
@@ -203,3 +200,45 @@ pub fn blend_rgba(bg: Rgba, fg: Rgba) -> Rgba {
     [r as u8, g as u8, b as u8, fast_divide_by_255(a_0) as u8]
 }
 ```
+
+Now we will use SIMD, which works only on nightly rust. In lib.rs we must add the line:
+
+#![feature(portable_simd)]
+
+Then we must specify that we are running our code with nightly, by running `rustup default nightly`
+
+```rust
+pub fn blend_rgba(bg: Rgba, fg: Rgba) -> Rgba {
+    let r_fg = fg[0] as u32;
+    let g_fg = fg[1] as u32;
+    let b_fg = fg[2] as u32;
+    let a_fg = fg[3] as u32;
+    let r_bg = bg[0] as u32;
+    let g_bg = bg[1] as u32;
+    let b_bg = bg[2] as u32;
+    let a_bg = bg[3] as u32;
+
+    let thing_1 = 255 * a_fg;
+    let thing_2 = 255 * a_bg - a_fg * a_bg;
+
+    // calculate final alpha * 255
+    let a_0 = thing_1 + thing_2;
+
+    // calculate red and green together with simd
+    let rg = (u32x2::splat(thing_1) * u32x2::from([r_fg, g_fg])
+        + u32x2::splat(thing_2) * u32x2::from([r_bg, g_bg]))
+        / u32x2::splat(a_0);
+
+    // calculate blue on its own
+    let b = (thing_1 * b_fg + thing_2 * b_bg) / a_0;
+
+    [
+        rg[0] as u8,
+        rg[1] as u8,
+        b as u8,
+        fast_divide_by_255(a_0) as u8,
+    ]
+}
+```
+
+This gets us to about 3.33 ns, giving us almost a 50% speed improvement.
