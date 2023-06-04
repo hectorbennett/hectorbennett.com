@@ -80,3 +80,45 @@ fn blend_rgba(bg: Rgba, fg: Rgba) -> Rgba {
 Running our test, we find that the output of our test is the purple `rgba(127, 0, 127, 255)`. Perfect!
 
 However, this probably isn't very fast. Let's write some benchmarks to see if we can optimise it. We'll use criterion to make our benchmarks.
+
+We add the following to the `cargo.toml` config:
+
+```toml
+# rust-alpha-blending/Cargo.toml
+[dev-dependencies]
+criterion = "0.5.1"
+
+[[bench]]
+name = "benchmarks"
+harness = false
+```
+
+and write our first benchmark:
+
+
+```rust
+// benches/benchmarks.rs
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use rust_alpha_blending::v1;
+
+fn criterion_benchmark(c: &mut Criterion) {
+    c.bench_function("v1::blend_rgba", |b| {
+        b.iter(|| v1::blend_rgba(black_box([255, 0, 0, 255]), black_box([0, 0, 255, 127])))
+    });
+}
+
+criterion_group!(benches, criterion_benchmark);
+criterion_main!(benches);
+
+```
+
+On my m1 macbook, this works out as 4.4585 ns!
+On my dell xps 13, this works out as xxx ns.
+
+pretty fast, however we need it to be faster. On a 4k monitor with resolution 3840x2160, that is 8,294,400
+
+doing this blend operation would take 36.9805824 milliseconds. To maintain a solid 60fps at 4k we would (theoretically) need to get this down to below 16 milliseconds.
+
+Let's see where we can optimise!
+
+
